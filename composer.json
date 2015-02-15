@@ -2,8 +2,8 @@
     "name": "lasallecms/usermanagement",
     "description": "User Management for LaSalleCMS.",
     "homepage": "http://southalsalle.com",
-    "keywords": "keywords": ["laravel", "laravel5", "user management", "login", "users", "LaSalleCMS", "South LaSalle:, "Bob Bloom"],
-    "license":"GPL",
+    "keywords": ["laravel", "laravel5", "user management", "login", "users", "LaSalleCMS", "South LaSalle", "Bob Bloom"],
+    "license":"GPL-3.0",
     "authors": [
         {
             "name": "Bob Bloom",
