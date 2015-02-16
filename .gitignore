@@ -2,5 +2,5 @@
 .env
 build
 composer.lock
-docs
-vendor
+GPL_HEADER.txt
+/vendor

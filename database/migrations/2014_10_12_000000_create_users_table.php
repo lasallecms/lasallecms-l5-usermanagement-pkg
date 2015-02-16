@@ -1,4 +1,4 @@
-<?php namespace Lasallecms\Usermanagement\Http\Controllers;
+<?php
 
 /**
  *
@@ -29,18 +29,37 @@
  *
  */
 
-use App\Http\Controllers\Controller;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class UsermanagementController extends Controller {
+class CreateUsersTable extends Migration {
 
 	/**
-	 * Show the application welcome screen to the user.
+	 * Run the migrations.
 	 *
-	 * @return Response
+	 * @return void
 	 */
-	public function index()
+	public function up()
 	{
-		return view('usermanagement::user');
+		Schema::create('users', function(Blueprint $table)
+		{
+			$table->increments('id');
+			$table->string('name');
+			$table->string('email')->unique();
+			$table->string('password', 60);
+			$table->rememberToken();
+			$table->timestamps();
+		});
+	}
+
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::drop('users');
 	}
 
 }

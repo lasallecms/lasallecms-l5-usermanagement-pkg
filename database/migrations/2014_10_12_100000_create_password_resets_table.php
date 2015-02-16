@@ -1,4 +1,4 @@
-<?php namespace Lasallecms\Usermanagement\Http\Controllers;
+<?php
 
 /**
  *
@@ -29,18 +29,35 @@
  *
  */
 
-use App\Http\Controllers\Controller;
 
-class UsermanagementController extends Controller {
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class CreatePasswordResetsTable extends Migration {
 
 	/**
-	 * Show the application welcome screen to the user.
+	 * Run the migrations.
 	 *
-	 * @return Response
+	 * @return void
 	 */
-	public function index()
+	public function up()
 	{
-		return view('usermanagement::user');
+		Schema::create('password_resets', function(Blueprint $table)
+		{
+			$table->string('email')->index();
+			$table->string('token')->index();
+			$table->timestamp('created_at');
+		});
+	}
+
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::drop('password_resets');
 	}
 
 }

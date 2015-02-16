@@ -1,4 +1,4 @@
-<?php namespace Lasallecms\Usermanagement\Http\Controllers;
+<?php namespace Lasallecms\Usermanagement\Http\Middleware;
 
 /**
  *
@@ -29,18 +29,51 @@
  *
  */
 
-use App\Http\Controllers\Controller;
+use Closure;
+use Illuminate\Contracts\Auth\Guard;
 
-class UsermanagementController extends Controller {
+class Authenticate {
 
 	/**
-	 * Show the application welcome screen to the user.
+	 * The Guard implementation.
 	 *
-	 * @return Response
+	 * @var Guard
 	 */
-	public function index()
+	protected $auth;
+
+	/**
+	 * Create a new filter instance.
+	 *
+	 * @param  Guard  $auth
+	 * @return void
+	 */
+	public function __construct(Guard $auth)
 	{
-		return view('usermanagement::user');
+		$this->auth = $auth;
+	}
+
+	/**
+	 * Handle an incoming request.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \Closure  $next
+	 * @return mixed
+	 */
+	public function handle($request, Closure $next)
+	{
+		if ($this->auth->guest())
+		{
+			if ($request->ajax())
+			{
+				return response('Unauthorized.', 401);
+			}
+			else
+			{
+				return redirect()->guest('auth/login');
+			}
+		}
+
+		return $next($request);
 	}
 
 }

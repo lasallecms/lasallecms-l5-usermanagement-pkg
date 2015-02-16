@@ -1,4 +1,4 @@
-<?php namespace Lasallecms\Usermanagement\Http\Controllers;
+<?php namespace Lasallecms\Usermanagement\Http;
 
 /**
  *
@@ -29,18 +29,19 @@
  *
  */
 
-use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
-class UsermanagementController extends Controller {
+class Kernel extends HttpKernel {
 
 	/**
-	 * Show the application welcome screen to the user.
+	 * The application's route middleware.
 	 *
-	 * @return Response
+	 * @var array
 	 */
-	public function index()
-	{
-		return view('usermanagement::user');
-	}
+	protected $routeMiddleware = [
+		'auth' => 'App\Http\Middleware\Authenticate',
+		'auth.basic' => 'Illuminate\Auth\Middleware\AuthenticateWithBasicAuth',
+		'guest' => 'App\Http\Middleware\RedirectIfAuthenticated',
+	];
 
 }

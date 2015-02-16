@@ -6,10 +6,12 @@
 [![GitHub Issues](https://img.shields.io/github/issues/lasallecms/lasallecms-l5-usermanagement-pkg.svg)](https://github.com/lasallecms/lasallecms-l5-usermanagement-pkg/issues)
 
 
+User management for my LaSalle Content Management System. I yanked out all the auth stuff from the L5 app and put 'em in this package. Then, I added more features. 
 
 
 
-Description!
+
+
 
 
 ## Usage
@@ -20,7 +22,7 @@ Description!
 
 If you discover any security related issues, please email Bob Bloom at "info at southlasalle dot com" instead of using the issue tracker.
 
-## Documentation
+## Links
 
 * [CONTRIBUTING](CONTRIBUTING.md)
 * [CHANGELOG](CHANGELOG.md)
