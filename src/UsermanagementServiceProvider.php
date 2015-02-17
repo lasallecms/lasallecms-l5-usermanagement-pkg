@@ -68,10 +68,13 @@ class UsermanagementServiceProvider extends ServiceProvider {
      */
     protected function setupConfiguration()
     {
-        $configuration = realpath(__DIR__.'/../config/usermanagement.php');
+        // config filename is "auth.php" instead of "usermanagement.php" because
+        // we are extracting an actual native app config file, instead of
+        // creating a brand new config file
+        $configuration = realpath(__DIR__.'/../config/auth.php');
 
         $this->publishes([
-            $configuration => config_path('usermanagement.php'),
+            $configuration => config_path('auth.php'),
         ]);
 
 
