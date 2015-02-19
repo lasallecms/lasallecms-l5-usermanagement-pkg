@@ -78,7 +78,7 @@ class UsermanagementServiceProvider extends ServiceProvider {
         ]);
 
 
-        $this->mergeConfigFrom($configuration, 'usermanagement');
+       // $this->mergeConfigFrom($configuration, 'auth');
     }
 
     /**
@@ -114,7 +114,7 @@ class UsermanagementServiceProvider extends ServiceProvider {
 	 */
 	private function registerUsermanagement()
 	{
-		$this->app->bind('contact', function($app) {
+		$this->app->bind('usermanagement', function($app) {
 			return new Usermanagement($app);
 		});
 
