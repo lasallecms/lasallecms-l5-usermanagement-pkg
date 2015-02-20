@@ -64,7 +64,7 @@ return [
 	|
 	*/
 
-	'model' => 'Lasallecms\Usermanagement\User',
+	'model' => 'Lasallecms\Usermanagement\Models\User',
 
 	/*
 	|--------------------------------------------------------------------------

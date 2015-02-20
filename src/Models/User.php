@@ -1,4 +1,4 @@
-<?php namespace Lasallecms\Usermanagement;
+<?php namespace Lasallecms\Usermanagement\Models;
 
 /**
  *
