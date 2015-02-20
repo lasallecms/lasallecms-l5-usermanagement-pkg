@@ -35,7 +35,8 @@ use Illuminate\Contracts\Auth\Registrar;
 
 
 //use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-Lasallecms\Usermanagement\Http\Controllers\Auth\AuthenticatesAndRegistersUsers;
+// https://github.com/lasallecms/lasallecms-l5-usermanagement-pkg/issues/9
+use Lasallecms\Usermanagement\Http\Controllers\Auth\AuthenticatesAndRegistersUsers;
 
 
 class AuthController extends Controller {
@@ -52,6 +53,11 @@ class AuthController extends Controller {
 	*/
 
 	use AuthenticatesAndRegistersUsers;
+
+    // Use this package's views
+    // https://github.com/lasallecms/lasallecms-l5-usermanagement-pkg/issues/9
+    protected $loginPath = 'usermanagement::auth.login';
+    protected $registerPath = 'usermanagement::auth.register';
 
 	/**
 	 * Create a new authentication controller instance.
