@@ -59,6 +59,10 @@ class UsermanagementServiceProvider extends ServiceProvider {
         $this->setupMigrations();
 
 		$this->setupRoutes($this->app->router);
+
+        $this->setupTranslations();
+
+        $this->setupViews();
 	}
 
     /**
@@ -133,13 +137,39 @@ class UsermanagementServiceProvider extends ServiceProvider {
 	 */
 	public function setupRoutes(Router $router)
 	{
-        $this->loadViewsFrom(realpath(__DIR__.'/../views'), 'usermanagement');
-
 		$router->group(['namespace' => 'Lasallecms\Usermanagement\Http\Controllers'], function($router)
 		{
 			require __DIR__.'/Http/routes.php';
 		});
 
 	}
+
+
+    /**
+     * Define the translations for the application.
+     *
+     * @return void
+     */
+    public function setupTranslations()
+    {
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'usermanagement');
+    }
+
+
+
+    /**
+     * Define the views for the application.
+     *
+     * @return void
+     */
+    public function setupViews()
+    {
+        $this->loadViewsFrom(__DIR__.'/../views', 'usermanagement');
+
+        $this->publishes([
+            __DIR__.'/../views' => base_path('resources/views/vendor/usermanagement'),
+        ]);
+
+    }
 
 }
