@@ -32,6 +32,7 @@
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
+
 /**
  * This is the User Management service provider class.
  *
@@ -39,31 +40,32 @@ use Illuminate\Support\ServiceProvider;
  */
 class UsermanagementServiceProvider extends ServiceProvider {
 
-	/**
-	 * Indicates if loading of the provider is deferred.
-	 *
-	 * @var bool
-	 */
-	protected $defer = false;
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = false;
 
 
-	/**
-	 * Boot the service provider.
-	 *
-	 * @return void
-	 */
-	public function boot()
-	{
-		$this->setupConfiguration();
+    /**
+     * Boot the service provider.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->setupConfiguration();
 
         $this->setupMigrations();
+        $this->setupSeeds();
 
-		$this->setupRoutes($this->app->router);
+        $this->setupRoutes($this->app->router);
 
         $this->setupTranslations();
 
         $this->setupViews();
-	}
+    }
 
     /**
      * Setup the Configuration.
@@ -80,9 +82,6 @@ class UsermanagementServiceProvider extends ServiceProvider {
         $this->publishes([
             $configuration => config_path('auth.php'),
         ]);
-
-
-       // $this->mergeConfigFrom($configuration, 'auth');
     }
 
     /**
@@ -93,56 +92,72 @@ class UsermanagementServiceProvider extends ServiceProvider {
     protected function setupMigrations()
     {
         $migrations = realpath(__DIR__.'/../database/migrations');
+
         $this->publishes([
-            $migrations    => base_path('database/migrations'),
+            $migrations    => $this->app->databasePath() . '/migrations',
+        ]);
+    }
+
+
+    /**
+     * Setup the Seeds.
+     *
+     * @return void
+     */
+    protected function setupSeeds()
+    {
+        $seeds = realpath(__DIR__.'/../database/seeds');
+
+        $this->publishes([
+            $seeds    => $this->app->databasePath() . '/seeds',
         ]);
     }
 
 
 
     /**
-	 * Register the service provider.
-	 *
-	 * @return void
-	 */
-	public function register()
-	{
-		$this->registerUsermanagement();
-	}
+     * Register the service provider.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->registerUsermanagement();
+    }
 
 
-	/**
-	 * Register the application bindings.
-	 *
-	 * @return void
-	 */
-	private function registerUsermanagement()
-	{
-		$this->app->bind('usermanagement', function($app) {
-			return new Usermanagement($app);
-		});
+    /**
+     * Register the application bindings.
+     *
+     * @return void
+     */
+    private function registerUsermanagement()
+    {
+        $this->app->bind('usermanagement', function($app) {
+            return new Usermanagement($app);
+        });
 
-		$this->app->bind(
-			'Illuminate\Contracts\Auth\Registrar',
-			'Lasallecms\Usermanagement\Services\Registrar'
-		);
-	}
+        $this->app->bind(
+            'Illuminate\Contracts\Auth\Registrar',
+            'Lasallecms\Usermanagement\Services\Registrar'
+        );
+    }
 
 
-	/**
-	 * Define the routes for the application.
-	 *
-	 * @param  \Illuminate\Routing\Router  $router
-	 * @return void
-	 */
-	public function setupRoutes(Router $router)
-	{
-		$router->group(['namespace' => 'Lasallecms\Usermanagement\Http\Controllers'], function($router)
-		{
-			require __DIR__.'/Http/routes.php';
-		});
+    /**
+     * Define the routes for the application.
+     *
+     * @param  \Illuminate\Routing\Router  $router
+     * @return void
+     */
+    public function setupRoutes(Router $router)
+    {
+        $router->group(['namespace' => 'Lasallecms\Usermanagement\Http\Controllers'], function($router)
+        {
+            require __DIR__.'/Http/routes.php';
+        });
 
-	}
+    }
 
 
     /**
@@ -154,7 +169,6 @@ class UsermanagementServiceProvider extends ServiceProvider {
     {
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'usermanagement');
     }
-
 
 
     /**
