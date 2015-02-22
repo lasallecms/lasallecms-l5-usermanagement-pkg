@@ -1,10 +1,18 @@
 # CHANGE LOG
 
-
-## NEXT: VERSION 0.1.3 - 2015-02-28
+## NEXT: VERSION 0.1.4 - 2015-02-28
 
 ### All GitHub issues for this version
-* [https://github.com/lasallecms/lasallecms-l5-flagship/issues?q=is%3Aissue+milestone%3A%22Version+0.1.2%22](https://github.com/lasallecms/lasallecms-l5-flagship/issues?q=is%3Aissue+milestone%3A%22Version+0.1.3%22)
+* [https://github.com/lasallecms/lasallecms-l5-flagship/issues?q=is%3Aissue+milestone%3A%22Version+0.1.4%22](https://github.com/lasallecms/lasallecms-l5-flagship/issues?q=is%3Aissue+milestone%3A%22Version+0.1.4%22)
+
+
+## VERSION 0.1.3 - 2015-02-22
+
+### Fix
+* issues pertaining to package installation
+
+### All GitHub issues for this version
+* [https://github.com/lasallecms/lasallecms-l5-flagship/issues?q=is%3Aissue+milestone%3A%22Version+0.1.3%22](https://github.com/lasallecms/lasallecms-l5-flagship/issues?q=is%3Aissue+milestone%3A%22Version+0.1.3%22)
 
 
 ## VERSION 0.1.2 - 2015-02-21
