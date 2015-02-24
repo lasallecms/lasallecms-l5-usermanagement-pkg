@@ -1,7 +1,7 @@
 <?php namespace Lasallecms\Usermanagement\Http\Controllers\Auth;
 /**
  *
- * LaSalle Content Management System, based on the Laravel 5 Framework
+ * User Management package for the LaSalle Content Management System, based on the Laravel 5 Framework
  * Copyright (C) 2015  The South LaSalle Trading Corporation
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *
- * @package    LaSalle Content Management System
+ * @package    User Management package for the LaSalle Content Management System
  * @version    1.0.0
  * @link       http://LaSalleCMS.com
  * @copyright  (c) 2015, The South LaSalle Trading Corporation
