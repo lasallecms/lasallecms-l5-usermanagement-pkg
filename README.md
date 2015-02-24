@@ -9,21 +9,24 @@
 [![Laravel](https://img.shields.io/badge/Laravel-v5-brightgreen.svg?style=flat-square)](http://laravel.com)
 
 
-User management for my LaSalle Content Management System. I yanked out all the auth stuff from the L5 app and put 'em in this package. Then, I added more features. 
+User Management package made specifically for my LaSalle Content Management System. 
+
+I extracted the native L5 app's authentication features into this package. 
 
 
+## Usage Caveat
 
+Is it really worthwhile extracting the core auth out of the app? After all, as I learned, it's not just the base L5 app we're dealing with. The two trait files at Illuminate\Foundation\Auth are part of it too. Plus App\Http\Kernel.php too. But, yes, it is, at least I think so.
 
+When I say extract, I am not kidding. I deleted all the auth from the L5 base app that extracted into this app. Even the auth.php config. Chances are pretty good that you are not extracting any auth from your L5 base app. I've not actually run this package with the L5 app, but I'm sure it won't work. Worse, it could even harm your app. 
 
-
-
-## Usage
-
+How's that for a caveat!
 
 
 ## Security
 
 If you discover any security related issues, please email Bob Bloom at "info at southlasalle dot com" instead of using the issue tracker.
+
 
 ## Links
 

@@ -1,6 +1,15 @@
 # CHANGE LOG
 
-## NEXT: VERSION 0.1.4 - 2015-02-28
+## NEXT: VERSION 0.2.0 - 2015-02-28
+
+### All GitHub issues for this version
+* [https://github.com/lasallecms/lasallecms-l5-flagship/issues?q=is%3Aissue+milestone%3A%22Version+0.2.0%22](https://github.com/lasallecms/lasallecms-l5-flagship/issues?q=is%3Aissue+milestone%3A%22Version+0.2.0%22)
+
+
+## VERSION 0.1.4 - 2015-02-23
+
+## Add
+* issues pertaining to password handling
 
 ### All GitHub issues for this version
 * [https://github.com/lasallecms/lasallecms-l5-flagship/issues?q=is%3Aissue+milestone%3A%22Version+0.1.4%22](https://github.com/lasallecms/lasallecms-l5-flagship/issues?q=is%3Aissue+milestone%3A%22Version+0.1.4%22)

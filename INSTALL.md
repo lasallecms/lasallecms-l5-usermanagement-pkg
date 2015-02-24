@@ -1,7 +1,58 @@
 # INSTALLATION
 
-Installation is weird. First thing is to delete all user and auth stuff from the L5 app. Maybe there is a way to just over-ride 'em, but I flat-out deleted 'em. 
+## Summary 
+My Flagship CMS app so depends on this package that it has the composer and service provider stuff built in already. 
 
-This user management package is designed to specifically work with my LaSalleCMS, so deleting the app files is ok. 
 
-To make this package generic, I'll either have to enumerate the deletions; and/or, figure out overrides. 
+## composer.json:
+
+```
+{
+    "require": {
+        "lasallecms/usermanagement": "0.1.*",
+    }
+}
+```
+
+
+## Service Provider
+
+In config/app.php:
+```
+'Lasallecms\Usermanagement\UsermanagementServiceProvider',
+```
+
+
+## Facade Alias
+
+* none
+
+
+## Dependencies
+* none
+
+
+## Publish the Package's Config
+
+With Artisan:
+```
+php artisan vendor:publish
+```
+
+## Migration
+
+With Artisan:
+```
+php artisan migrate
+```
+
+## Notes
+
+* view files will be published to the main app's view folder
+* you should install all your packages first, then run "vendor:publish" and "migrate"
+* run "vendor:publish" first; then, run "migrate" second
+
+
+## Serious Caveat 
+
+This package is designed to run specifically with my Flagship blog app. See my README.md for the full shpiel. 
