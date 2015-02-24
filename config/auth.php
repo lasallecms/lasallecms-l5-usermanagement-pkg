@@ -95,7 +95,7 @@ return [
 	*/
 
 	'password' => [
-		'email' => 'emails.password',
+		'email' => 'usermanagement::emails.password',
 		'table' => 'password_resets',
 		'expire' => 60,
 	],

@@ -29,7 +29,7 @@
  *
  */
 
-use Lasallecms\Usermanagement\User;
+use Lasallecms\Usermanagement\Models\User;
 use Validator;
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
 
