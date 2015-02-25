@@ -100,4 +100,21 @@ return [
 		'expire' => 60,
 	],
 
+
+    /*
+	|--------------------------------------------------------------------------
+	| Forbidden Top Level Domains
+	|--------------------------------------------------------------------------
+	|
+	| Email addresses with these top level domains will not be registered
+	|
+	| Examples: '.ru', '.cn'
+	|
+	*/
+
+    'forbiddenTLDs' => [
+        '.ru',
+        '.cn',
+    ],
+
 ];

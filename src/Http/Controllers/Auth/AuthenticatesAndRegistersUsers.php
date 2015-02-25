@@ -1,4 +1,5 @@
 <?php namespace Lasallecms\Usermanagement\Http\Controllers\Auth;
+
 /**
  *
  * User Management package for the LaSalle Content Management System, based on the Laravel 5 Framework
@@ -31,6 +32,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
+use Lasallecms\Usermanagement\Validation\ExtraValidation;
 
 trait AuthenticatesAndRegistersUsers {
 
@@ -66,7 +68,7 @@ trait AuthenticatesAndRegistersUsers {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function postRegister(Request $request)
+    public function postRegister(Request $request, ExtraValidation $extraValidation)
     {
         $validator = $this->registrar->validator($request->all());
 
@@ -76,6 +78,11 @@ trait AuthenticatesAndRegistersUsers {
                 $request, $validator
             );
         }
+
+        // Custom forbidden top level domain validation.
+        // If this validation fails then kill the request.
+        if ( !$this->ForbiddenTLD->validateForbiddenTLD($request->only('email')) ) return;
+
 
         $this->auth->login($this->registrar->create($request->all()));
 

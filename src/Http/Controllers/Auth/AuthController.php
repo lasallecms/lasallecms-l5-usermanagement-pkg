@@ -29,15 +29,13 @@
  *
  */
 
-use App\Http\Controllers\Controller;
+use Lasallecms\Usermanagement\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
-
 
 //use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 // https://github.com/lasallecms/lasallecms-l5-usermanagement-pkg/issues/9
 use Lasallecms\Usermanagement\Http\Controllers\Auth\AuthenticatesAndRegistersUsers;
-
 
 class AuthController extends Controller {
 
