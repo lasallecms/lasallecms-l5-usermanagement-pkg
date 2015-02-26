@@ -39,4 +39,11 @@ class User_group extends BaseModel {
      */
     public $timestamps = false;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['user_id', 'group_id'];
+
 }
