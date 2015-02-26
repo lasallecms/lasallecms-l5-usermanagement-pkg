@@ -44,7 +44,8 @@ trait AuthenticatesAndRegistersUsers {
     protected $auth;
 
     /**
-     * The registrar implementation.
+     * The registrar i
+mplementation.
      *
      * @var Registrar
      */
