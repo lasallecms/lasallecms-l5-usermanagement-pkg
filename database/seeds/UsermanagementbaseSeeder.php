@@ -14,7 +14,40 @@ class UsermanagementSeeder extends Seeder {
 	{
 		Model::unguard();
 
-		// $this->call('UserTableSeeder');
-	}
+        User::create([
+            'name'       => 'Bob Bloom',
+            'email'      => 'admin@example.org',
+            'password'   => bcrypt('password'),
+            'created_at' => new DateTime,
+            'updated_at' => new DateTime,
+        ]);
 
+        Group::create([
+            'title'       => 'Registered',
+            'description' => 'Basic front-end access only.',
+            'created_at' => new DateTime,
+            'updated_at' => new DateTime,
+        ]);
+
+        Group::create([
+            'title'       => 'Administrator',
+            'description' => 'Basic back-end administration access only.',
+            'created_at' => new DateTime,
+            'updated_at' => new DateTime,
+        ]);
+
+        Group::create([
+            'title'       => 'Super Administrator',
+            'description' => 'Highest back-end administration access.',
+            'created_at' => new DateTime,
+            'updated_at' => new DateTime,
+        ]);
+
+
+        User_group::create([
+            'user_id'   => 1,
+            'group_id'  => 3,
+        ]);
+
+	}
 }

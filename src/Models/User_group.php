@@ -1,4 +1,4 @@
-<?php
+<?php namespace Lasallecms\Usermanagement\Models;
 
 /**
  *
@@ -29,37 +29,14 @@
  *
  */
 
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
+use Lasallecms\Usermanagement\Models\BaseModel;
 
-class CreateUsersTable extends Migration {
+class User_group extends BaseModel {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-		Schema::create('users', function(Blueprint $table)
-		{
-			$table->increments('id');
-			$table->string('name');
-			$table->string('email')->unique();
-			$table->string('password', 60);
-			$table->rememberToken();
-			$table->timestamps();
-		});
-	}
-
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		Schema::drop('users');
-	}
+    /**
+     * Timestamps for the post_tag table
+     * @var binary
+     */
+    public $timestamps = false;
 
 }

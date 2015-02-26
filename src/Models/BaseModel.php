@@ -29,49 +29,19 @@
  *
  */
 
-// Please note: this file is modified from the original that comes with the L5 app
 
-use Lasallecms\Usermanagement\Models\BaseModel;
-use Illuminate\Auth\Authenticatable;
-use Illuminate\Auth\Passwords\CanResetPassword;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
-
-class User extends BaseModel implements AuthenticatableContract, CanResetPasswordContract {
-
-	use Authenticatable, CanResetPassword;
-
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'users';
-
-	/**
-	 * The attributes that are mass assignable.
-	 *
-	 * @var array
-	 */
-	protected $fillable = ['name', 'email', 'password'];
-
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
-	protected $hidden = ['password', 'remember_token'];
-
-
+class BaseModel extends Eloquent
+{
     /*
-     * Many to many relationship with groups
-     *
-     * @return Eloquent
+     * Laravel will execute this function automatically
      */
-    public function groups()
+    public static function boot()
     {
-        return $this->belongsToMany('Lasallecms\Usermanagement\Models\Group');
+        // empty for now
+        // https://laracasts.com/series/digging-in/episodes/8
+        // parent's boot function should occur first
+        parent::boot();
     }
-
 }

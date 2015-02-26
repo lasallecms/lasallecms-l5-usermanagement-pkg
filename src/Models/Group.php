@@ -1,4 +1,4 @@
-<?php
+<?php namespace Lasallecms\Usermanagement\Models;
 
 /**
  *
@@ -29,35 +29,23 @@
  *
  */
 
+use Lasallecms\Usermanagement\Models\BaseModel;
 
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Database\Migrations\Migration;
+class Group extends BaseModel {
 
-class CreatePasswordResetsTable extends Migration {
+    /**
+     * Which fields may be mass assigned
+     * @var array
+     */
+    protected $fillable = ['title', 'description', 'enabled'];
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-		Schema::create('password_resets', function(Blueprint $table)
-		{
-			$table->string('email')->index();
-			$table->string('token')->index();
-			$table->timestamp('created_at');
-		});
-	}
-
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		Schema::drop('password_resets');
-	}
-
+    /*
+     * Many to many relationship with users
+     *
+     * @return Eloquent
+     */
+    public function users()
+    {
+        return $this->belongsToMany('Lasallecms\Usermanagement\Models\User');
+    }
 }
