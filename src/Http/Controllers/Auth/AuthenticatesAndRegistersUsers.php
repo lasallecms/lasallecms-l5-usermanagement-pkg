@@ -32,7 +32,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
-use Lasallecms\Usermanagement\Validation\ExtraValidation;
+use Lasallecms\Usermanagement\Validation\ForbiddenTLD;
 
 trait AuthenticatesAndRegistersUsers {
 
