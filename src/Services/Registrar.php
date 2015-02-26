@@ -65,4 +65,18 @@ class Registrar implements RegistrarContract {
 		]);
 	}
 
+    /**
+     * Assign newly registered user to the "Registered" group
+     *
+     * @param  int  $id
+     * @return User_group
+     */
+    public function createusergroup($id)
+    {
+        return User_group::create([
+            'user_id'   => $id,
+            'group_id'  => 1,
+        ]);
+    }
+
 }
