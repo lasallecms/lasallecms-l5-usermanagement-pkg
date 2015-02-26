@@ -46,6 +46,11 @@ class UsermanagementSeeder extends Seeder {
 
         User_group::create([
             'user_id'   => 1,
+            'group_id'  => 1,
+        ]);
+
+        User_group::create([
+            'user_id'   => 1,
             'group_id'  => 3,
         ]);
 
