@@ -68,7 +68,7 @@ trait AuthenticatesAndRegistersUsers {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function postRegister(Request $request, ExtraValidation $extraValidation)
+    public function postRegister(Request $request, ForbiddenTLD $ForbiddenTLD)
     {
         $validator = $this->registrar->validator($request->all());
 
@@ -80,8 +80,8 @@ trait AuthenticatesAndRegistersUsers {
         }
 
         // Custom forbidden top level domain validation.
-        // If this validation fails then kill the request.
-        if ( !$this->ForbiddenTLD->validateForbiddenTLD($request->only('email')) ) return;
+        // If this validation fails then kill the request right here
+        if ( !$ForbiddenTLD->validateForbiddenTLD($request->only('email')) ) return;
 
 
         $this->auth->login($this->registrar->create($request->all()));
