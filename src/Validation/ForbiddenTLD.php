@@ -82,7 +82,7 @@ class ForbiddenTLD {
         // so the unit test can specify its own list of forbidden TLDs
         if (!empty($specifiedTLDs)) return $specifiedTLDs;
 
-        return Config::get('usermanagement.forbiddenTLDs');
+        return Config::get('auth.forbiddenTLDs');
 
     }
 
