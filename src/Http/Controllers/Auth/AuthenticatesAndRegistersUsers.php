@@ -86,6 +86,9 @@ trait AuthenticatesAndRegistersUsers {
 
         $this->auth->login($this->registrar->create($request->all()));
 
+        // assign this newly registered (and logged in) user the "Registered" group
+        $this->registrar->createusergroup($this->auth->user()->id);
+
         return redirect($this->redirectPath());
     }
 
