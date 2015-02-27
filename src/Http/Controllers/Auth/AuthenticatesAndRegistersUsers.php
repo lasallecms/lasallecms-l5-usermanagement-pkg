@@ -102,7 +102,7 @@ trait AuthenticatesAndRegistersUsers {
     {
         //return view('auth.login');
         // https://github.com/lasallecms/lasallecms-l5-flagship/issues/16
-        return view( $this->loginPath() );
+        return view( $this->loginPathView() );
     }
 
     /**
@@ -124,7 +124,7 @@ trait AuthenticatesAndRegistersUsers {
             return redirect()->intended($this->redirectPath());
         }
 
-        return redirect($this->loginPath())
+        return redirect($this->loginPathController())
             ->withInput($request->only('email', 'remember'))
             ->withErrors([
                 'email' => 'These credentials do not match our records.',
@@ -165,7 +165,7 @@ trait AuthenticatesAndRegistersUsers {
      */
     public function loginPathView()
     {
-        return property_exists($this, 'loginPathView') ? $this->loginPath : 'auth.login';
+        return property_exists($this, 'loginPathView') ? $this->loginPathView : 'auth.login';
     }
 
     /**
@@ -175,7 +175,7 @@ trait AuthenticatesAndRegistersUsers {
      */
     public function loginPathController()
     {
-        return property_exists($this, 'loginPathController') ? $this->loginPath : '/auth/login';
+        return property_exists($this, 'loginPathController') ? $this->loginPathController : '/auth/login';
     }
 
     /**
