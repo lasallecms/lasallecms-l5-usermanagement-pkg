@@ -59,7 +59,7 @@ trait AuthenticatesAndRegistersUsers {
     {
         //return view('auth.register');
         //https://github.com/lasallecms/lasallecms-l5-flagship/issues/16
-        return view( $this->registerPath() );
+        return view( $this->registerPathView() );
     }
 
     /**
@@ -159,13 +159,23 @@ trait AuthenticatesAndRegistersUsers {
     }
 
     /**
-     * Get the path to the login route.
+     * Get the view path to the login route.
      *
      * @return string
      */
-    public function loginPath()
+    public function loginPathView()
     {
-        return property_exists($this, 'loginPath') ? $this->loginPath : '/auth/login';
+        return property_exists($this, 'loginPathView') ? $this->loginPath : 'auth.login';
+    }
+
+    /**
+     * Get the controller path to the login route.
+     *
+     * @return string
+     */
+    public function loginPathController()
+    {
+        return property_exists($this, 'loginPathController') ? $this->loginPath : '/auth/login';
     }
 
     /**
@@ -173,12 +183,9 @@ trait AuthenticatesAndRegistersUsers {
      *
      * @return string
      */
-    public function registerPath()
+    public function registerPathView()
     {
-        return property_exists($this, 'registerPath') ? $this->registerPath : '/auth/register';
+        return property_exists($this, 'registerPathView') ? $this->registerPathView : '/auth/register';
     }
-
-
-
 
 }

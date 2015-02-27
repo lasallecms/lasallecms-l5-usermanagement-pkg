@@ -54,8 +54,9 @@ class AuthController extends Controller {
 
     // Use this package's views
     // https://github.com/lasallecms/lasallecms-l5-usermanagement-pkg/issues/9
-    protected $loginPath = 'usermanagement::auth.login';
-    protected $registerPath = 'usermanagement::auth.register';
+    protected $loginPathView       = 'usermanagement::auth.login';
+    protected $loginPathController = '/auth/login';
+    protected $registerPathView    = 'usermanagement::auth.register';
 
 	/**
 	 * Create a new authentication controller instance.
