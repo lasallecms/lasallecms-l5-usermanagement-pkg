@@ -142,6 +142,9 @@ class LasallecmsSetupUsersTable extends Migration {
         Schema::dropIfExists('groups');
         Schema::table('groups', function($table){
             $table->drop_index('groups_title_unique');
+            $table->drop_foreign('groups_created_by_foreign');
+            $table->drop_foreign('groups_updated_by_foreign');
+            $table->drop_foreign('groups_locked_by_foreign');
         });
 
 
