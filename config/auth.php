@@ -117,4 +117,44 @@ return [
         '.cn',
     ],
 
+
+    /*
+	|--------------------------------------------------------------------------
+	| Admin Login Form View Folder
+	|--------------------------------------------------------------------------
+	|
+	| The login form is created independently of the admin template. It's just something
+    | on its own. The default view folder is "views/admin/login/admin_login_view_folder/". The default
+    | assets folder is "public/admin/login/admin_login_view_folder/"
+	|
+	*/
+    'admin_login_view_folder' => 'default',
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Admin IP Addresses allowed
+    |--------------------------------------------------------------------------
+    |
+    | Users from the following IP addresses are permitted to login to the admin.
+    | Leave blank if not applicable.
+    | If you use a package for user/login/registration, then this may not work!
+    |
+    */
+    'use_ip_addresses_for_admin' => true,
+    //'use_ip_addresses_for_admin' => false,
+    'admin_ip_addresses_allowed' => [
+        '127.0.0.1',
+    ],
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Administrator, first among equals
+    |--------------------------------------------------------------------------
+    |
+    | The administrator who cannot be deleted in the admin's user.index
+    */
+    'administrator_first_among_equals_email' => '',
+
 ];

@@ -65,6 +65,8 @@ class UsermanagementServiceProvider extends ServiceProvider {
         $this->setupTranslations();
 
         $this->setupViews();
+
+        $this->setupAssets();
     }
 
     /**
@@ -182,6 +184,20 @@ class UsermanagementServiceProvider extends ServiceProvider {
 
         $this->publishes([
             __DIR__.'/../views' => base_path('resources/views/vendor/usermanagement'),
+        ]);
+
+    }
+
+
+    /**
+     * Define the assets for the application.
+     *
+     * @return void
+     */
+    public function setupAssets()
+    {
+        $this->publishes([
+            __DIR__.'/../public' => public_path('packages/usermanagement/'),
         ]);
 
     }

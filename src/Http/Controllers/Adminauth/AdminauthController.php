@@ -1,4 +1,4 @@
-<?php
+<?php namespace Lasallecms\Usermanagement\Http\Controllers\Adminauth;
 
 /**
  *
@@ -29,22 +29,21 @@
  *
  */
 
+use Lasallecms\Usermanagement\Http\Controllers\Controller;
+use Auth;
 
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);
+class AdminauthController extends Controller {
+
+    public function __construct() {
+        $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\AdminAuth::class);
+    }
 
 
-/*
- * Admin auth routes
- */
-$router->get('admin/login', [
-    'as' => 'admin.login',
-    'uses' => 'Adminauth\AdminauthController@index'
-]);
+    public function index() {
+        return view('usermanagement::admin/login/'.config('auth.admin_login_view_folder').'/login');
+    }
 
-$router->post('admin/login', [
-    'as' => 'admin.login',
-    'uses' => 'Adminauth\AdminauthController@post'
-]);
+    public function post() {
+        //
+    }
+}
