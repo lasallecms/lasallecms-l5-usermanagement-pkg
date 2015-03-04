@@ -48,48 +48,43 @@
         <div class="panel panel-info" >
 
             <div class="panel-heading">
-                <div class="panel-title" style="text-align: center;font-weight:bolder;font-size:140%;">Welcome to the {{{ Config::get('lasallecms.site_name') }}} Administration</div>
+                <div class="panel-title"><strong>Confirm: Logout of {{{ Config::get('lasallecms.site_name') }}} Administration?<strong></div>
             </div>
 
-            <div style="padding-top:30px" class="panel-body" >
+            <div style="padding-top:10px" class="panel-body" >
 
                 <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
 
 
-                {!! Form::open(['action' => '\Lasallecms\Usermanagement\Http\Controllers\Adminauth\AdminauthController@post']) !!}
+                {!! Form::open(['action' => '\Lasallecms\Usermanagement\Http\Controllers\Adminauth\AdminauthController@destroy']) !!}
 
 
-                <div style="margin-bottom: 25px" class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                    {!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'email']) !!}
-                </div>
+                    <div style="margin-top:0px" class="form-group">
+                        <div class="col-sm-12 controls">
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                <i class="glyphicon glyphicon-okA"></i>  <strong>Yes</strong>, I want to logout!
+                            </button>
+                        </div>
 
-
-
-                <div style="margin-bottom: 25px" class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                    {!! Form::password('password', ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'password']) !!}
-                </div>
-
-
-
-                <input id="login-remember" type="hidden" name="remember" value="1">
-
-
-
-                <div style="margin-top:10px;margin-left:25px;" class="form-group">
-                    <div class="col-sm-12 controls">
-                        <button type="submit" class="btn btn-success">
-                            <i class="glyphicon glyphicon-ok"></i>  Log into Admin
-                        </button>
                     </div>
-                </div>
 
                 </form>
 
 
+                <br /><br /><br />
+
+                <div style="margin-top:0px;margin-left:100px;" class="form-group">
+                    <div class="col-sm-12 controls">
+                        <button onclick="goBack()" class="btn btn-success btn-lg">
+                            <i class="glyphicon glyphicon-removeA"></i> Oops! <strong>No</strong>, I want to go back!
+                        </button>
+                    </div>
+                </div>
+
 
             </div>
+
+
         </div>
     </div>
 
@@ -105,14 +100,12 @@
 
 
 
+<script>
+    function goBack() {
+        window.history.back()
+    }
+</script>
 
-
-
-<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
-<!-- Latest compiled and minified JavaScript -->
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
 
 </body>

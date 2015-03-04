@@ -128,7 +128,22 @@ return [
     | assets folder is "public/admin/login/admin_login_view_folder/"
 	|
 	*/
-    'admin_login_view_folder' => 'default',
+    //'admin_login_view_folder' => 'default',
+    'admin_login_view_folder' => 'retroradioes',
+
+
+    /*
+	|--------------------------------------------------------------------------
+	| Admin Logout Form View Folder
+	|--------------------------------------------------------------------------
+	|
+	| The logout form is created independently of the admin template. It's just something
+    | on its own. The default view folder is "views/admin/logout/admin_logout_view_folder/". The default
+    | assets folder is "public/admin/logout/admin_logout_view_folder/"
+	|
+	*/
+    //'admin_logout_view_folder' => 'default',
+    'admin_logout_view_folder' => 'retroradioes',
 
 
     /*

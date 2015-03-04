@@ -48,3 +48,13 @@ $router->post('admin/login', [
     'as' => 'admin.login',
     'uses' => 'Adminauth\AdminauthController@post'
 ]);
+
+$router->get('admin/logout', [
+    'as' => 'admin.logout',
+    'uses' => 'Adminauth\AdminauthController@logout'
+]);
+
+$router->post('admin/logout', [
+    'as' => 'admin.logout',
+    'uses' => 'Adminauth\AdminauthController@destroy'
+]);

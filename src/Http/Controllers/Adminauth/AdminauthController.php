@@ -30,9 +30,19 @@
  */
 
 use Lasallecms\Usermanagement\Http\Controllers\Controller;
-use Auth;
+use Illuminate\Http\Request;
+use Illuminate\Contracts\Auth\Guard;
+
 
 class AdminauthController extends Controller {
+
+    /**
+     * The Guard implementation.
+     *
+     * @var Guard
+     */
+    protected $auth;
+
 
     public function __construct() {
         $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\AdminAuth::class);
@@ -43,7 +53,48 @@ class AdminauthController extends Controller {
         return view('usermanagement::admin/login/'.config('auth.admin_login_view_folder').'/login');
     }
 
-    public function post() {
-        //
+    /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function post(Request $request, Guard $auth) {
+        $this->validate($request, [
+            'email' => 'required|email', 'password' => 'required',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if ($auth->attempt($credentials, $request->has('remember')))
+        {
+            return redirect('admin/');
+        }
+
+        return redirect($this->loginPathController())
+            ->withInput($request->only('email', 'remember'))
+            ->withErrors([
+                'email' => 'These credentials do not match our records.',
+            ]);
+    }
+
+    /**
+     * Admin "are you sure you want to logout?" form
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function logout(Guard $auth) {
+        return view('usermanagement::admin/logout/'.config('auth.admin_logout_view_folder').'/logout');
+    }
+
+
+    /**
+     * Log the user out of the application.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Guard $auth) {
+        $auth->logout();
+        return redirect('admin/');
     }
 }
