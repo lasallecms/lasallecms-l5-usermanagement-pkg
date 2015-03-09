@@ -48,7 +48,9 @@ class AdminLoginController extends Controller {
      * Middleware
      */
     public function __construct() {
+
         $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\Admin\AdminDoNotDisplayLoginFormWhenLoggedInCheck::class, ['only' => 'displayLoginForm']);
+
         $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\Admin\CustomAdminAuthChecks::class, ['only' => 'post']);
     }
 

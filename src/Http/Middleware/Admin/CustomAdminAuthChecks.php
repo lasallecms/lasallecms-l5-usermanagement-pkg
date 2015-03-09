@@ -38,7 +38,7 @@ use Lasallecms\Usermanagement\Models\User;
 // https://github.com/lasallecms/lasallecms-l5-usermanagement-pkg/issues/26
 /*
  * Perform custom login checks.
- * These checks occur before the usual login processing commences (middleware!)
+ * These checks occur before the usual login processing commences (middleware)
  */
 class CustomAdminAuthChecks  {
 
@@ -67,13 +67,33 @@ class CustomAdminAuthChecks  {
                     ]);
         }
 
+        // User must be enabled
+        // This test is mandatory! So, no setting in the config
+        if (!$this->UserEnabledCheck($request) ) {
+            return redirect('admin/login')
+                ->withInput($request->only('email'))
+                ->withErrors([
+                    'email' => 'Your email address is incorrect; or, you are not allowed to login to the admin.',
+                ]);
+        }
+
+        // User must be activated
+        // This test is mandatory! So, no setting in the config
+        if (!$this->UserActivatedCheck($request) ) {
+            return redirect('admin/login')
+                ->withInput($request->only('email'))
+                ->withErrors([
+                    'email' => 'You are not yet activated to login to the admin.',
+                ]);
+        }
+
         // Allowed users
         if ($this->isAllowedUsersCheck()) {
             if (!$this->allowedUsersCheck( $this->getAllowedUsers(), $this->getRequestEmail($request)) )
                 return redirect('admin/login')
                     ->withInput($request->only('email'))
                     ->withErrors([
-                        'email' => 'You are not authorized to login.',
+                        'email' => 'You are not allowed to login.',
                     ]);
         }
 
@@ -83,7 +103,7 @@ class CustomAdminAuthChecks  {
                 return redirect('admin/login')
                     ->withInput($request->only('email'))
                     ->withErrors([
-                        'email' => 'You are not authorized to login.',
+                        'email' => 'You are not authorized to login to the admin.',
                     ]);
         }
 
@@ -156,6 +176,7 @@ class CustomAdminAuthChecks  {
      * Get the IP Address of the user asking to be logged into the admin.
      * From the Request.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return string
      */
     public function getRequestIPAddress($request) {
@@ -184,6 +205,7 @@ class CustomAdminAuthChecks  {
         return $emailRequest['email'];
     }
 
+
     /*
      * Get the user groups allowed to access the admin.
      * From the config.
@@ -198,6 +220,7 @@ class CustomAdminAuthChecks  {
      * Get the user group of the user asking to be logged into the admin.
      * From the Request.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return string
      */
     public function getRequestUserGroups($request) {
@@ -231,6 +254,40 @@ class CustomAdminAuthChecks  {
         if ( in_array($requestIPAddress, $allowedIPAddresses) )
         {
             return true;
+        } else {
+            return false;
+        }
+    }
+
+    /*
+     * Is the user enabled?
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    public function UserEnabledCheck($request) {
+
+        $user = $this->user->where('email', '=', $this->getRequestEmail($request) )->get()->first();
+
+        if ( $user ) {
+            return $user->enabled;
+        } else {
+            return false;
+        }
+    }
+
+    /*
+     * Is the user activated?
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return bool
+     */
+    public function UserActivatedCheck($request) {
+
+        $user = $this->user->where('email', '=', $this->getRequestEmail($request) )->get()->first();
+
+        if ( $user ) {
+            return $user->activated;
         } else {
             return false;
         }
