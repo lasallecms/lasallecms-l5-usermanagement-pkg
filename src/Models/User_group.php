@@ -33,6 +33,8 @@ use Lasallecms\Usermanagement\Models\BaseModel;
 
 class User_group extends BaseModel {
 
+    protected $table = 'user_group';
+
     /**
      * Timestamps for the post_tag table
      * @var binary

@@ -148,6 +148,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Administrator, first among equals
+    |--------------------------------------------------------------------------
+    |
+    | The "Super Administrator" who can *NOT* be deleted in the user table.
+    |
+    | Use the email address.
+    |
+    */
+    'administrator_first_among_equals_email' => '',
+
+
+    /*
+    |--------------------------------------------------------------------------
     | Admin IP Addresses allowed
     |--------------------------------------------------------------------------
     |
@@ -156,8 +169,7 @@ return [
     | If you use a package for user/login/registration, then this may not work!
     |
     */
-    'use_ip_addresses_for_admin' => true,
-    //'use_ip_addresses_for_admin' => false,
+    'perform_the_ip_addresses_for_admin_check' => true,
     'admin_ip_addresses_allowed' => [
         '127.0.0.1',
     ],
@@ -165,11 +177,34 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Administrator, first among equals
+    | Users who are allowed to access the admin
     |--------------------------------------------------------------------------
     |
-    | The administrator who cannot be deleted in the admin's user.index
+    | These users are allowed to access the admin.
+    | These users are still subject to other custom admin checks.
+    | The "first among equals" user *MUST* not be listed as subject to the login checks
+    |
+    | Use email addresses.
+    |
     */
-    'administrator_first_among_equals_email' => '',
+    'perform_the_users_allowed_to_access_admin_check' => true,
+    'users_allowed_to_access_the_admin' => [],
 
+    /*
+    |--------------------------------------------------------------------------
+    | User groups that are allowed to access the admin
+    |--------------------------------------------------------------------------
+    |
+    | These user groups are allowed to access the admin.
+    | Sure, this specification is *supposed* to be buried in the code somewhere. But..
+    | a quick way to prevent "Administrators" from accessing the admin during a testing
+    | phase or maintenance or during some brief time period, without messing around with
+    | the permanent group assignments.
+    |
+    */
+    'perform_the_usergroups_allowed_to_access_admin_check' => 'true',
+    'usergroups_allowed_to_access_the_admin' => [
+        'Super Administrator',
+        'Administrator',
+    ],
 ];

@@ -42,62 +42,50 @@
 
     <div id="loginbox" style="margin-top:200px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
 
-
-
-
         <div class="panel panel-info" >
 
             <div class="panel-heading">
-                <div class="panel-title"><strong>Confirm: Logout of {{{ Config::get('lasallecms.site_name') }}} Administration?<strong></div>
+                <div class="panel-title" style="text-align: center;font-weight:bolder;font-size:140%;">Confirm: Logout of {{{ Config::get('lasallecms.site_name') }}} Administration?</div>
             </div>
 
             <div style="padding-top:10px" class="panel-body" >
 
                 <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
 
+                    {!! Form::open(['action' => '\Lasallecms\Usermanagement\Http\Controllers\AdminAuth\AdminLogoutController@destroy']) !!}
 
-                {!! Form::open(['action' => '\Lasallecms\Usermanagement\Http\Controllers\Adminauth\AdminauthController@destroy']) !!}
+                        <div style="margin-top:0px" class="form-group">
 
+                            <div class="col-sm-12 controls">
+                                <button type="submit" class="btn btn-danger btn-lg">
+                                    <i class="glyphicon glyphicon-okA"></i>  <strong>Yes</strong>, I want to logout!
+                                </button>
+                            </div>
 
-                    <div style="margin-top:0px" class="form-group">
-                        <div class="col-sm-12 controls">
-                            <button type="submit" class="btn btn-danger btn-lg">
-                                <i class="glyphicon glyphicon-okA"></i>  <strong>Yes</strong>, I want to logout!
-                            </button>
                         </div>
 
-                    </div>
-
-                </form>
+                    </form>
 
 
                 <br /><br /><br />
 
-                <div style="margin-top:0px;margin-left:100px;" class="form-group">
+                <div style="margin-top:0px;margin-left:50px;" class="form-group">
+
                     <div class="col-sm-12 controls">
                         <button onclick="goBack()" class="btn btn-success btn-lg">
                             <i class="glyphicon glyphicon-removeA"></i> Oops! <strong>No</strong>, I want to go back!
                         </button>
                     </div>
-                </div>
 
+                </div>
 
             </div>
 
-
         </div>
+
     </div>
 
-
-
-
-
 </div>
-</div>
-
-
-
-
 
 
 <script>
@@ -107,7 +95,5 @@
 </script>
 
 
-
 </body>
-
 </html>

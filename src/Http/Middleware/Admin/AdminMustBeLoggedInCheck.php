@@ -1,4 +1,4 @@
-<?php
+<?php namespace Lasallecms\Usermanagement\Http\Middleware\Admin;
 
 /**
  *
@@ -29,32 +29,47 @@
  *
  */
 
+use Illuminate\Contracts\Routing\Middleware;
+use Illuminate\Contracts\Auth\Guard;
+use Closure;
 
-Route::controllers([
-	'auth' => 'Auth\AuthController',
-	'password' => 'Auth\PasswordController',
-]);
-
-
-/*
- * Admin auth routes
- */
-$router->get('admin/login', [
-    'as' => 'admin.login',
-    'uses' => 'AdminAuth\AdminLoginController@displayLoginForm'
-]);
-
-$router->post('admin/login', [
-    'as' => 'admin.login',
-    'uses' => 'AdminAuth\AdminLoginController@post'
-]);
-
-$router->get('admin/logout', [
-    'as' => 'admin.logout',
-    'uses' => 'AdminAuth\AdminLogoutController@logout'
-]);
-
-$router->post('admin/logout', [
-    'as' => 'admin.logout',
-    'uses' => 'AdminAuth\AdminLogoutController@destroy'
-]);
+class AdminMustBeLoggedInCheck implements Middleware{
+    /**
+     * The Guard implementation.
+     *
+     * @var Guard
+     */
+    protected $auth;
+    /**
+     * Create a new filter instance.
+     *
+     * @param  Guard  $auth
+     * @return void
+     */
+    public function __construct(Guard $auth)
+    {
+        $this->auth = $auth;
+    }
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+        if ($this->auth->guest())
+        {
+            if ($request->ajax())
+            {
+                return response('Unauthorized.', 401);
+            }
+            else
+            {
+                return redirect()->guest('admin/login');
+            }
+        }
+        return $next($request);
+    }
+}

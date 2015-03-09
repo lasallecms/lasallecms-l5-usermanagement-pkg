@@ -69,9 +69,9 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
      *
      * @return Eloquent
      */
-    public function groups()
+    public function group()
     {
-        return $this->belongsToMany('Lasallecms\Usermanagement\Models\Group');
+        return $this->belongsToMany('Lasallecms\Usermanagement\Models\Group', 'user_group');
     }
 
 }

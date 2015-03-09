@@ -44,8 +44,8 @@ class Group extends BaseModel {
      *
      * @return Eloquent
      */
-    public function users()
+    public function user()
     {
-        return $this->belongsToMany('Lasallecms\Usermanagement\Models\User');
+        return $this->belongsToMany('Lasallecms\Usermanagement\Models\User', 'user_group');
     }
 }

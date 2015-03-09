@@ -1,4 +1,4 @@
-<?php namespace Lasallecms\Usermanagement\Http\Controllers\Adminauth;
+<?php namespace Lasallecms\Usermanagement\Http\Controllers\AdminAuth;
 
 /**
  *
@@ -34,7 +34,7 @@ use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 
 
-class AdminauthController extends Controller {
+class AdminLoginController extends Controller {
 
     /**
      * The Guard implementation.
@@ -44,12 +44,16 @@ class AdminauthController extends Controller {
     protected $auth;
 
 
+    /*
+     * Middleware
+     */
     public function __construct() {
-        $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\AdminAuth::class);
+        $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\Admin\AdminDoNotDisplayLoginFormWhenLoggedInCheck::class, ['only' => 'displayLoginForm']);
+        $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\Admin\CustomAdminAuthChecks::class, ['only' => 'post']);
     }
 
 
-    public function index() {
+    public function displayLoginForm() {
         return view('usermanagement::admin/login/'.config('auth.admin_login_view_folder').'/login');
     }
 
@@ -71,30 +75,12 @@ class AdminauthController extends Controller {
             return redirect('admin/');
         }
 
-        return redirect($this->loginPathController())
-            ->withInput($request->only('email', 'remember'))
+        return redirect('admin/login')
+            ->withInput($request->only('email'))
             ->withErrors([
-                'email' => 'These credentials do not match our records.',
+                'email' => 'Your login did not succeed. Please try again',
             ]);
     }
 
-    /**
-     * Admin "are you sure you want to logout?" form
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function logout(Guard $auth) {
-        return view('usermanagement::admin/logout/'.config('auth.admin_logout_view_folder').'/logout');
-    }
 
-
-    /**
-     * Log the user out of the application.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Guard $auth) {
-        $auth->logout();
-        return redirect('admin/');
-    }
 }

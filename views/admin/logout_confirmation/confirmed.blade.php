@@ -31,7 +31,7 @@
 
 
     <!-- Custom styles for this template http://getbootstrap.com/examples/navbar-fixed-top/-->
-    <link media="all" type="text/css" rel="stylesheet" href="{{{ Config::get('app.url') }}}/{{{ Config::get('lasallecms.public_folder') }}}/packages/usermanagement/admin/login/{{{ Config::get('auth.admin_login_view_folder') }}}/login.css" >
+    <link media="all" type="text/css" rel="stylesheet" href="{{{ Config::get('app.url') }}}/{{{ Config::get('lasallecms.public_folder') }}}/packages/usermanagement/admin/logout_confirmation/confirmed.css" >
 </head>
 
 
@@ -45,40 +45,15 @@
         <div class="panel panel-info" >
 
             <div class="panel-heading">
-                <div class="panel-title" style="text-align: center;font-weight:bolder;font-size:140%;">Confirm: Logout of {{{ Config::get('lasallecms.site_name') }}} Administration?</div>
+                <div class="panel-title" style="text-align: center;font-weight:bolder;font-size:140%;">You are now logged out of the {{{ Config::get('lasallecms.site_name') }}} Administration</div>
             </div>
 
-            <div style="padding-top:10px" class="panel-body" >
+            <div style="padding-top:25px" class="panel-body" >
 
-                <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
-
-
-                {!! Form::open(['action' => '\Lasallecms\Usermanagement\Http\Controllers\AdminAuth\AdminLogoutController@destroy']) !!}
-
-
-                    <div style="margin-top:0px" class="form-group">
-
-                        <div class="col-sm-12 controls">
-                            <button type="submit" class="btn btn-danger btn-lg">
-                                <i class="glyphicon glyphicon-okA"></i>  <strong>Yes</strong>, I want to logout!
-                            </button>
-                        </div>
-
-                    </div>
-
-                </form>
-
-
-                <br /><br /><br />
-
-                <div style="margin-top:0px;margin-left:50px;" class="form-group">
-
-                    <div class="col-sm-12 controls">
-                        <button onclick="goBack()" class="btn btn-success btn-lg">
-                            <i class="glyphicon glyphicon-removeA"></i> Oops! <strong>No</strong>, I want to go back!
-                        </button>
-                    </div>
-
+                <div class="">
+                    <a href="{{ route('admin.login') }}" class="btn btn-success btn-small">
+                        <span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;&nbsp;Log back into Admin
+                    </a>
                 </div>
 
             </div>
@@ -90,13 +65,9 @@
 </div>
 
 
-<script>
-    function goBack() {
-        window.history.back()
-    }
-</script>
 
 
 
 </body>
+
 </html>

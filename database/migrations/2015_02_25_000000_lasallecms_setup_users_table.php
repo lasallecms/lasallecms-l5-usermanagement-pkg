@@ -107,9 +107,9 @@ class LasallecmsSetupUsersTable extends Migration {
         }
 
 
-        if (!Schema::hasTable('user_groups'))
+        if (!Schema::hasTable('user_group'))
         {
-            Schema::create('user_groups', function (Blueprint $table)
+            Schema::create('user_group', function (Blueprint $table)
             {
                 $table->engine = 'InnoDB';
 
@@ -132,10 +132,10 @@ class LasallecmsSetupUsersTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::dropIfExists('user_groups');
-        Schema::table('user_groups', function($table){
-            $table->drop_index('user_groups_user_id_index');
-            $table->drop_index('user_groups_group_id_index');
+        Schema::dropIfExists('user_group');
+        Schema::table('user_group', function($table){
+            $table->drop_index('user_group_user_id_index');
+            $table->drop_index('user_group_group_id_index');
         });
 
 

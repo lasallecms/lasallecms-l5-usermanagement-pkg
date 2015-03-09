@@ -1,7 +1,8 @@
-<?php namespace Lasallecms\Usermanagement\Http\Middleware;
+<?php namespace Lasallecms\Usermanagement\Http\Controllers\AdminAuth;
+
 /**
  *
- * Administrative package for the LaSalle Content Management System, based on the Laravel 5 Framework
+ * User Management package for the LaSalle Content Management System, based on the Laravel 5 Framework
  * Copyright (C) 2015  The South LaSalle Trading Corporation
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  *
- * @package    Administrative package for the LaSalle Content Management System
+ * @package    User Management package for the LaSalle Content Management System
  * @version    1.0.0
  * @link       http://LaSalleCMS.com
  * @copyright  (c) 2015, The South LaSalle Trading Corporation
@@ -28,46 +29,44 @@
  *
  */
 
-use Closure;
+use Lasallecms\Usermanagement\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 
-class AdminAuth {
+
+class AdminLogoutController extends Controller {
+
     /**
      * The Guard implementation.
      *
      * @var Guard
      */
     protected $auth;
-    /**
-     * Create a new filter instance.
-     *
-     * @param  Guard  $auth
-     * @return void
-     */
-    public function __construct(Guard $auth)
-    {
-        $this->auth = $auth;
+
+
+    public function __construct() {
+        $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\Admin\AdminMustBeLoggedInCheck::class, ['except' => 'index']);
+        $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\Admin\CustomAdminAuthChecks::class, ['only' => 'post']);
     }
+
+
     /**
-     * Handle an incoming request.
+     * Admin "are you sure you want to logout?" form
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
+     * @return \Illuminate\Http\Response
      */
-    public function handle($request, Closure $next)
-    {
-        if ($this->auth->guest())
-        {
-            if ($request->ajax())
-            {
-                return response('Unauthorized.', 401);
-            }
-            else
-            {
-                //return redirect()->guest('auth/login');
-            }
-        }
-        return $next($request);
+    public function logout(Guard $auth) {
+        return view('usermanagement::admin/logout/'.config('auth.admin_logout_view_folder').'/logout');
+    }
+
+
+    /**
+     * Log the user out of the application.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Guard $auth) {
+        $auth->logout();
+        return view('usermanagement::admin/logout_confirmation/confirmed');
     }
 }

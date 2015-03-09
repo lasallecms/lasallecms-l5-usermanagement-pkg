@@ -42,9 +42,6 @@
 
     <div id="loginbox" style="margin-top:200px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
 
-
-
-
         <div class="panel panel-info" >
 
             <div class="panel-heading">
@@ -56,55 +53,52 @@
                 <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
 
 
-                {!! Form::open(['action' => '\Lasallecms\Usermanagement\Http\Controllers\Adminauth\AdminauthController@post']) !!}
-
-
-                <div style="margin-bottom: 25px" class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                    {!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'email']) !!}
-                </div>
-
-
-
-                <div style="margin-bottom: 25px" class="input-group">
-                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                    {!! Form::password('password', ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'password']) !!}
-                </div>
-
-
-
-                <input id="login-remember" type="hidden" name="remember" value="1">
-
-
-
-                <div style="margin-top:10px;margin-left:25px;" class="form-group">
-                    <div class="col-sm-12 controls">
-                        <button type="submit" class="btn btn-success">
-                            <i class="glyphicon glyphicon-ok"></i>  Log into Admin
-                        </button>
+                @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
-                </div>
+                @endif
+
+
+                {!! Form::open(['action' => '\Lasallecms\Usermanagement\Http\Controllers\AdminAuth\AdminLoginController@post']) !!}
+
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                        {!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'email']) !!}
+                    </div>
+
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        {!! Form::password('password', ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'password']) !!}
+                    </div>
+
+                    <input id="login-remember" type="hidden" name="remember" value="1">
+
+                    <div style="margin-top:10px;margin-left:25px;" class="form-group">
+
+                        <div class="col-sm-12 controls">
+                            <button type="submit" class="btn btn-success">
+                                <i class="glyphicon glyphicon-ok"></i>  Log into Admin
+                            </button>
+                        </div>
+
+                    </div>
 
                 </form>
 
 
-
             </div>
+
         </div>
+
     </div>
 
-
-
-
-
 </div>
-</div>
-
-
-
-
-
-
 
 
 
@@ -116,5 +110,4 @@
 
 
 </body>
-
 </html>
