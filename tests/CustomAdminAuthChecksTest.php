@@ -12,6 +12,8 @@ class CustomAdminAuthChecksTest extends PHPUnit_Framework_TestCase  {
 
         parent::setUp(); // Don't forget this!
 
+        $this->model = $this->getMock('Lasallecms\Usermanagement\Models\User');
+
         $this->customChecks = new CustomAdminAuthChecks();
     }
 
