@@ -32,7 +32,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class LasallecmsSetupUsersTable extends Migration {
+class CreateUsersTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -132,29 +132,37 @@ class LasallecmsSetupUsersTable extends Migration {
 	 */
 	public function down()
 	{
-        Schema::dropIfExists('user_group');
+        // Disable foreign key constraints or these DROPs will not work
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+
+
         Schema::table('user_group', function($table){
-            $table->drop_index('user_group_user_id_index');
-            $table->drop_index('user_group_group_id_index');
+            $table->dropIndex('user_group_user_id_index');
+            $table->dropIndex('user_group_group_id_index');
         });
+        Schema::dropIfExists('user_group');
 
 
-        Schema::dropIfExists('groups');
         Schema::table('groups', function($table){
-            $table->drop_index('groups_title_unique');
-            $table->drop_foreign('groups_created_by_foreign');
-            $table->drop_foreign('groups_updated_by_foreign');
-            $table->drop_foreign('groups_locked_by_foreign');
+            $table->dropIndex('groups_title_unique');
+            $table->dropForeign('groups_created_by_foreign');
+            $table->dropForeign('groups_updated_by_foreign');
+            $table->dropForeign('groups_locked_by_foreign');
         });
+        Schema::dropIfExists('groups');
 
 
         Schema::drop('password_resets');
 
 
-        Schema::dropIfExists('users');
         Schema::table('users', function($table){
-            $table->drop_index('users_email_unique');
+            $table->dropIndex('users_email_unique');
         });
+        Schema::dropIfExists('users');
+
+
+        // Enable foreign key constraints
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
 
 
