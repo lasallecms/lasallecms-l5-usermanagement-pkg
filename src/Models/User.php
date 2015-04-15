@@ -64,6 +64,59 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 	protected $hidden = ['password', 'remember_token'];
 
 
+    /**
+     * Sanitation rules for Create (INSERT)
+     *
+     * @var array
+     */
+    public $sanitationRulesForCreate = [
+        'name'       => 'trim|strip_tags',
+    ];
+
+    /**
+     * Sanitation rules for UPDATE
+     *
+     * @var array
+     */
+    public $sanitationRulesForUpdate = [
+        'name'       => 'trim|strip_tags',
+    ];
+
+
+    /**
+     * Validation rules for  Create (INSERT)
+     *
+     * @var array
+     */
+    public $validationRulesForCreate = [
+        'name'       => 'required',
+        'email'      => 'required|email|unique:users',
+        'password'   => 'required|confirmed|min:6',
+        'confirmed'  => 'in:1,0'
+    ];
+
+    /**
+     * Validation rules for user when the user is being updated but the password is left intact
+     *
+     * @var array
+     */
+    public $validationRulesForUpdateNoPassword = [
+        'name'       => 'required',
+        'email'      => 'required|email'
+    ];
+
+    /**
+     * Validation rules for user when the password is created for the first time; or, is being updated
+     *
+     * @var array
+     */
+    public $validationRulesForUpdateWithPassword = [
+        'name'       => 'required',
+        'email'      => 'required|email',
+        'password'   => 'required|confirmed|min:6',
+    ];
+
+
     /*
      * Many to many relationship with groups
      *

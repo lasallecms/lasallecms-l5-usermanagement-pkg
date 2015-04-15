@@ -22,6 +22,13 @@ When I say extract, I am not kidding. I deleted all the auth from the L5 base ap
 
 How's that for a caveat!
 
+## It's Really All About AUTH
+
+This package was originally intended to be an all-encompassing user management package. Auth, front-end registration, back-end user management, roles & permissions. However, as real-life intrudes, this comprehensiveness is not manifesting. 
+
+Instead, it is mercifully easier to place the back-end user management in the -- wait for it! -- Admin package. 
+
+So, this package is named "User Management", yet it is, so far, distilling into a user auth package. 
 
 ## Security
 

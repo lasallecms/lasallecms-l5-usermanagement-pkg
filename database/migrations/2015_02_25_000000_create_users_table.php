@@ -59,7 +59,11 @@ class CreateUsersTable extends Migration {
                 $table->boolean('enabled')->default(true);;
 
                 $table->timestamp('created_at');
+                $table->integer('created_by')->unsigned()->default(0);
+
                 $table->timestamp('updated_at');
+                $table->integer('updated_by')->unsigned()->default(0);
+
 
                 $table->timestamp('locked_at')->nullable();
                 $table->integer('locked_by')->nullable();

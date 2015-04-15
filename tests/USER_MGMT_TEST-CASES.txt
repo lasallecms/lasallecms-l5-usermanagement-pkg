@@ -1,0 +1,26 @@
+USER MANAGEMENT TEST CASES   for login...
+
+
+CONFIG OPTIONS:
+perform_the_ip_addresses_for_admin_check  TRUE | FALSE
+admin_ip_addresses_allowed
+
+
+perform_the_users_allowed_to_access_admin_check  TRUE | FALSE
+users_allowed_to_access_the_admin
+
+perform_the_usergroups_allowed_to_access_admin_check  TRUE | FALSE
+usergroups_allowed_to_access_the_admin
+
+
+
+
+MIDDLEWARE CLASSES:
+AdminDoNotDisplayLoginFormWhenLoggedInCheck
+AdminMustBeLoggedInCheck
+
+CustomAdminAuthChecks
+* User must be enabled
+* User must be activated
+
+
