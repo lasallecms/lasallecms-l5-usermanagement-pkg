@@ -31,14 +31,18 @@
 
 // Please note: this file is modified from the original that comes with the L5 app
 
-use Lasallecms\Usermanagement\Models\BaseModel;
+// LaSalle Software
+use Lasallecms\Lasallecmsapi\Models\BaseModel;
+
+// Laravel classes
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 
-class User extends BaseModel implements AuthenticatableContract, CanResetPasswordContract {
+class User extends BaseModel implements AuthenticatableContract, CanResetPasswordContract
+{
 
 	use Authenticatable, CanResetPassword;
 
@@ -63,7 +67,6 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
-
     /**
      * Sanitation rules for Create (INSERT)
      *
@@ -81,7 +84,6 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     public $sanitationRulesForUpdate = [
         'name'       => 'trim|strip_tags',
     ];
-
 
     /**
      * Validation rules for  Create (INSERT)
@@ -126,5 +128,4 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     {
         return $this->belongsToMany('Lasallecms\Usermanagement\Models\Group', 'user_group');
     }
-
 }

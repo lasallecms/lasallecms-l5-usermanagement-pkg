@@ -1,4 +1,5 @@
-<?php namespace Lasallecms\Usermanagement\Models;
+<?php
+namespace Lasallecms\Usermanagement\Models;
 
 /**
  *
@@ -29,15 +30,56 @@
  *
  */
 
-use Lasallecms\Usermanagement\Models\BaseModel;
+/*
+ * GROUPS IS A LOOKUP TABLE!
+ *
+ */
 
-class Group extends BaseModel {
+
+// LaSalle Software
+use Lasallecms\Lasallecmsapi\Models\BaseModel;
+
+// Laravel facades
+use Illuminate\Support\Facades\DB;
+
+class Group extends BaseModel
+{
+    ///////////////////////////////////////////////////////////////////
+    //////////////          PROPERTIES              ///////////////////
+    ///////////////////////////////////////////////////////////////////
+
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    public $table = 'groups';
 
     /**
      * Which fields may be mass assigned
      * @var array
      */
-    protected $fillable = ['title', 'description', 'enabled'];
+    protected $fillable = [
+        'title', 'description', 'enabled'
+    ];
+
+    /*
+     * User groups that are allowed to execute each controller action
+     */
+    protected $allowed_user_groups = [
+        ['index'   => ['Super Administrator']],
+        ['create'  => ['Super Administrator']],
+        ['store'   => ['Super Administrator']],
+        ['edit'    => ['Super Administrator']],
+        ['update'  => ['Super Administrator']],
+        ['destroy' => ['Super Administrator']],
+    ];
+
+
+
+    ///////////////////////////////////////////////////////////////////
+    //////////////        RELATIONSHIPS             ///////////////////
+    ///////////////////////////////////////////////////////////////////
 
     /*
      * Many to many relationship with users
@@ -47,5 +89,35 @@ class Group extends BaseModel {
     public function user()
     {
         return $this->belongsToMany('Lasallecms\Usermanagement\Models\User', 'user_group');
+    }
+
+    /*
+     * Return an array of all the tables using a specified lookup table id.
+     * The array is in the form ['table related to the lookup table' => 'count']
+     *
+     * @param   int   $id   Table ID
+     * @return  array
+     */
+    public function foreignKeyCheck($id)
+    {
+        // 'related_table' is the table name
+        return  [
+            [ 'related_table' => 'users', 'count' => $this->usersCount($id) ],
+        ];
+    }
+
+    /*
+     * Count of related table using lookup table.
+     *
+     * Method name is the table name (no techie reason, just a convention to adopt)
+     *
+     * @return int
+     */
+    public function usersCount($id)
+    {
+        // I know eloquent does this, but having trouble so hand crafting using DB
+        // Note the pivot table
+        $record =  DB::table('user_group')->where('group_id', '=', $id)->get();
+        return count($record);
     }
 }

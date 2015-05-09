@@ -1,4 +1,5 @@
-<?php namespace Lasallecms\Usermanagement\Models;
+<?php
+namespace Lasallecms\Usermanagement\Models;
 
 /**
  *
@@ -29,10 +30,14 @@
  *
  */
 
-use Lasallecms\Usermanagement\Models\BaseModel;
+// LaSalle Software
+use Lasallecms\Lasallecmsapi\Models\BaseModel;
 
-class User_group extends BaseModel {
-
+class User_group extends BaseModel
+{
+    /*
+     * Database table
+     */
     protected $table = 'user_group';
 
     /**
@@ -47,5 +52,4 @@ class User_group extends BaseModel {
      * @var array
      */
     protected $fillable = ['user_id', 'group_id'];
-
 }
