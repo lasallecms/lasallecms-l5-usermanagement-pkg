@@ -75,6 +75,17 @@ class Group extends BaseModel
         ['destroy' => ['Super Administrator']],
     ];
 
+    /*
+     * Lookup table records that must not be deleted.
+     *
+     * Specify the "title" field, not the "id" field, as the ID can change for a given TITLE.
+     *
+     * Optional!
+     */
+    protected $do_not_delete = [
+        'Administrator', 'Registered', 'Super Administrator'
+    ];
+
 
 
     ///////////////////////////////////////////////////////////////////
