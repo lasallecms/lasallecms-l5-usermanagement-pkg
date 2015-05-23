@@ -66,7 +66,7 @@ class Group extends BaseModel
     /*
      * User groups that are allowed to execute each controller action
      */
-    protected $allowed_user_groups = [
+    public $allowed_user_groups = [
         ['index'   => ['Super Administrator']],
         ['create'  => ['Super Administrator']],
         ['store'   => ['Super Administrator']],
@@ -76,13 +76,15 @@ class Group extends BaseModel
     ];
 
     /*
-     * Lookup table records that must not be deleted.
+     * DO NOT DELETE THESE CORE RECORDS.
      *
-     * Specify the "title" field, not the "id" field, as the ID can change for a given TITLE.
+     * Specify the TITLE of these records
      *
-     * Optional!
+     * Assumed that this database table has a "title" field
+     *
+     * @var array
      */
-    protected $do_not_delete = [
+    public $do_not_delete_these_core_records = [
         'Administrator', 'Registered', 'Super Administrator'
     ];
 

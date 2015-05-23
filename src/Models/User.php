@@ -1,4 +1,5 @@
-<?php namespace Lasallecms\Usermanagement\Models;
+<?php
+namespace Lasallecms\Usermanagement\Models;
 
 /**
  *
@@ -29,7 +30,16 @@
  *
  */
 
-// Please note: this file is modified from the original that comes with the L5 app
+
+
+///////////////////////////////////////////////////////////////////
+//// USER MANAGEMENT AND AUTHENTICATION IS SO BESPOKE THAT     ////
+////      IT IS NOT PART OF LASALLE's FORM AUTOMATION          ////
+///////////////////////////////////////////////////////////////////
+
+
+
+// Please note: this file is modified from the original that comes with the L5.0 app
 
 // LaSalle Software
 use Lasallecms\Lasallecmsapi\Models\BaseModel;
@@ -45,6 +55,9 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 {
 
 	use Authenticatable, CanResetPassword;
+
+
+    // LARAVEL MODEL CLASS PROPERTIES
 
 	/**
 	 * The database table used by the model.
@@ -67,6 +80,9 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 	 */
 	protected $hidden = ['password', 'remember_token'];
 
+
+    // SANITATION RULES PROPERTIES
+
     /**
      * Sanitation rules for Create (INSERT)
      *
@@ -84,6 +100,9 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     public $sanitationRulesForUpdate = [
         'name'       => 'trim|strip_tags',
     ];
+
+
+    // VALIDATION RULES PROPERTIES
 
     /**
      * Validation rules for  Create (INSERT)
@@ -118,6 +137,28 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
         'password'   => 'required|confirmed|min:6',
     ];
 
+
+    // USER GROUPS & ROLES PROPERTIES
+
+    /*
+     * User groups that are allowed to execute each controller action
+     *
+     * @var array
+     */
+    public $allowed_user_groups = [
+        ['index'   => ['Super Administrator']],
+        ['create'  => ['Super Administrator']],
+        ['store'   => ['Super Administrator']],
+        ['edit'    => ['Super Administrator']],
+        ['update'  => ['Super Administrator']],
+        ['destroy' => ['Super Administrator']],
+    ];
+
+
+
+    ///////////////////////////////////////////////////////////////////
+    //////////////        RELATIONSHIPS             ///////////////////
+    ///////////////////////////////////////////////////////////////////
 
     /*
      * Many to many relationship with groups
