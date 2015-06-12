@@ -1,4 +1,6 @@
-<?php namespace Lasallecms\Usermanagement\Http\Controllers\Auth;
+<?php
+
+namespace Lasallecms\Usermanagement\Http\Controllers\Auth;
 
 /**
  *
@@ -29,7 +31,10 @@
  *
  */
 
+// LaSalle Software
 use Lasallecms\Usermanagement\Http\Controllers\Controller;
+
+// Laravel classes
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
 
@@ -37,8 +42,8 @@ use Illuminate\Contracts\Auth\Registrar;
 // https://github.com/lasallecms/lasallecms-l5-usermanagement-pkg/issues/9
 use Lasallecms\Usermanagement\Http\Controllers\Auth\AuthenticatesAndRegistersUsers;
 
-class AuthController extends Controller {
-
+class AuthController extends Controller
+{
 	/*
 	|--------------------------------------------------------------------------
 	| Registration & Login Controller
@@ -72,5 +77,4 @@ class AuthController extends Controller {
 
 		$this->middleware('guest', ['except' => 'getLogout']);
 	}
-
 }

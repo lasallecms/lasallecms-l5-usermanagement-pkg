@@ -2,6 +2,9 @@
 
 class TestCase extends Illuminate\Foundation\Testing\TestCase {
 
+	// http://laravel.com/docs/5.1/upgrade#upgrade-5.1.0
+	protected $baseUrl = 'http://localhost';
+
 	/**
 	 * Creates the application.
 	 *

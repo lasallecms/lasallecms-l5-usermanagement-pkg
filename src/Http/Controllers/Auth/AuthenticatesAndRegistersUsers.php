@@ -1,4 +1,6 @@
-<?php namespace Lasallecms\Usermanagement\Http\Controllers\Auth;
+<?php
+
+namespace Lasallecms\Usermanagement\Http\Controllers\Auth;
 
 /**
  *
@@ -29,13 +31,17 @@
  *
  */
 
+// LaSalle Software
+use Lasallecms\Usermanagement\Validation\ForbiddenTLD;
+
+// Laravel classes
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
-use Lasallecms\Usermanagement\Validation\ForbiddenTLD;
 
-trait AuthenticatesAndRegistersUsers {
 
+trait AuthenticatesAndRegistersUsers
+{
     /**
      * The Guard implementation.
      *

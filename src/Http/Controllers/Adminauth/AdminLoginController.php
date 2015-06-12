@@ -1,4 +1,5 @@
-<?php namespace Lasallecms\Usermanagement\Http\Controllers\AdminAuth;
+<?php
+namespace Lasallecms\Usermanagement\Http\Controllers\AdminAuth;
 
 /**
  *
@@ -34,8 +35,8 @@ use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 
 
-class AdminLoginController extends Controller {
-
+class AdminLoginController extends Controller
+{
     /**
      * The Guard implementation.
      *
@@ -47,15 +48,16 @@ class AdminLoginController extends Controller {
     /*
      * Middleware
      */
-    public function __construct() {
-
+    public function __construct()
+    {
         $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\Admin\AdminDoNotDisplayLoginFormWhenLoggedInCheck::class, ['only' => 'displayLoginForm']);
 
         $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\Admin\CustomAdminAuthChecks::class, ['only' => 'post']);
     }
 
 
-    public function displayLoginForm() {
+    public function displayLoginForm()
+    {
         return view('usermanagement::admin/login/'.config('auth.admin_login_view_folder').'/login');
     }
 
@@ -65,7 +67,8 @@ class AdminLoginController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function post(Request $request, Guard $auth) {
+    public function post(Request $request, Guard $auth)
+    {
         $this->validate($request, [
             'email' => 'required|email', 'password' => 'required',
         ]);
@@ -83,6 +86,4 @@ class AdminLoginController extends Controller {
                 'email' => 'Your login did not succeed. Please try again',
             ]);
     }
-
-
 }

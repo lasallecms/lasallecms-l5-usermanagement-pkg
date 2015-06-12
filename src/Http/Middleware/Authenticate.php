@@ -1,4 +1,5 @@
-<?php namespace Lasallecms\Usermanagement\Http\Middleware;
+<?php
+namespace Lasallecms\Usermanagement\Http\Middleware;
 
 /**
  *
@@ -32,8 +33,8 @@
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
-class Authenticate {
-
+class Authenticate
+{
 	/**
 	 * The Guard implementation.
 	 *

@@ -1,4 +1,5 @@
-<?php namespace Lasallecms\Usermanagement\Http\Controllers;
+<?php
+namespace Lasallecms\Usermanagement\Http\Controllers;
 
 /**
  *
@@ -29,13 +30,15 @@
  *
  */
 
+// Laravel classes
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Bus\DispatchesCommands;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 
-abstract class Controller extends BaseController {
+abstract class Controller extends BaseController
+{
 
-    use DispatchesCommands, ValidatesRequests;
+    use DispatchesJobs, ValidatesRequests;
 
 }
 

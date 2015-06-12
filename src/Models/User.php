@@ -110,8 +110,8 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
      * @var array
      */
     public $validationRulesForCreate = [
-        'name'       => 'required',
-        'email'      => 'required|email|unique:users',
+        'name'       => 'required|max:255',
+        'email'      => 'required|email|max:255|unique:users',
         'password'   => 'required|confirmed|min:6',
         'confirmed'  => 'in:1,0'
     ];
@@ -122,8 +122,8 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
      * @var array
      */
     public $validationRulesForUpdateNoPassword = [
-        'name'       => 'required',
-        'email'      => 'required|email'
+        'name'       => 'required|max:255',
+        'email'      => 'required|email|max:255'
     ];
 
     /**

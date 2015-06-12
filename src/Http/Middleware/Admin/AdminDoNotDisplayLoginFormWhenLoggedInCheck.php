@@ -29,11 +29,11 @@
  *
  */
 
-use Illuminate\Contracts\Routing\Middleware;
 use Illuminate\Contracts\Auth\Guard;
 use Closure;
 
-class AdminDoNotDisplayLoginFormWhenLoggedInCheck implements Middleware{
+class AdminDoNotDisplayLoginFormWhenLoggedInCheck
+{
     /**
      * The Guard implementation.
      *
