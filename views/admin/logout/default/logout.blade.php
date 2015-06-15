@@ -31,7 +31,7 @@
 
 
     <!-- Custom styles for this template http://getbootstrap.com/examples/navbar-fixed-top/-->
-    <link media="all" type="text/css" rel="stylesheet" href="{{{ Config::get('app.url') }}}/{{{ Config::get('lasallecms.public_folder') }}}/packages/usermanagement/admin/login/{{{ Config::get('auth.admin_login_view_folder') }}}/login.css" >
+    <link media="all" type="text/css" rel="stylesheet" href="{{{ Config::get('app.url') }}}/{{{ Config::get('lasallecms.public_folder') }}}/packages/usermanagement/admin/logout/{{{ Config::get('auth.admin_login_view_folder') }}}/logout.css" >
 </head>
 
 
