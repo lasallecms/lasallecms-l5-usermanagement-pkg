@@ -186,8 +186,18 @@ return [
     |--------------------------------------------------------------------------
     |
     | These users are allowed to access the admin.
-    | These users are still subject to other custom admin checks.
-    | The "first among equals" user *MUST* not be listed as subject to the login checks
+    |
+    | ** These users are still subject to other custom admin checks.**
+    |
+    | The "first among equals" user *MUST NOT* be listed in this setting, to circumvent
+    | the login checks
+    |
+    | The reason for this setting is that, in my experience, only a handful of people
+    | are allowed access to the admin -- especially Super Admins. So, my thinking goes,
+    | list these peoples' emails in the config, and then any other emails trying to access
+    | the admin will be rejected.
+    |
+    | Use in conjunction with the "Admin IP Addresses allowed" setting.
     |
     | Use email addresses.
     |
@@ -201,6 +211,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | These user groups are allowed to access the admin.
+    |
     | Sure, this specification is *supposed* to be buried in the code somewhere. But..
     | a quick way to prevent "Administrators" from accessing the admin during a testing
     | phase or maintenance or during some brief time period, without messing around with
