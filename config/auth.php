@@ -126,8 +126,11 @@ return [
 	|--------------------------------------------------------------------------
 	|
 	| The login form is created independently of the admin template. It's just something
-    | on its own. The default view folder is "views/admin/login/admin_login_view_folder/". The default
-    | assets folder is "public/admin/login/admin_login_view_folder/"
+    | on its own. The default "root" view folder is:
+    | public/packages/usermanagement/admin/logout/
+    |
+    | FYI: The default "root" admin view folder is:
+    | public/packages/lasallecmsadmin/
 	|
 	*/
     //'admin_login_view_folder' => 'default',
