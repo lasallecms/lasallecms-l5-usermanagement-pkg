@@ -39,11 +39,9 @@
 
 <body>
 
-
 <div class="container">
 
     <div id="loginbox" style="margin-top:200px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-
 
         <div class="panel panel-info" >
 
@@ -83,14 +81,17 @@
                     <input id="login-remember" type="hidden" name="remember" value="1">
 
                     <div style="margin-top:10px;margin-left:25px;" class="form-group">
+
                         <div class="col-sm-12 controls">
                             <button type="submit" class="btn btn-success">
                                 <i class="glyphicon glyphicon-ok"></i>  Log into Admin
                             </button>
                         </div>
+
                     </div>
 
                 </form>
+
 
             </div>
 
@@ -99,6 +100,7 @@
     </div>
 
 </div>
+
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

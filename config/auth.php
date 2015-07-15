@@ -126,15 +126,16 @@ return [
 	|--------------------------------------------------------------------------
 	|
 	| The login form is created independently of the admin template. It's just something
-    | on its own. The default "root" view folder is:
-    | public/packages/usermanagement/admin/logout/
+    | on its own.
     |
-    | FYI: The default "root" admin view folder is:
-    | public/packages/lasallecmsadmin/
-	|
+    | The login blade file is located at:
+    | resources/views/vendor/usermanagement/admin/login/default
+    |
+    | The css file for the login blade file is located at:
+    | public/packages/usermanagement/admin/login/default/
+    |
 	*/
-    //'admin_login_view_folder' => 'default',
-    'admin_login_view_folder' => 'retroradioes',
+    'admin_login_view_folder' => 'default',
 
 
     /*
@@ -143,12 +144,22 @@ return [
 	|--------------------------------------------------------------------------
 	|
 	| The logout form is created independently of the admin template. It's just something
-    | on its own. The default view folder is "views/admin/logout/admin_logout_view_folder/". The default
-    | assets folder is "public/admin/logout/admin_logout_view_folder/"
+    | on its own.
+    |
+    | The login blade file is located at:
+    | resources/views/vendor/usermanagement/admin/logout/default
+    |
+    | The css file for the login blade file is located at:
+    | public/packages/usermanagement/admin/logout/default/
+    |
+    | The logout confirmation blade file is located at:
+    | resources/views/vendor/usermanagement/admin/logout_confirmation/
+    |
+    | The css file for the logout confirmation blade file is located at:
+    | public/packages/usermanagement/admin/logout_confirmation/default/
 	|
 	*/
-    //'admin_logout_view_folder' => 'default',
-    'admin_logout_view_folder' => 'retroradioes',
+    'admin_logout_view_folder' => 'default',
 
 
     /*

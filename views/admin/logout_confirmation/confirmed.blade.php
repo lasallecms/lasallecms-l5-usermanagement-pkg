@@ -31,7 +31,7 @@
 
 
     <!-- Custom styles for this template http://getbootstrap.com/examples/navbar-fixed-top/-->
-    <link media="all" type="text/css" rel="stylesheet" href="{{{ Config::get('app.url') }}}/{{{ Config::get('lasallecms.public_folder') }}}/packages/usermanagement/admin/logout_confirmation/confirmed.css" >
+    <link media="all" type="text/css" rel="stylesheet" href="{{{ Config::get('app.url') }}}/packages/usermanagement/admin/logout_confirmation/default/logout_confirmation.css" >
 </head>
 
 

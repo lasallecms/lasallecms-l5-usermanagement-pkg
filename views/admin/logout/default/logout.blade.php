@@ -54,19 +54,21 @@
 
                 <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
 
-                    {!! Form::open(['action' => '\Lasallecms\Usermanagement\Http\Controllers\AdminAuth\AdminLogoutController@destroy']) !!}
 
-                        <div style="margin-top:0px" class="form-group">
+                {!! Form::open(['action' => '\Lasallecms\Usermanagement\Http\Controllers\AdminAuth\AdminLogoutController@destroy']) !!}
 
-                            <div class="col-sm-12 controls">
-                                <button type="submit" class="btn btn-danger btn-lg">
-                                    <i class="glyphicon glyphicon-okA"></i>  <strong>Yes</strong>, I want to logout!
-                                </button>
-                            </div>
 
+                    <div style="margin-top:0px" class="form-group">
+
+                        <div class="col-sm-12 controls">
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                <i class="glyphicon glyphicon-okA"></i>  <strong>Yes</strong>, I want to logout!
+                            </button>
                         </div>
 
-                    </form>
+                    </div>
+
+                </form>
 
 
                 <br /><br /><br />
@@ -95,6 +97,7 @@
         window.history.back()
     }
 </script>
+
 
 
 </body>
