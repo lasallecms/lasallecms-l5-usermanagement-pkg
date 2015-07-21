@@ -1,5 +1,6 @@
 <?php
-namespace Lasallecms\Usermanagement\Http\Middleware;
+
+namespace Lasallecms\Usermanagement;
 
 /**
  *
@@ -29,51 +30,41 @@ namespace Lasallecms\Usermanagement\Http\Middleware;
  *
  */
 
-use Closure;
-use Illuminate\Contracts\Auth\Guard;
-
-class Authenticate
+class Version
 {
-	/**
-	 * The Guard implementation.
-	 *
-	 * @var Guard
-	 */
-	protected $auth;
+    /**
+     * This package's version number.
+     *
+     * @var string
+     */
+    const VERSION = '1.0';
 
-	/**
-	 * Create a new filter instance.
-	 *
-	 * @param  Guard  $auth
-	 * @return void
-	 */
-	public function __construct(Guard $auth)
-	{
-		$this->auth = $auth;
-	}
 
-	/**
-	 * Handle an incoming request.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  \Closure  $next
-	 * @return mixed
-	 */
-	public function handle($request, Closure $next)
-	{
-		if ($this->auth->guest())
-		{
-			if ($request->ajax())
-			{
-				return response('Unauthorized.', 401);
-			}
-			else
-			{
-				return redirect()->guest('auth/login');
-			}
-		}
+    /**
+     * This package's name.
+     *
+     * @var string
+     */
+    const PACKAGE = 'User Management for LaSalleCMS';
 
-		return $next($request);
-	}
 
+    /**
+     * Get the version number of this package.
+     *
+     * @return string
+     */
+    public function version()
+    {
+        return static::VERSION;
+    }
+
+    /**
+     * Get the name of this package.
+     *
+     * @return string
+     */
+    public function packageName()
+    {
+        return static::PACKAGE;
+    }
 }
