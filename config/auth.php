@@ -209,11 +209,17 @@ return [
     |
     | Use in conjunction with the "Admin IP Addresses allowed" setting.
     |
+    | Please note that "admin@example.org" is the user initial set up so you can log into the admin. Once you have
+    | logged into the admin and changed your user details, then update this setting -- if this user is not the
+    | "first among equals" user. 
+    |
     | Use email addresses.
     |
     */
     'perform_the_users_allowed_to_access_admin_check' => true,
-    'users_allowed_to_access_the_admin' => [],
+    'users_allowed_to_access_the_admin' => [
+        'admin@example.org',
+    ],
 
     /*
     |--------------------------------------------------------------------------
