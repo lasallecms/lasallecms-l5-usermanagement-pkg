@@ -199,9 +199,6 @@ return [
     |
     | ** These users are still subject to other custom admin checks.**
     |
-    | The "first among equals" user *MUST NOT* be listed in this setting, to circumvent
-    | the login checks
-    |
     | The reason for this setting is that, in my experience, only a handful of people
     | are allowed access to the admin -- especially Super Admins. So, my thinking goes,
     | list these peoples' emails in the config, and then any other emails trying to access
@@ -211,7 +208,7 @@ return [
     |
     | Please note that "admin@example.org" is the user initial set up so you can log into the admin. Once you have
     | logged into the admin and changed your user details, then update this setting -- if this user is not the
-    | "first among equals" user. 
+    | "first among equals" user.
     |
     | Use email addresses.
     |
