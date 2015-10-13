@@ -8,7 +8,7 @@
 
     <!-- title tag -->
     <!-- http://www.netlingo.com/tips/html-code-cheat-sheet.php -->
-    <title>Admin Login &verbar; {{{ Config::get('lasallecms.site_name') }}}</title>
+    <title>Admin Login &verbar; {{{ Config::get('lasallecmsfrontend.site_name') }}}</title>
 
 
 
@@ -45,7 +45,7 @@
         <div class="panel panel-info" >
 
             <div class="panel-heading">
-                <div class="panel-title" style="text-align: center;font-weight:bolder;font-size:140%;">You are now logged out of the {{{ Config::get('lasallecms.site_name') }}} Administration</div>
+                <div class="panel-title" style="text-align: center;font-weight:bolder;font-size:140%;">You are now logged out of the {{{ Config::get('lasallecmsfrontend.site_name') }}} Administration</div>
             </div>
 
             <div style="padding-top:25px" class="panel-body" >
