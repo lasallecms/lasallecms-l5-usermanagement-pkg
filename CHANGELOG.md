@@ -1,9 +1,9 @@
 # CHANGE LOG
 
-## VERSION 1.0 - 2015-07-31
+## VERSION 1.0 - 2015-10-03
 
 ### All GitHub issues for this version
-* [https://github.com/lasallecms/lasallecms-l5-usermanagement-pkg/milestones/Version%201.0](https://github.com/lasallecms/lasallecms-l5-usermanagement-pkg/milestones/Version%201.0)
+* [https://github.com/lasallecms/lasallecms-l5-usermanagement-pkg/issues?q=milestone%3A%22Version+1.0%22+is%3Aclosed](https://github.com/lasallecms/lasallecms-l5-usermanagement-pkg/issues?q=milestone%3A%22Version+1.0%22+is%3Aclosed)
 
 
 ## VERSION 0.1.4 - 2015-02-23
