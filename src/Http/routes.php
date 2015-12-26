@@ -28,32 +28,50 @@
  *
  */
 
-
+/*
 Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
-
+*/
 
 /*
  * Admin auth routes
  */
 $router->get('admin/login', [
-    'as' => 'admin.login',
+    'as'   => 'admin.login',
     'uses' => 'AdminAuth\AdminLoginController@displayLoginForm'
 ]);
-
 $router->post('admin/login', [
-    'as' => 'admin.login',
+    'as'   => 'admin.login',
     'uses' => 'AdminAuth\AdminLoginController@post'
 ]);
 
 $router->get('admin/logout', [
-    'as' => 'admin.logout',
+    'as'   => 'admin.logout',
     'uses' => 'AdminAuth\AdminLogoutController@logout'
 ]);
-
 $router->post('admin/logout', [
-    'as' => 'admin.logout',
+    'as'   => 'admin.logout',
     'uses' => 'AdminAuth\AdminLogoutController@destroy'
 ]);
+
+/*
+ * Front-end auth routes
+ */
+$router->get('login', [
+    'as'   => 'auth.login',
+    'uses' => 'Frontendauth\FrontendAuthController@getLogin'
+]);
+$router->post('login', [
+    'as'   => 'auth.login',
+    'uses' => 'Frontendauth\FrontendAuthController@postLogin'
+]);
+
+$router->get('logout', [
+    'as'   => 'auth.logout',
+    'uses' => 'Frontendauth\FrontendAuthController@logout'
+]);
+
+$router->post('logout','Frontendauth\FrontendAuthController@postLogout');
+

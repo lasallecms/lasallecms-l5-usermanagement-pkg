@@ -1,5 +1,6 @@
 <?php
-namespace Lasallecms\Usermanagement\Http\Controllers;
+
+namespace Lasallecms\Usermanagement\Http\Middleware;
 
 /**
  *
@@ -21,6 +22,7 @@ namespace Lasallecms\Usermanagement\Http\Controllers;
  *
  *
  * @package    User Management package for the LaSalle Content Management System
+
  * @link       http://LaSalleCMS.com
  * @copyright  (c) 2015, The South LaSalle Trading Corporation
  * @license    http://www.gnu.org/licenses/gpl-3.0.html
@@ -29,18 +31,28 @@ namespace Lasallecms\Usermanagement\Http\Controllers;
  *
  */
 
-// Laravel classes
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
+// Laravel facades
+use Illuminate\Support\Facades\Config;
 
+// PHP
+use Closure;
 
-abstract class Controller extends BaseController
+class FrontendCustomLoginChecks
 {
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+        if (!Config::get('auth.auth_allow_users_to_log_into_front_end'))
+        {
+            return redirect()->back();
+        }
+        return $next($request);
+    }
+
 }
-
-
-
-

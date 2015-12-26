@@ -1,5 +1,4 @@
 <?php
-namespace Lasallecms\Usermanagement\Http\Controllers;
 
 /**
  *
@@ -29,18 +28,20 @@ namespace Lasallecms\Usermanagement\Http\Controllers;
  *
  */
 
-// Laravel classes
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
+return [
 
+    /*
+    |--------------------------------------------------------------------------
+    | Pagination Language Lines
+    |--------------------------------------------------------------------------
+    |
+    | The following language lines are used by the paginator library to build
+    | the simple pagination links. You are free to change them to anything
+    | you want to customize your views to better match your application.
+    |
+    */
 
-abstract class Controller extends BaseController
-{
-    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-}
+    'previous' => '&laquo; Previous',
+    'next'     => 'Next &raquo;',
 
-
-
-
+];

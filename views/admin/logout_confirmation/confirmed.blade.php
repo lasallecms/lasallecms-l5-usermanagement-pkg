@@ -48,11 +48,11 @@
                 <div class="panel-title" style="text-align: center;font-weight:bolder;font-size:140%;">You are now logged out of the {{{ Config::get('lasallecmsfrontend.site_name') }}} Administration</div>
             </div>
 
-            <div style="padding-top:25px" class="panel-body" >
+             <div class="panel-body text-center" style="padding-top:25px" >
 
                 <div class="">
                     <a href="{{ route('admin.login') }}" class="btn btn-success btn-small">
-                        <span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;&nbsp;Log back into Admin
+                        <span class="fa fa-btn fa-sign-in"></span>&nbsp;&nbsp;&nbsp;Log back into Admin
                     </a>
                 </div>
 

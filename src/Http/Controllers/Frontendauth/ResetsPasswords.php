@@ -1,4 +1,4 @@
-<?php namespace Lasallecms\Usermanagement\Http\Controllers\Auth;
+<?php namespace Lasallecms\Usermanagement\Http\Controllers\Frontendauth;
 
 /**
  *

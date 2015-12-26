@@ -1,6 +1,6 @@
 <?php
 
-namespace Lasallecms\Usermanagement\Http\Controllers\Auth;
+namespace Lasallecms\Usermanagement\Http\Controllers\Frontendauth;
 
 /**
  *
@@ -40,7 +40,8 @@ use Illuminate\Contracts\Auth\Registrar;
 
 //use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 // https://github.com/lasallecms/lasallecms-l5-usermanagement-pkg/issues/9
-use Lasallecms\Usermanagement\Http\Controllers\Auth\AuthenticatesAndRegistersUsers;
+//use Lasallecms\Usermanagement\Http\Controllers\Frontendauth\AuthenticatesAndRegistersUsers;
+use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
 class AuthController extends Controller
 {
@@ -59,7 +60,7 @@ class AuthController extends Controller
 
     // Use this package's views
     // https://github.com/lasallecms/lasallecms-l5-usermanagement-pkg/issues/9
-    protected $loginPathView       = 'usermanagement::auth.login';
+    protected $loginPathView       = 'usermanagement::frontend.default.login.login';
     protected $loginPathController = '/auth/login';
     protected $registerPathView    = 'usermanagement::auth.register';
 
@@ -72,9 +73,18 @@ class AuthController extends Controller
 	 */
 	public function __construct(Guard $auth, Registrar $registrar)
 	{
-		$this->auth = $auth;
+		$this->auth      = $auth;
 		$this->registrar = $registrar;
 
 		$this->middleware('guest', ['except' => 'getLogout']);
+	}
+
+	public function getLogin()
+	{
+		dd("");
+		if (view()->exists('auth.authenticate')) {
+			return view('auth.authenticate');
+		}
+		return view('auth.login');
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lasallecms\Usermanagement\Http\Controllers\Auth;
+namespace Lasallecms\Usermanagement\Http\Controllers\Frontendauth;
 
 /**
  *

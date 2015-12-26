@@ -170,7 +170,7 @@ class UsermanagementServiceProvider extends ServiceProvider {
      */
     public function setupTranslations()
     {
-        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'usermanagement');
+        $this->loadTranslationsFrom(__DIR__.'/../languages', 'usermanagement');
     }
 
 

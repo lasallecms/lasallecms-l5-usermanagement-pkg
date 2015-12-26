@@ -80,6 +80,18 @@ return [
 
 	'table' => 'users',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Allow users to log into the front-end
+    |--------------------------------------------------------------------------
+    |
+    | Do you want users to log into the front-end?
+    | Has nothing to do with logging into the admin -- pertains to the front-end only.
+    |
+    */
+
+    'auth_allow_users_to_log_into_front_end' => 'false',
+
 	/*
 	|--------------------------------------------------------------------------
 	| Password Reset Settings
