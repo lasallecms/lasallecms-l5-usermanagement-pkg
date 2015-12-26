@@ -60,6 +60,13 @@ class FrontendAuthController extends Controller
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     /**
+     * Where to redirect users when frontend login fails.
+     *
+     * @var string
+     */
+    protected $loginPath = 'login';
+
+    /**
      * Where to redirect users after login / registration.
      *
      * @var string
@@ -96,7 +103,10 @@ class FrontendAuthController extends Controller
      * Show the application login form.
      *
      * OVERRIDES THE Illuminate\Foundation\Auth\AuthenticatesUsers::getLogin() method
-     *
+     *public function getRegister()
+    {
+        return view('auth.register');
+    }
      * @return \Illuminate\Http\Response
      */
     public function getLogin()
