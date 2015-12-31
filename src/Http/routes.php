@@ -72,6 +72,23 @@ $router->get('logout', [
     'as'   => 'auth.logout',
     'uses' => 'Frontendauth\FrontendAuthController@logout'
 ]);
-
 $router->post('logout','Frontendauth\FrontendAuthController@postLogout');
+
+/*
+ * Front-end registration routes
+ */
+Route::get('register', [
+    'as'   => 'auth.register',
+    'uses' => 'Frontendauth\RegisterUserController@getRegister'
+]);
+Route::post('register', 'Frontendauth\RegisterUserController@postRegister');
+
+
+// Password reset link request routes...
+Route::get('password/email', 'Frontendauth\ResetsPasswordsController@getEmail');
+Route::post('password/email', 'Frontendauth\ResetsPasswordsController@postEmail');
+
+// Password reset routes...
+Route::get('password/reset/{token}', 'Frontendauth\ResetsPasswordsController@getReset');
+Route::post('password/reset', 'Frontendauth\ResetsPasswordsController@postReset');
 

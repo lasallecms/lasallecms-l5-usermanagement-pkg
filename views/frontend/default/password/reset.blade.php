@@ -1,59 +1,65 @@
-@extends('app')
+<!doctype html>
+<html lang="en">
 
-@section('content')
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-			<div class="panel panel-default">
-				<div class="panel-heading">Reset Password</div>
-				<div class="panel-body">
-					@if (count($errors) > 0)
-						<div class="alert alert-danger">
-							<strong>Whoops!</strong> There were some problems with your input.<br><br>
-							<ul>
-								@foreach ($errors->all() as $error)
-									<li>{{ $error }}</li>
-								@endforeach
-							</ul>
-						</div>
-					@endif
+@include('usermanagement::frontend.default.common.header')
 
-					<form class="form-horizontal" role="form" method="POST" action="/password/reset">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
-						<input type="hidden" name="token" value="{{ $token }}">
+		<!-- Custom styles for this template http://getbootstrap.com/examples/navbar-fixed-top/-->
+<link media="all" type="text/css" rel="stylesheet" href="{{{ Config::get('app.url') }}}/packages/usermanagement/frontend/{{{ Config::get('lasallecmsfrontend.frontend_template_name') }}}/password/password.css">
+</head>
 
-						<div class="form-group">
-							<label class="col-md-4 control-label">E-Mail Address</label>
-							<div class="col-md-6">
-								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
-							</div>
-						</div>
+<body>
 
-						<div class="form-group">
-							<label class="col-md-4 control-label">Password</label>
-							<div class="col-md-6">
-								<input type="password" class="form-control" name="password">
-							</div>
-						</div>
+<div class="container">
 
-						<div class="form-group">
-							<label class="col-md-4 control-label">Confirm Password</label>
-							<div class="col-md-6">
-								<input type="password" class="form-control" name="password_confirmation">
-							</div>
-						</div>
+	<div class="col-sm-offset-2 col-sm-8" style="margin-top:200px;">
+		<div class="panel panel-default">
 
-						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
-								<button type="submit" class="btn btn-primary">
-									Reset Password
-								</button>
-							</div>
-						</div>
-					</form>
-				</div>
+			<div class="panel-heading">
+				Reset Password<br />{{{ Config::get('lasallecmsfrontend.site_name') }}}
 			</div>
+
+			<div class="panel-body text-center">
+
+				<!-- Display Validation Errors -->
+				@include('usermanagement::frontend.default.common.errors')
+
+						<!-- New Task Form -->
+				{!! Form::open(['action' => '\Lasallecms\Usermanagement\Http\Controllers\Frontendauth\ResetsPasswordsController@postReset']) !!}
+
+				<input type="hidden" name="token" value="{{ $token }}">
+
+				<!-- E-Mail Address -->
+				<div style="margin-bottom: 25px; margin-top: 25px;" class="input-group">
+					<span class="input-group-addon"><i class="fa fa-btn fa-envelope"></i></span>
+					{!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'email']) !!}
+				</div>
+
+				<!-- Password -->
+				<div style="margin-bottom: 25px" class="input-group">
+					<span class="input-group-addon"><i class="fa fa-btn fa-lock"></i></span>
+					{!! Form::password('password', ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'password']) !!}
+				</div>
+
+				<!-- Confirm Password -->
+				<div style="margin-bottom: 25px" class="input-group">
+					<span class="input-group-addon"><i class="fa fa-btn fa-lock"></i></span>
+					{!! Form::password('password_confirmation', ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'confirm password']) !!}
+				</div>
+
+				<!-- Login Button -->
+				<button type="submit" class="btn btn-success">
+					<i class="fa fa-btn fa-sign-in"></i>&nbsp;&nbsp;Reset Password
+				</button>
+
+				</form>
+
+			</div>
+
 		</div>
+
 	</div>
 </div>
-@endsection
+
+
+</body>
+</html>

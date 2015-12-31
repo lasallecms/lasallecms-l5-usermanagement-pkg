@@ -16,7 +16,12 @@
         <div class="panel panel-default">
 
             <div class="panel-heading">
-                Log {!! \Auth::user()->name !!} out of<br />{{{ Config::get('lasallecmsfrontend.site_name') }}}
+                @if (isset(Auth::user()->name))
+                    Log {!! Auth::user()->name !!} out of<br />
+                @else
+                    Logout of
+                @endif
+                    {{{ Config::get('lasallecmsfrontend.site_name') }}}
             </div>
 
 

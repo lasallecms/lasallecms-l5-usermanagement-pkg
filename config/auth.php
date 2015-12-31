@@ -80,6 +80,12 @@ return [
 
 	'table' => 'users',
 
+
+
+    /****************************************************************************************/
+    /*                       START: FRONT-END REGISTRATION                                  */
+    /****************************************************************************************/
+
     /*
     |--------------------------------------------------------------------------
     | Allow users to log into the front-end
@@ -89,8 +95,37 @@ return [
     | Has nothing to do with logging into the admin -- pertains to the front-end only.
     |
     */
-
     'auth_allow_users_to_log_into_front_end' => 'false',
+
+    /*
+    |--------------------------------------------------------------------------
+    | User ID for created_by and updated_by when allow front-end user registration
+    |--------------------------------------------------------------------------
+    |
+    | In the admin, a logged in user creates and updates user table records. This
+    | user id appears in the "created_by" and/or "updated_by" fields. Someone
+    | registering via the front-end is initiating the INSERT themselves. Nevertheless,
+    | a user id still needs to be in the "created_by" and "updated_by" fields. So,
+    | what user id should be INSERTed into these fields for front-end registration?.
+    |
+    */
+	'auth_user_id_for_created_by_for_frontend_user_registration' => 1,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Display the register confirmation view after successful frontend registration
+    |--------------------------------------------------------------------------
+    |
+    | Do you want to display the front-end registration confirmation form after
+    | a successful front-end registration?
+    |
+    */
+    'auth_display_register_confirmation_view_after_successful_frontend_registration' => true,
+
+    /****************************************************************************************/
+    /*                        END: FRONT-END REGISTRATION                                   */
+    /****************************************************************************************/
+
 
 	/*
 	|--------------------------------------------------------------------------

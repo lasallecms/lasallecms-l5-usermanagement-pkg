@@ -1,50 +1,51 @@
-@extends('app')
+<!doctype html>
+<html lang="en">
 
-@section('content')
-<div class="container-fluid">
-	<div class="row">
-		<div class="col-md-8 col-md-offset-2">
-			<div class="panel panel-default">
-				<div class="panel-heading">Reset Password</div>
-				<div class="panel-body">
-					@if (session('status'))
-						<div class="alert alert-success">
-							{{ session('status') }}
-						</div>
-					@endif
+@include('usermanagement::frontend.default.common.header')
 
-					@if (count($errors) > 0)
-						<div class="alert alert-danger">
-							<strong>Whoops!</strong> There were some problems with your input.<br><br>
-							<ul>
-								@foreach ($errors->all() as $error)
-									<li>{{ $error }}</li>
-								@endforeach
-							</ul>
-						</div>
-					@endif
+		<!-- Custom styles for this template http://getbootstrap.com/examples/navbar-fixed-top/-->
+<link media="all" type="text/css" rel="stylesheet" href="{{{ Config::get('app.url') }}}/packages/usermanagement/frontend/{{{ Config::get('lasallecmsfrontend.frontend_template_name') }}}/password/password.css">
+</head>
 
-					<form class="form-horizontal" role="form" method="POST" action="/password/email">
-						<input type="hidden" name="_token" value="{{ csrf_token() }}">
+<body>
 
-						<div class="form-group">
-							<label class="col-md-4 control-label">E-Mail Address</label>
-							<div class="col-md-6">
-								<input type="email" class="form-control" name="email" value="{{ old('email') }}">
-							</div>
-						</div>
+<div class="container">
 
-						<div class="form-group">
-							<div class="col-md-6 col-md-offset-4">
-								<button type="submit" class="btn btn-primary">
-									Send Password Reset Link
-								</button>
-							</div>
-						</div>
-					</form>
-				</div>
+	<div class="col-sm-offset-2 col-sm-8" style="margin-top:200px;">
+		<div class="panel panel-default">
+
+			<div class="panel-heading">
+				Password Reset Request<br />{{{ Config::get('lasallecmsfrontend.site_name') }}}
 			</div>
+
+			<div class="panel-body text-center">
+
+				<!-- Display Validation Errors -->
+				@include('usermanagement::frontend.default.common.errors')
+
+						<!-- New Task Form -->
+				{!! Form::open(['action' => '\Lasallecms\Usermanagement\Http\Controllers\Frontendauth\ResetsPasswordsController@postEmail']) !!}
+
+				<!-- E-Mail Address -->
+				<div style="margin-bottom: 25px; margin-top: 25px;" class="input-group">
+					<span class="input-group-addon"><i class="fa fa-btn fa-envelope"></i></span>
+					{!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'email']) !!}
+				</div>
+
+				<!-- Login Button -->
+				<button type="submit" class="btn btn-success">
+					<i class="fa fa-btn fa-sign-in"></i>&nbsp;&nbsp;Send Password Reset Link
+				</button>
+
+				</form>
+
+			</div>
+
 		</div>
+
 	</div>
 </div>
-@endsection
+
+
+</body>
+</html>

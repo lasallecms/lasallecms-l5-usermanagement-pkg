@@ -10,7 +10,7 @@
         @if (\Auth::check())
             Logout
          @else
-            Login
+            {!! $title !!}
         @endif
     &verbar; {{{ Config::get('lasallecmsfrontend.site_name') }}}</title>
 

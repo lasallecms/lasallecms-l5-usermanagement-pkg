@@ -42,22 +42,18 @@ use Illuminate\Support\Facades\Config;
 // Laravel classes
 use Validator;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
-use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
+/**
+ * Class FrontendAuthController
+ *
+ * Manage front-end login/logout
+ *
+ * @package Lasallecms\Usermanagement\Http\Controllers\Frontendauth
+ */
 class FrontendAuthController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Registration & Login Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users, as well as the
-    | authentication of existing users. By default, this controller uses
-    | a simple trait to add these behaviors. Why don't you explore it? (I have! -Bob)
-    |
-    */
-
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+    use AuthenticatesUsers, ThrottlesLogins;
 
     /**
      * Where to redirect users when frontend login fails.
@@ -85,8 +81,7 @@ class FrontendAuthController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         //$this->middleware('guest', ['except' => 'logout']);
 
         // Run through the frontend middleware checks
@@ -103,15 +98,13 @@ class FrontendAuthController extends Controller
      * Show the application login form.
      *
      * OVERRIDES THE Illuminate\Foundation\Auth\AuthenticatesUsers::getLogin() method
-     *public function getRegister()
-    {
-        return view('auth.register');
-    }
+     *
      * @return \Illuminate\Http\Response
      */
-    public function getLogin()
-    {
-        return view('usermanagement::frontend.'.$this->frontend_template_name.'.login.login');
+    public function getLogin() {
+        return view('usermanagement::frontend.'.$this->frontend_template_name.'.login.login', [
+            'title' => 'Login',
+            ]);
     }
 
     /**
@@ -120,7 +113,9 @@ class FrontendAuthController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function logout() {
-        return view('usermanagement::frontend.'.$this->frontend_template_name.'.logout.logout');
+        return view('usermanagement::frontend.'.$this->frontend_template_name.'.logout.logout', [
+            'title' => 'Logout',
+            ]);
     }
 
     /**
@@ -128,40 +123,11 @@ class FrontendAuthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function postLogout()
-    {
+    public function postLogout() {
         Auth::logout();
 
-        return view('usermanagement::frontend.'.$this->frontend_template_name.'.logout_confirmed.logout_confirmed');
-    }
-
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|confirmed|min:6',
-        ]);
-    }
-
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
+        return view('usermanagement::frontend.'.$this->frontend_template_name.'.logout_confirmed.logout_confirmed', [
+            'title' => 'Logout Confirmation'
         ]);
     }
 }

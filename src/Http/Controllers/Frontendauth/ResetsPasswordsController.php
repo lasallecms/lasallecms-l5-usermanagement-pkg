@@ -1,4 +1,6 @@
-<?php namespace Lasallecms\Usermanagement\Http\Controllers\Frontendauth;
+<?php
+
+namespace Lasallecms\Usermanagement\Http\Controllers\Frontendauth;
 
 /**
  *
@@ -31,26 +33,50 @@
 // Fork of Illuminate\Foundation\Auth\ResetsPasswords
 // https://github.com/lasallecms/lasallecms-l5-flagship/issues/20
 
+// Updated this trait to L5.1.27
+
+// LaSalle Software classes
+use Lasallecms\Usermanagement\Http\Controllers\Controller;
+
+// Laravel facades
+use Illuminate\Support\Facades\Config;
+
+// Laravel classes
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Auth\Guard;
-use Illuminate\Contracts\Auth\PasswordBroker;
+use Illuminate\Mail\Message;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Password;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-trait ResetsPasswords {
+class ResetsPasswordsController extends Controller
+{
+    //use RedirectsUsers;
 
     /**
-     * The Guard implementation.
+     * The name of the front-end template where the auth views are located
      *
-     * @var Guard
+     * @var string
      */
-    protected $auth;
+    protected $frontend_template_name;
 
     /**
-     * The password broker implementation.
+     * Create a new authentication controller instance.
      *
-     * @var PasswordBroker
+     * @return void
      */
-    protected $passwords;
+    public function __construct() {
+        //$this->middleware('guest', ['except' => 'logout']);
+        $this->middleware('guest');
+
+        // Run through the frontend middleware checks
+        $this->middleware(\Lasallecms\Lasallecmsfrontend\Http\Middleware\CustomFrontendChecks::class);
+
+        // Run through further custom frontend auth checks
+        $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\FrontendCustomLoginChecks::class);
+
+        $this->frontend_template_name = Config::get('lasallecmsfrontend.frontend_template_name');
+    }
+
 
     /**
      * Display the form to request a password reset link.
@@ -59,8 +85,12 @@ trait ResetsPasswords {
      */
     public function getEmail()
     {
-        return view('usermanagement::auth.password');
+        return view('usermanagement::frontend.'.$this->frontend_template_name.'.password.password', [
+            'title' => 'Password Reset Request'
+        ]);
     }
+
+
 
     /**
      * Send a reset link to the given user.
@@ -72,17 +102,19 @@ trait ResetsPasswords {
     {
         $this->validate($request, ['email' => 'required|email']);
 
-        $response = $this->passwords->sendResetLink($request->only('email'), function($m)
-        {
-            $m->subject($this->getEmailSubject());
+        $response = Password::sendResetLink($request->only('email'), function (Message $message) {
+            $message->subject($this->getEmailSubject());
         });
 
-        switch ($response)
-        {
-            case PasswordBroker::RESET_LINK_SENT:
-                return redirect()->back()->with('status', trans($response));
+        switch ($response) {
+            case Password::RESET_LINK_SENT:
+                //return redirect()->back()->with('status', trans($response));
+                return view('usermanagement::frontend.'.$this->frontend_template_name.'.password.password_email_sent', [
+                    'title' => 'Password Reset Email Sent',
+                    'email' => $request->input('email'),
+                ]);
 
-            case PasswordBroker::INVALID_USER:
+            case Password::INVALID_USER:
                 return redirect()->back()->withErrors(['email' => trans($response)]);
         }
     }
@@ -110,7 +142,11 @@ trait ResetsPasswords {
             throw new NotFoundHttpException;
         }
 
-        return view('usermanagement::auth.reset')->with('token', $token);
+        //return view('usermanagement::auth.reset')->with('token', $token);
+        return view('usermanagement::frontend.'.$this->frontend_template_name.'.password.reset', [
+            'title' => 'Reset Password',
+            'token' => $token,
+        ]);
     }
 
     /**
@@ -122,8 +158,8 @@ trait ResetsPasswords {
     public function postReset(Request $request)
     {
         $this->validate($request, [
-            'token' => 'required',
-            'email' => 'required|email',
+            'token'    => 'required',
+            'email'    => 'required|email',
             'password' => 'required|confirmed',
         ]);
 
@@ -143,7 +179,11 @@ trait ResetsPasswords {
         switch ($response)
         {
             case PasswordBroker::PASSWORD_RESET:
-                return redirect($this->redirectPath());
+                //return redirect($this->redirectPath());
+                return view('usermanagement::frontend.'.$this->frontend_template_name.'.password.password_reset_confirmation', [
+                    'title' => 'Password Reset Confirmation',
+                    'email' => $request->input('email'),
+                ]);
 
             default:
                 return redirect()->back()
