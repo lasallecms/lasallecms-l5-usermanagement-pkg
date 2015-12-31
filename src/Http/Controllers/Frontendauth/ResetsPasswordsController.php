@@ -167,6 +167,7 @@ class ResetsPasswordsController extends Controller
             'email', 'password', 'password_confirmation', 'token'
         );
 
+/*
         $response = $this->passwords->reset($credentials, function($user, $password)
         {
             $user->password = bcrypt($password);
@@ -174,6 +175,10 @@ class ResetsPasswordsController extends Controller
             $user->save();
 
             $this->auth->login($user);
+        });
+*/
+        $response = Password::reset($credentials, function ($user, $password) {
+            $this->resetPassword($user, $password);
         });
 
         switch ($response)
@@ -205,6 +210,21 @@ class ResetsPasswordsController extends Controller
         }
 
         return property_exists($this, 'redirectTo') ? $this->redirectTo : '/home';
+    }
+
+
+    /**
+     * Reset the given user's password.
+     *
+     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
+     * @param  string  $password
+     * @return void
+     */
+    protected function resetPassword($user, $password)
+    {
+        $user->password = bcrypt($password);
+        $user->save();
+        Auth::login($user);
     }
 
 }
