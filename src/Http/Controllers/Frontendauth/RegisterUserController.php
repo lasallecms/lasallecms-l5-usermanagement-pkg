@@ -67,6 +67,9 @@ class RegisterUserController extends Controller
     {
         //$this->middleware('guest', ['except' => 'logout']);
 
+        // If logged in, then do not see the register form
+        $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\FrontendLoggedInNoRegisterCheck::class);
+
         // Run through the frontend middleware checks
         $this->middleware(\Lasallecms\Lasallecmsfrontend\Http\Middleware\CustomFrontendChecks::class);
 

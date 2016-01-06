@@ -68,6 +68,9 @@ class ResetsPasswordsController extends Controller
         //$this->middleware('guest', ['except' => 'logout']);
         $this->middleware('guest');
 
+        // If user is already logged in, then cannot see the reset form
+        $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\FrontendLoggedInThenNoLoginFormCheck::class);
+
         // Run through the frontend middleware checks
         $this->middleware(\Lasallecms\Lasallecmsfrontend\Http\Middleware\CustomFrontendChecks::class);
 

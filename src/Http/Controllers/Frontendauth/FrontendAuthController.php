@@ -84,6 +84,9 @@ class FrontendAuthController extends Controller
     public function __construct() {
         //$this->middleware('guest', ['except' => 'logout']);
 
+        // If user is already logged in, then cannot see the login form
+        $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\FrontendLoggedInThenNoLoginFormCheck::class);
+
         // Run through the frontend middleware checks
         $this->middleware(\Lasallecms\Lasallecmsfrontend\Http\Middleware\CustomFrontendChecks::class);
 
