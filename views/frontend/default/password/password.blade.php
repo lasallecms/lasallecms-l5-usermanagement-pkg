@@ -34,7 +34,7 @@
 
 				<!-- Login Button -->
 				<button type="submit" class="btn btn-success">
-					<i class="fa fa-btn fa-sign-in"></i>&nbsp;&nbsp;Send Password Reset Link
+					<i class="fa fa-btn fa-envelope-o"></i>&nbsp;&nbsp;Send Password Reset Link
 				</button>
 
 				</form>

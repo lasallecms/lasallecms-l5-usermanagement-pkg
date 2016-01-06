@@ -7,7 +7,7 @@
     <!-- title tag -->
     <!-- http://www.netlingo.com/tips/html-code-cheat-sheet.php -->
     <title>
-        @if (\Auth::check())
+        @if ( (\Auth::check()) && ($title != "Password Reset Confirmed") )
             Logout
          @else
             {!! $title !!}

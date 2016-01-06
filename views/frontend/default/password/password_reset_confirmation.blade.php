@@ -23,35 +23,23 @@
 				<!-- Display Validation Errors -->
 				@include('usermanagement::frontend.default.common.errors')
 
-						<!-- New Task Form -->
-				{!! Form::open(['action' => '\Lasallecms\Usermanagement\Http\Controllers\Frontendauth\ResetsPasswordsController@postReset']) !!}
 
-				<input type="hidden" name="token" value="{{ $token }}">
+				<br />
 
-				<!-- E-Mail Address -->
-				<div style="margin-bottom: 25px; margin-top: 25px;" class="input-group">
-					<span class="input-group-addon"><i class="fa fa-btn fa-envelope"></i></span>
-					{!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'email']) !!}
-				</div>
-
-				<!-- Password -->
-				<div style="margin-bottom: 25px" class="input-group">
-					<span class="input-group-addon"><i class="fa fa-btn fa-lock"></i></span>
-					{!! Form::password('password', ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'password']) !!}
-				</div>
-
-				<!-- Confirm Password -->
-				<div style="margin-bottom: 25px" class="input-group">
-					<span class="input-group-addon"><i class="fa fa-btn fa-lock"></i></span>
-					{!! Form::password('password_confirmation', ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'confirm password']) !!}
-				</div>
-
-				<!-- Login Button -->
-				<button type="submit" class="btn btn-success">
-					<i class="fa fa-btn fa-sign-in"></i>&nbsp;&nbsp;Reset Password
+				<button class="btn btn-info">
+					{!! $username !!}<br /><br />You successfully reset your password!
 				</button>
 
-				</form>
+				<br /><br /><br />
+
+				<!-- To Home Page -->
+				<a href="{{ route('home') }}" class="btn btn-success">
+					<span class="fa fa-btn fa-home"></span>&nbsp;&nbsp;Home
+				</a>
+
+				<br /><br />
+
+
 
 			</div>
 

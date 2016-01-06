@@ -43,6 +43,13 @@
 					    <i class="fa fa-btn fa-sign-in"></i>&nbsp;&nbsp;Login
 					</button>
 
+
+                    <br /><br />
+                    <!-- Reset Request Link -->
+                    <a class="btn btn-warning" href="password/email" role="button">
+                        <i class="fa fa-btn fa-envelope-o"></i>&nbsp;&nbsp;Forgot Your Password?
+                    </a>
+
 				</form>
 
 			</div>

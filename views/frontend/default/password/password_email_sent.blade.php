@@ -15,7 +15,7 @@
 		<div class="panel panel-default">
 
 			<div class="panel-heading">
-				Password Reset Confirmation<br />{{{ Config::get('lasallecmsfrontend.site_name') }}}
+				Password Reset Email Sent<br />{{{ Config::get('lasallecmsfrontend.site_name') }}}
 			</div>
 
 			<div class="panel-body text-center">
@@ -23,7 +23,7 @@
 				<br />
 
 				<button class="btn btn-info">
-					<h4>Congratulations! Your password was reset<br />{!! $email !!}</h4>
+					<h4>Congratulations! Your password reset email was sent to<br />{!! $email !!}</h4>
 				</button>
 
 				<br /><br /><br />

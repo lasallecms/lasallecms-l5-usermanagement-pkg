@@ -160,34 +160,25 @@ class ResetsPasswordsController extends Controller
         $this->validate($request, [
             'token'    => 'required',
             'email'    => 'required|email',
-            'password' => 'required|confirmed',
+            'password' => 'required|confirmed|min:6',
         ]);
 
         $credentials = $request->only(
             'email', 'password', 'password_confirmation', 'token'
         );
 
-/*
-        $response = $this->passwords->reset($credentials, function($user, $password)
-        {
-            $user->password = bcrypt($password);
-
-            $user->save();
-
-            $this->auth->login($user);
-        });
-*/
         $response = Password::reset($credentials, function ($user, $password) {
             $this->resetPassword($user, $password);
         });
 
         switch ($response)
         {
-            case PasswordBroker::PASSWORD_RESET:
-                //return redirect($this->redirectPath());
+            case Password::PASSWORD_RESET:
+                //return redirect($this->redirectPath())->with('status', trans($response));
                 return view('usermanagement::frontend.'.$this->frontend_template_name.'.password.password_reset_confirmation', [
-                    'title' => 'Password Reset Confirmation',
-                    'email' => $request->input('email'),
+                    'title'     => 'Password Reset Confirmed',
+                    'email'     => $request->input('email'),
+                    'username'  => Auth::user()->name,
                 ]);
 
             default:
@@ -224,6 +215,7 @@ class ResetsPasswordsController extends Controller
     {
         $user->password = bcrypt($password);
         $user->save();
+
         Auth::login($user);
     }
 
