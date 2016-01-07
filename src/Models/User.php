@@ -72,6 +72,15 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 	 */
 	protected $fillable = ['name', 'email', 'password'];
 
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * LaSalle Software handles the created_at and updated_at fields, so false.
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *

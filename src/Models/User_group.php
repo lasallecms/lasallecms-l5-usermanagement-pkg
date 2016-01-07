@@ -40,8 +40,11 @@ class User_group extends BaseModel
     protected $table = 'user_group';
 
     /**
-     * Timestamps for the post_tag table
-     * @var binary
+     * Indicates if the model should be timestamped.
+     *
+     * Pivot tables do not have the created_at and updated_at fields, so false.
+     *
+     * @var bool
      */
     public $timestamps = false;
 
