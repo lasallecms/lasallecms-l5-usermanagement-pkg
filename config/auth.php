@@ -95,7 +95,7 @@ return [
     | Has nothing to do with logging into the admin -- pertains to the front-end only.
     |
     */
-    'auth_allow_users_to_log_into_front_end' => 'false',
+    'auth_allow_users_to_log_into_front_end' => env('APP_AUTH_ALLOW_USERS_TO_LOG_INTO_FRONT_END'),
 
     /*
     |--------------------------------------------------------------------------
