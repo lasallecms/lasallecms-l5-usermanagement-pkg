@@ -55,7 +55,15 @@ class CreateUsersTable extends Migration {
                 $table->boolean('activated')->default(true);
                 $table->dateTime('last_login')->nullable();
 
-                $table->boolean('enabled')->default(true);;
+                $table->boolean('enabled')->default(true);
+
+                // Two-Factor Authentication Columns
+                $table->boolean('two_factor_auth_enabled')->default(true);
+                $table->string('phone_country_code')->nullable();
+                $table->string('phone_number')->nullable();
+                $table->string('sms_token')->nullable();
+                $table->timestamp('sms_token_created_at')->nullable();
+
 
                 $table->timestamp('created_at');
                 $table->integer('created_by')->unsigned()->default(0);

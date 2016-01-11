@@ -70,23 +70,23 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 	 *
 	 * @var array
 	 */
-	protected $fillable = ['name', 'email', 'password'];
+	protected $fillable = ['name', 'email', 'password', 'two_factor_auth_enabled', 'phone_country_code', 'phone_number'];
 
     /**
      * Indicates if the model should be timestamped.
      *
-     * LaSalle Software handles the created_at and updated_at fields, so false.
+     * LaSalle Software handles the created_at and updated_at fields, so false. EXCEPT FOR USERS!
      *
      * @var bool
      */
-    public $timestamps = false;
+    public $timestamps = true;
 
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
 	 * @var array
 	 */
-	protected $hidden = ['password', 'remember_token'];
+	protected $hidden = ['password', 'remember_token', 'sms_token', 'sms_token_created_at'];
 
 
     // SANITATION RULES PROPERTIES

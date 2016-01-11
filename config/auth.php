@@ -120,11 +120,44 @@ return [
     | a successful front-end registration?
     |
     */
-    'auth_display_register_confirmation_view_after_successful_frontend_registration' => true,
+    'auth_allow_two_factor_authorization_frontend_registration' => true,
 
     /****************************************************************************************/
     /*                        END: FRONT-END REGISTRATION                                   */
     /****************************************************************************************/
+
+
+
+	/****************************************************************************************/
+	/*                     START: FRONT-END TWO FACTOR AUTHORIZATION                        */
+	/****************************************************************************************/
+
+	/*
+    |--------------------------------------------------------------------------
+    | Enable Two Factor Authorization for front-end REGISTRATION
+    |--------------------------------------------------------------------------
+    |
+    | Do you want to enable 2FA for front-end registration?
+    |
+    */
+	'auth_enable_two_factor_authorization_frontend_registration' => env('APP_AUTH_ENABLE_2FA_FRONTEND_REGISTRATION'),
+
+	/*
+    |--------------------------------------------------------------------------
+    | Enable Two Factor Authorization for front-end LOGIN
+    |--------------------------------------------------------------------------
+    |
+    | Do you want to enable 2FA for front-end login?
+    |
+    */
+	'auth_enable_two_factor_authorization_frontend_login' => env('APP_AUTH_ENABLE_2FA_FRONTEND_LOGIN'),
+
+
+	/****************************************************************************************/
+	/*                      END: FRONT-END TWO FACTOR AUTHORIZATION                         */
+	/****************************************************************************************
+
+
 
 
 	/*
