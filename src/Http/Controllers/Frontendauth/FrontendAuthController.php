@@ -32,6 +32,7 @@ namespace Lasallecms\Usermanagement\Http\Controllers\Frontendauth;
  */
 
 /// LaSalle Software
+use Lasallecms\Helpers\TwoFactorAuth\TwoFactorAuthHelper;
 use Lasallecms\Usermanagement\Models\User;
 use Lasallecms\Usermanagement\Http\Controllers\Controller;
 
@@ -40,9 +41,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 
 // Laravel classes
-use Validator;
-use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Http\Request;
+use Validator;
 
 /**
  * Class FrontendAuthController
@@ -77,11 +79,18 @@ class FrontendAuthController extends Controller
     protected $frontend_template_name;
 
     /**
+     * Two Factor Authorization helper class
+     * @var string
+     */
+    protected $twoFactorAuthHelper;
+
+    /**
      * Create a new authentication controller instance.
      *
+     * @param \Lasallecms\Helpers\TwoFactorAuth\TwoFactorAuthHelper
      * @return void
      */
-    public function __construct() {
+    public function __construct(TwoFactorAuthHelper $twoFactorAuthHelper) {
         //$this->middleware('guest', ['except' => 'logout']);
 
         // If user is already logged in, then cannot see the login form
@@ -94,6 +103,8 @@ class FrontendAuthController extends Controller
         $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\FrontendCustomLoginChecks::class);
 
         $this->frontend_template_name = Config::get('lasallecmsfrontend.frontend_template_name');
+
+        $this->twoFactorAuthHelper = $twoFactorAuthHelper;
     }
 
 
@@ -104,9 +115,52 @@ class FrontendAuthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getLogin() {
+    public function getLogin(Request $request) {
         return view('usermanagement::frontend.'.$this->frontend_template_name.'.login.login', [
             'title' => 'Login',
+            ]);
+    }
+
+    /**
+     * Handle a login request to the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function postLogin(Request $request)
+    {
+        $this->validate($request, [
+            $this->loginUsername() => 'required', 'password' => 'required',
+        ]);
+
+
+        // If the class is using the ThrottlesLogins trait, we can automatically throttle
+        // the login attempts for this application. We'll key this by the username and
+        // the IP address of the client making these requests into this application.
+        $throttles = $this->isUsingThrottlesLoginsTrait();
+        if ($throttles && $this->hasTooManyLoginAttempts($request)) {
+            return $this->sendLockoutResponse($request);
+        }
+
+
+        $credentials = $this->getCredentials($request);
+        if (Auth::attempt($credentials, $request->has('remember'))) {
+            return $this->handleUserWasAuthenticated($request, $throttles);
+        }
+
+
+        // If the login attempt was unsuccessful we will increment the number of attempts
+        // to login and redirect the user back to the login form. Of course, when this
+        // user surpasses their maximum number of attempts they will get locked out.
+        if ($throttles) {
+            $this->incrementLoginAttempts($request);
+        }
+
+
+        return redirect($this->loginPath())
+            ->withInput($request->only($this->loginUsername(), 'remember'))
+            ->withErrors([
+                $this->loginUsername() => $this->getFailedLoginMessage(),
             ]);
     }
 
@@ -133,4 +187,95 @@ class FrontendAuthController extends Controller
             'title' => 'Logout Confirmation'
         ]);
     }
+
+
+    /**
+     * Send the response after the user was authenticated.
+     *
+     * Over-riding the method in Illuminate/Foundation/Auth/AuthenticatesUsers.php
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  bool  $throttles
+     * @return \Illuminate\Http\Response
+     */
+    protected function handleUserWasAuthenticated(Request $request, $throttles)
+    {
+        if ($throttles) {
+            $this->clearLoginAttempts($request);
+        }
+
+        if (method_exists($this, 'authenticated')) {
+            //return $this->authenticated($request, Auth::user());
+        }
+
+        // Is front-end auth config set for 2FA login?
+        if (!$this->twoFactorAuthHelper->isAuthConfigEnableTwoFactorAuthLogin()) {
+            return redirect()->intended($this->redirectPath());
+        }
+
+        // Is this individual user enabled for 2FA?
+        if (!$this->twoFactorAuthHelper->isUserTwoFactorAuthEnabled(AUTH::user()->id)) {
+            return redirect()->intended($this->redirectPath());
+        }
+
+        // The user is actually logged in already, as standard login is performed first; then, the
+        // Two Factor Authorization is performed. So, logout!
+        if (Auth::check()) {
+            $this->twoFactorAuthHelper->setUserIdSessionVar(AUTH::user()->id);
+            Auth::logout();
+        }
+
+        // Perform 2FA for login
+        $this->twoFactorAuthHelper->doTwoFactorAuthLogin($request->session()->get('user_id'));
+
+        return view('usermanagement::frontend.'.$this->frontend_template_name.'.login.two_factor_auth', [
+            'title' => 'Login Enter 2FA Code',
+        ]);
+    }
+
+    /**
+     * Handle the front-end Two Factor Authorization login
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function post2FALogin(Request $request)
+    {
+        $userId = $request->session()->get('user_id');
+
+        // Did the user take too much time to fill out the form?
+       if ($this->twoFactorAuthHelper->isTwoFactorAuthFormTimeout($userId)) {
+           return view('usermanagement::frontend.'.$this->frontend_template_name.'.login.login', [
+               'title' => 'Login',
+               ])
+               ->withErrors([
+                   'Two Factor Authorization' => 'Your two factor authorization code expired. Please re-login.'
+               ]);
+       }
+
+        // Is the code correct?
+        // If not, go back to the 2FA form with an error message
+        if (!$this->twoFactorAuthHelper->isInputtedTwoFactorAuthCodeCorrect($userId)) {
+            return view('usermanagement::frontend.'.$this->frontend_template_name.'.login.two_factor_auth', [
+                'title' => 'Login Enter 2FA Code',
+            ])
+                ->withErrors([
+                    'Two Factor Authorization' => 'Your entered an incorrect two factor authorization code. Please try again.'
+                ]);
+        }
+
+        // 2FA successful!
+
+        // Clear the user's 2FA code
+        $this->twoFactorAuthHelper->clearUserTwoFactorAuthFields($userId);
+
+        // Manually login user
+        Auth::loginUsingId($request->session()->get('user_id'));
+
+        // Clear the 'user_id' session variable
+        $this->twoFactorAuthHelper->clearUserIdSessionVar();
+
+        // Go somewhere!
+        return redirect()->intended($this->twoFactorAuthHelper->redirectPathUponSuccessfulFrontendLogin());
+     }
 }

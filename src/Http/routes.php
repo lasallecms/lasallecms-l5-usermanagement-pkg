@@ -67,6 +67,7 @@ $router->post('login', [
     'as'   => 'auth.login',
     'uses' => 'Frontendauth\FrontendAuthController@postLogin'
 ]);
+$router->post('login2fa','Frontendauth\FrontendAuthController@post2FALogin');
 
 $router->get('logout', [
     'as'   => 'auth.logout',

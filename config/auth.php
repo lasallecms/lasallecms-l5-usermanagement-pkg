@@ -152,11 +152,23 @@ return [
     */
 	'auth_enable_two_factor_authorization_frontend_login' => env('APP_AUTH_ENABLE_2FA_FRONTEND_LOGIN'),
 
+	/*
+    |--------------------------------------------------------------------------
+    | How many minutes does the user have to enter their 2FA code?
+    |--------------------------------------------------------------------------
+    |
+    | The code that is sent to the user's cell phone via sms is live for only a few minutes.
+    | After which, the code cannot be used anymore.
+    |
+    | How many minutes is the code "live"?
+    |
+    */
+	'auth_2fa_minutes_smscode_is_live' => env('APP_AUTH_2FA_MINUTES_SMSCODE_IS_LIVE'),
+
 
 	/****************************************************************************************/
 	/*                      END: FRONT-END TWO FACTOR AUTHORIZATION                         */
 	/****************************************************************************************
-
 
 
 
