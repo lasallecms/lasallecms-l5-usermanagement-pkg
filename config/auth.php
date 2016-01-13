@@ -154,6 +154,16 @@ return [
 
 	/*
     |--------------------------------------------------------------------------
+    | Enable Two Factor Authorization for admin LOGIN
+    |--------------------------------------------------------------------------
+    |
+    | Do you want to enable 2FA for admin login?
+    |
+    */
+	'auth_enable_two_factor_authorization_admin_login' => env('APP_AUTH_ENABLE_2FA_ADMIN_LOGIN'),
+
+	/*
+    |--------------------------------------------------------------------------
     | How many minutes does the user have to enter their 2FA code?
     |--------------------------------------------------------------------------
     |

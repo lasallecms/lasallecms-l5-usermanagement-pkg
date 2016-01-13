@@ -1,4 +1,5 @@
 <?php
+
 namespace Lasallecms\Usermanagement\Http\Controllers\AdminAuth;
 
 /**
@@ -29,36 +30,64 @@ namespace Lasallecms\Usermanagement\Http\Controllers\AdminAuth;
  *
  */
 
+// LaSalle Software
+use Lasallecms\Helpers\TwoFactorAuth\TwoFactorAuthHelper;
 use Lasallecms\Usermanagement\Http\Controllers\Controller;
+
+// Laravel facades
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
+
+// Laravel classes
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
-use Illuminate\Contracts\Auth\Guard;
+use Validator;
 
-
+/**
+ * Class AdminLoginController
+ *
+ * Manage admin login/logout
+ *
+ * @package Lasallecms\Usermanagement\Http\Controllers\Adminauth\AdminLoginController
+ */
 class AdminLoginController extends Controller
 {
+    use AuthenticatesUsers, ThrottlesLogins;
+
     /**
-     * The Guard implementation.
-     *
-     * @var Guard
+     * Two Factor Authorization helper class
+     * @var string
      */
-    protected $auth;
+    protected $twoFactorAuthHelper;
 
 
     /*
      * Middleware
+     *
+     * @param \Lasallecms\Helpers\TwoFactorAuth\TwoFactorAuthHelper
      */
-    public function __construct()
+    public function __construct(TwoFactorAuthHelper $twoFactorAuthHelper)
     {
         $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\Admin\AdminDoNotDisplayLoginFormWhenLoggedInCheck::class, ['only' => 'displayLoginForm']);
 
         $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\Admin\CustomAdminAuthChecks::class, ['only' => 'post']);
+
+        $this->twoFactorAuthHelper = $twoFactorAuthHelper;
     }
 
 
-    public function displayLoginForm()
-    {
+    /**
+     * Show the application login form.
+     *
+     * OVERRIDES THE Illuminate\Foundation\Auth\AuthenticatesUsers::getLogin() method
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getLogin(Request $request) {
         return view('usermanagement::admin/login/'.config('auth.admin_login_view_folder').'/login');
     }
+
 
     /**
      * Handle a registration request for the application.
@@ -66,23 +95,126 @@ class AdminLoginController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function post(Request $request, Guard $auth)
+    public function postLogin(Request $request)
     {
         $this->validate($request, [
             'email' => 'required|email', 'password' => 'required',
         ]);
 
+
+        // If the class is using the ThrottlesLogins trait, we can automatically throttle
+        // the login attempts for this application. We'll key this by the username and
+        // the IP address of the client making these requests into this application.
+        $throttles = $this->isUsingThrottlesLoginsTrait();
+        if ($throttles && $this->hasTooManyLoginAttempts($request)) {
+            return $this->sendLockoutResponse($request);
+        }
+
+
         $credentials = $request->only('email', 'password');
 
-        if ($auth->attempt($credentials, $request->has('remember')))
+        if (Auth::attempt($credentials, $request->has('remember')))
         {
-            return redirect('admin/');
+            //return redirect('admin/');
+            return $this->handleUserWasAuthenticated($request, $throttles);
         }
+dd("postLogin after handleuser call");
+
+        // If the login attempt was unsuccessful we will increment the number of attempts
+        // to login and redirect the user back to the login form. Of course, when this
+        // user surpasses their maximum number of attempts they will get locked out.
+        if ($throttles) {
+            $this->incrementLoginAttempts($request);
+        }
+
+
 
         return redirect('admin/login')
             ->withInput($request->only('email'))
             ->withErrors([
                 'email' => 'Your login did not succeed. Please try again',
             ]);
+    }
+
+
+    /**
+     * Send the response after the user was authenticated.
+     *
+     * Over-riding the method in Illuminate/Foundation/Auth/AuthenticatesUsers.php
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  bool  $throttles
+     * @return \Illuminate\Http\Response
+     */
+    protected function handleUserWasAuthenticated(Request $request, $throttles)
+    {
+        if ($throttles) {
+            $this->clearLoginAttempts($request);
+        }
+
+        // Is front-end auth config set for 2FA login?
+        if (!$this->twoFactorAuthHelper->isAuthConfigEnableTwoFactorAuthAdminLogin()) {
+            return redirect('admin/');
+        }
+
+        // Is this individual user enabled for 2FA?
+        if (!$this->twoFactorAuthHelper->isUserTwoFactorAuthEnabled(AUTH::user()->id)) {
+            return redirect('admin/');
+        }
+
+        // The user is actually logged in already, as standard login is performed first; then, the
+        // Two Factor Authorization is performed. So, logout!
+        if (Auth::check()) {
+            $this->twoFactorAuthHelper->setUserIdSessionVar(AUTH::user()->id);
+            Auth::logout();
+        }
+
+        // Perform 2FA for login
+        $this->twoFactorAuthHelper->doTwoFactorAuthLogin($request->session()->get('user_id'));
+
+        return view('usermanagement::admin/login/'.config('auth.admin_login_view_folder').'/.two_factor_auth');
+    }
+
+
+    /**
+     * Handle the admin Two Factor Authorization login
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function post2FALogin(Request $request)
+    {
+        $userId = $request->session()->get('user_id');
+
+        // Did the user take too much time to fill out the form?
+        if ($this->twoFactorAuthHelper->isTwoFactorAuthFormTimeout($userId)) {
+            return view('usermanagement::admin/login/'.config('auth.admin_login_view_folder').'/login')
+                ->withErrors([
+                    'Two Factor Authorization' => 'Your two factor authorization code expired. Please re-login.'
+                ]);
+        }
+
+        // Is the code correct?
+        // If not, go back to the 2FA form with an error message
+        if (!$this->twoFactorAuthHelper->isInputtedTwoFactorAuthCodeCorrect($userId)) {
+            return view('usermanagement::admin/login/'.config('auth.admin_login_view_folder').'/.two_factor_auth')
+                ->withErrors([
+                    'Two Factor Authorization' => 'Your entered an incorrect two factor authorization code. Please try again.'
+                ]);
+        }
+
+        // 2FA successful!
+
+        // Clear the user's 2FA code
+        $this->twoFactorAuthHelper->clearUserTwoFactorAuthFields($userId);
+
+        // Manually login user
+        Auth::loginUsingId($request->session()->get('user_id'));
+
+        // Clear the 'user_id' session variable
+        $this->twoFactorAuthHelper->clearUserIdSessionVar();
+
+        // Onward and forward to the admin!
+        return redirect('admin/');
     }
 }

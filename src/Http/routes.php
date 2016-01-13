@@ -40,11 +40,11 @@ Route::controllers([
  */
 $router->get('admin/login', [
     'as'   => 'admin.login',
-    'uses' => 'AdminAuth\AdminLoginController@displayLoginForm'
+    'uses' => 'AdminAuth\AdminLoginController@getLogin'
 ]);
 $router->post('admin/login', [
     'as'   => 'admin.login',
-    'uses' => 'AdminAuth\AdminLoginController@post'
+    'uses' => 'AdminAuth\AdminLoginController@postLogin'
 ]);
 
 $router->get('admin/logout', [
@@ -55,6 +55,7 @@ $router->post('admin/logout', [
     'as'   => 'admin.logout',
     'uses' => 'AdminAuth\AdminLogoutController@destroy'
 ]);
+$router->post('admin/login2fa','AdminAuth\AdminLoginController@post2FALogin');
 
 /*
  * Front-end auth routes
