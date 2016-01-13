@@ -269,6 +269,9 @@ class FrontendAuthController extends Controller
         // Clear the user's 2FA code
         $this->twoFactorAuthHelper->clearUserTwoFactorAuthFields($userId);
 
+        // Update the user's last_login fields
+        $this->twoFactorAuthHelper->updateUserRecordWithLastlogin($userId);
+
         // Manually login user
         Auth::loginUsingId($request->session()->get('user_id'));
 

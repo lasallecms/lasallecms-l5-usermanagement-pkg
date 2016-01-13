@@ -53,7 +53,9 @@ class CreateUsersTable extends Migration {
                 $table->string('password', 60);
                 $table->rememberToken();
                 $table->boolean('activated')->default(true);
+
                 $table->dateTime('last_login')->nullable();
+                $table->string('last_login_ip')->nullable();
 
                 $table->boolean('enabled')->default(true);
 
