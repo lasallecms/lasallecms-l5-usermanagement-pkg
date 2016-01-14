@@ -109,7 +109,7 @@ return [
     | what user id should be INSERTed into these fields for front-end registration?.
     |
     */
-	'auth_user_id_for_created_by_for_frontend_user_registration' => 1,
+	'auth_user_id_for_created_by_for_frontend_user_registration' => true,
 
     /*
     |--------------------------------------------------------------------------
