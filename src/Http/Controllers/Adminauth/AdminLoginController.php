@@ -118,7 +118,7 @@ class AdminLoginController extends Controller
             //return redirect('admin/');
             return $this->handleUserWasAuthenticated($request, $throttles);
         }
-dd("postLogin after handleuser call");
+
 
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this

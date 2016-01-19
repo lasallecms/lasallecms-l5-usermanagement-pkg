@@ -37,6 +37,7 @@ If you discover any security related issues, please email Bob Bloom at "info at 
 
 ## Links
 
+* [Note on front-end registration](REGISTRATION.md)
 * [CONTRIBUTING](CONTRIBUTING.md)
 * [CHANGELOG](CHANGELOG.md)
 * [INSTALL](INSTALL.md)

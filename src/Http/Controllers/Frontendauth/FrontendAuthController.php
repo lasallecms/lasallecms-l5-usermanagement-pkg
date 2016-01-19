@@ -200,6 +200,8 @@ class FrontendAuthController extends Controller
      */
     protected function handleUserWasAuthenticated(Request $request, $throttles)
     {
+        $userId = AUTH::user()->id;
+
         if ($throttles) {
             $this->clearLoginAttempts($request);
         }
@@ -210,18 +212,22 @@ class FrontendAuthController extends Controller
 
         // Is front-end auth config set for 2FA login?
         if (!$this->twoFactorAuthHelper->isAuthConfigEnableTwoFactorAuthLogin()) {
+            // Update the user's last_login fields
+            $this->twoFactorAuthHelper->updateUserRecordWithLastlogin($userId);
             return redirect()->intended($this->redirectPath());
         }
 
         // Is this individual user enabled for 2FA?
-        if (!$this->twoFactorAuthHelper->isUserTwoFactorAuthEnabled(AUTH::user()->id)) {
+        if (!$this->twoFactorAuthHelper->isUserTwoFactorAuthEnabled($userId)) {
+            // Update the user's last_login fields
+            $this->twoFactorAuthHelper->updateUserRecordWithLastlogin($userId);
             return redirect()->intended($this->redirectPath());
         }
 
         // The user is actually logged in already, as standard login is performed first; then, the
         // Two Factor Authorization is performed. So, logout!
         if (Auth::check()) {
-            $this->twoFactorAuthHelper->setUserIdSessionVar(AUTH::user()->id);
+            $this->twoFactorAuthHelper->setUserIdSessionVar($userId);
             Auth::logout();
         }
 

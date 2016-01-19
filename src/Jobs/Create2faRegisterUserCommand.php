@@ -40,8 +40,13 @@ use Lasallecms\Lasallecmsapi\Users\CreateUserFormProcessing;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
-
-class CreateRegisterUserCommand extends Command implements SelfHandling
+/**
+ * This is the command used to validate ONLY front-end user registration data. No data persist here.
+ *
+ * Class Create2faRegisterUserCommand
+ * @package Lasallecms\Usermanagement\Jobs
+ */
+class Create2faRegisterUserCommand extends Command implements SelfHandling
 {
     use DispatchesJobs;
 
@@ -87,21 +92,7 @@ class CreateRegisterUserCommand extends Command implements SelfHandling
      */
     public function handle(CreateUserFormProcessing $createUserFormProcessing)
     {
-        // ==> YES, USE CreateUserFormProcessing
-
-        // ==> THE CreateUserCommand / CreateRegisterUserCommand (THIS FILE!!!!) calls CreateUserFormProcessing
-
-        return $createUserFormProcessing->quarterback($this);
-
-        // LOG USER IN
-        // $this->auth->login($user);
-
-        // create LaSalleCRM "people"
-
-        // email new registered user
-
-        // email super administrators
-
-        // return to a new registration welcome form
+        // call the 2FA method --> the one that validates only (does *not* persist)!
+        return $createUserFormProcessing->quarterback2fa($this);
     }
 }

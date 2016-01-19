@@ -48,7 +48,12 @@ use Illuminate\Support\Facades\Session;
 // Laravel classes
 use Illuminate\Http\Request;
 
-
+/**
+ * Regular Front-end user registration workflow
+ *
+ * Class Register2faUserController
+ * @package Lasallecms\Usermanagement\Http\Controllers\Frontendauth
+ */
 class RegisterUserController extends Controller
 {
     /**
@@ -63,8 +68,7 @@ class RegisterUserController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct() {
         //$this->middleware('guest', ['except' => 'logout']);
 
         // If logged in, then do not see the register form
@@ -85,10 +89,10 @@ class RegisterUserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getRegister()
-    {
+    public function getRegister() {
         return view('usermanagement::frontend.'.$this->frontend_template_name.'.register.register', [
-            'title' => 'Register'
+            'title'                    => 'Register',
+            'two_factor_auth_workflow' => false,
         ]);
     }
 
@@ -100,27 +104,7 @@ class RegisterUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function postRegister(Request $request)
-    {
-
-        /*
-
-        // Custom forbidden top level domain validation.
-        // If this validation fails then induce WSOD
-        // first, convert the request array to a string
-        $email = implode(" ",$request->only('email'));
-        if ( !$ForbiddenTLD->validateForbiddenTLD($email) ) return;
-
-        $this->auth->login($this->registrar->create($request->all()));
-
-        // assign this newly registered (and logged in) user the "Registered" group
-        $this->registrar->createusergroup($this->auth->ushttp://localhost/lasallecms-l5-packages/public/index.php/er()->id);
-
-        */
-
-
-
-
+    public function postRegister(Request $request) {
         $response = $this->dispatchFrom(CreateRegisterUserCommand::class, $request);
 
         Session::flash('status_code', $response['status_code'] );

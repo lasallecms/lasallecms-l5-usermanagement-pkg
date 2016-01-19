@@ -79,11 +79,24 @@ $router->post('logout','Frontendauth\FrontendAuthController@postLogout');
 /*
  * Front-end registration routes
  */
-Route::get('register', [
-    'as'   => 'auth.register',
-    'uses' => 'Frontendauth\RegisterUserController@getRegister'
-]);
-Route::post('register', 'Frontendauth\RegisterUserController@postRegister');
+if (config('auth.auth_enable_two_factor_authorization_frontend_registration')) {
+    // Two Factor Authorization workflow
+    Route::get('register', [
+        'as'   => 'auth.register',
+        'uses' => 'Frontendauth\Register2faUserController@get2faRegister'
+    ]);
+    Route::post('register2fa', 'Frontendauth\Register2faUserController@post2faRegisterDisplayForm');
+    Route::post('register', 'Frontendauth\Register2faUserController@post2faRegister');
+
+} else {
+    // Regular workflow
+    Route::get('register', [
+        'as'   => 'auth.register',
+        'uses' => 'Frontendauth\RegisterUserController@getRegister'
+    ]);
+    Route::post('register', 'Frontendauth\RegisterUserController@postRegister');
+}
+
 
 
 // Password reset link request routes...
