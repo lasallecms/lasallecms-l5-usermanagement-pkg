@@ -154,11 +154,13 @@ class AdminLoginController extends Controller
 
         // Is front-end auth config set for 2FA login?
         if (!$this->twoFactorAuthHelper->isAuthConfigEnableTwoFactorAuthAdminLogin()) {
+            $this->twoFactorAuthHelper->updateUserRecordWithLastlogin(AUTH::user()->id);
             return redirect('admin/');
         }
 
         // Is this individual user enabled for 2FA?
         if (!$this->twoFactorAuthHelper->isUserTwoFactorAuthEnabled(AUTH::user()->id)) {
+            $this->twoFactorAuthHelper->updateUserRecordWithLastlogin(AUTH::user()->id);
             return redirect('admin/');
         }
 
