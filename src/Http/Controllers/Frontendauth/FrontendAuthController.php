@@ -211,7 +211,11 @@ class FrontendAuthController extends Controller
         }
 
         // Is front-end auth config set for 2FA login?
-        if (!$this->twoFactorAuthHelper->isAuthConfigEnableTwoFactorAuthLogin()) {
+        if (
+            (!$this->twoFactorAuthHelper->isAuthConfigEnableTwoFactorAuthLogin())
+            && (!$this->twoFactorAuthHelper->isUserTwoFactorAuthEnabled($userId))
+        )
+        {
             // Update the user's last_login fields
             $this->twoFactorAuthHelper->updateUserRecordWithLastlogin($userId);
             return redirect()->intended($this->redirectPath());
@@ -219,17 +223,31 @@ class FrontendAuthController extends Controller
 
         // Is this individual user enabled for 2FA?
         if (!$this->twoFactorAuthHelper->isUserTwoFactorAuthEnabled($userId)) {
+
             // Update the user's last_login fields
             $this->twoFactorAuthHelper->updateUserRecordWithLastlogin($userId);
             return redirect()->intended($this->redirectPath());
         }
 
-        // The user is actually logged in already, as standard login is performed first; then, the
-        // Two Factor Authorization is performed. So, logout!
-        if (Auth::check()) {
-            $this->twoFactorAuthHelper->setUserIdSessionVar($userId);
+
+        // Does user have their country code and phone number specified?
+        if (!$this->twoFactorAuthHelper->existstUserCountryCodeAndPhoneNumber(AUTH::user()->id)) {
+
+            // User is actually logged in at this point, so must log 'em out
             Auth::logout();
+
+            return redirect($this->loginPath())
+                ->withInput($request->only('email'))
+                ->withErrors([
+                    'email' => 'You do not have a country code and/or a phone number for Two Factor Authorization. Please contact your administrator.',
+                ]);
         }
+
+        // Save the user's ID, as the user is actually logged in at this point
+        $this->twoFactorAuthHelper->setUserIdSessionVar(AUTH::user()->id);
+
+        // User is actually logged in at this point, so must log 'em out
+        Auth::logout();
 
         // Perform 2FA for login
         $this->twoFactorAuthHelper->doTwoFactorAuthLogin($request->session()->get('user_id'));
@@ -287,4 +305,20 @@ class FrontendAuthController extends Controller
         // Go somewhere!
         return redirect()->intended($this->twoFactorAuthHelper->redirectPathUponSuccessfulFrontendLogin());
      }
+
+
+    /**
+     * Do this if 2FA is enabled in config or for individual user AND user not have country code/phone number.
+     *
+     * @param $request
+     * @return mixed
+     */
+    public function doThisWhenUserNotHaveCountryCodeOrPhoneNumber($request) {
+        Auth::logout();
+        return redirect('admin/login')
+            ->withInput($request->only('email'))
+            ->withErrors([
+                'email' => 'You do not have a country code and/or a phone number for Two Factor Authorization. Please contact your administrator.',
+            ]);
+    }
 }

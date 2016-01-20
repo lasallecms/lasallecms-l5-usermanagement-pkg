@@ -152,24 +152,47 @@ class AdminLoginController extends Controller
             $this->clearLoginAttempts($request);
         }
 
-        // Is front-end auth config set for 2FA login?
-        if (!$this->twoFactorAuthHelper->isAuthConfigEnableTwoFactorAuthAdminLogin()) {
+        // Is config set for admin 2FA login?
+        if (
+            (!$this->twoFactorAuthHelper->isAuthConfigEnableTwoFactorAuthAdminLogin())
+            && (!$this->twoFactorAuthHelper->isUserTwoFactorAuthEnabled(AUTH::user()->id))
+        )
+        {
+
+            // Update the user's last_login fields
             $this->twoFactorAuthHelper->updateUserRecordWithLastlogin(AUTH::user()->id);
             return redirect('admin/');
         }
 
         // Is this individual user enabled for 2FA?
         if (!$this->twoFactorAuthHelper->isUserTwoFactorAuthEnabled(AUTH::user()->id)) {
+
+            // Update the user's last_login fields
             $this->twoFactorAuthHelper->updateUserRecordWithLastlogin(AUTH::user()->id);
             return redirect('admin/');
         }
 
-        // The user is actually logged in already, as standard login is performed first; then, the
-        // Two Factor Authorization is performed. So, logout!
-        if (Auth::check()) {
-            $this->twoFactorAuthHelper->setUserIdSessionVar(AUTH::user()->id);
+
+        // Does user have their country code and phone number specified?
+        if (!$this->twoFactorAuthHelper->existstUserCountryCodeAndPhoneNumber(AUTH::user()->id)) {
+
+            // User is actually logged in at this point, so must log 'em out
             Auth::logout();
+
+            return redirect('admin/login')
+                ->withInput($request->only('email'))
+                ->withErrors([
+                    'email' => 'You do not have a country code and/or a phone number for Two Factor Authorization. Please contact your administrator.',
+                ]);
         }
+
+
+        // Save the user's ID, as the user is actually logged in at this point
+        $this->twoFactorAuthHelper->setUserIdSessionVar(AUTH::user()->id);
+
+        // User is actually logged in at this point, so must log 'em out
+        Auth::logout();
+
 
         // Perform 2FA for login
         $this->twoFactorAuthHelper->doTwoFactorAuthLogin($request->session()->get('user_id'));
