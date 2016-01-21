@@ -37,12 +37,18 @@ use Lasallecms\Usermanagement\Http\Controllers\Controller;
 // Laravel facades
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Cookie;
 
 // Laravel classes
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Cookie\Cookiejar;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Validator;
+
+// Third party classes
+use Carbon\Carbon;
 
 /**
  * Class AdminLoginController
@@ -84,7 +90,7 @@ class AdminLoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function getLogin(Request $request) {
+    public function getLogin(Request $request, Response $response) {
         return view('usermanagement::admin/login/'.config('auth.admin_login_view_folder').'/login');
     }
 
@@ -123,7 +129,7 @@ class AdminLoginController extends Controller
         // If the login attempt was unsuccessful we will increment the number of attempts
         // to login and redirect the user back to the login form. Of course, when this
         // user surpasses their maximum number of attempts they will get locked out.
-        if ($throttles) {
+               dd("postlogin"); if ($throttles) {
             $this->incrementLoginAttempts($request);
         }
 
@@ -152,23 +158,45 @@ class AdminLoginController extends Controller
             $this->clearLoginAttempts($request);
         }
 
-        // Is config set for admin 2FA login?
-        if (
-            (!$this->twoFactorAuthHelper->isAuthConfigEnableTwoFactorAuthAdminLogin())
-            && (!$this->twoFactorAuthHelper->isUserTwoFactorAuthEnabled(AUTH::user()->id))
-        )
-        {
+        // I've succeeded avoiding CASE statements and ELSE clauses in conditionals. However, this time is different,
+        // because I've had a hard time flowing through my 2FA flow. Turns out that expressing it this way, I've
+        // removed some code! Once in a while, gotta bite the bullet, I suppose. Note my guilt!
 
-            // Update the user's last_login fields
-            $this->twoFactorAuthHelper->updateUserRecordWithLastlogin(AUTH::user()->id);
-            return redirect('admin/');
+        // Is config set for admin 2FA login?
+        if ($this->twoFactorAuthHelper->isAuthConfigEnableTwoFactorAuthAdminLogin()) {
+
+            // All users must go through the 2FA admin login process, so no skipping 2FA!
+
+        } else {
+
+            // The admin can still assign a user to go through the 2FA process, despite the global setting
+            if ($this->twoFactorAuthHelper->isUserTwoFactorAuthEnabled(AUTH::user()->id)) {
+
+                // Ah, this specific user must go through the 2FA admin login process
+
+            } else {
+
+                // We're here? Then no 2FA login required for admin login
+
+                // Update the user's last_login fields
+                $this->twoFactorAuthHelper->updateUserRecordWithLastlogin(AUTH::user()->id);
+
+                // Onward to the admin!
+                return redirect('admin/');
+            }
         }
 
-        // Is this individual user enabled for 2FA?
-        if (!$this->twoFactorAuthHelper->isUserTwoFactorAuthEnabled(AUTH::user()->id)) {
+
+        // Oh, well, 2FA it is!
+
+
+        // Um, maybe not. If the cookie exists, then no 2FA
+        if ($this->twoFactorAuthHelper->isCookieExists()) {
 
             // Update the user's last_login fields
             $this->twoFactorAuthHelper->updateUserRecordWithLastlogin(AUTH::user()->id);
+
+            // Onward to the admin!
             return redirect('admin/');
         }
 
@@ -192,7 +220,6 @@ class AdminLoginController extends Controller
 
         // User is actually logged in at this point, so must log 'em out
         Auth::logout();
-
 
         // Perform 2FA for login
         $this->twoFactorAuthHelper->doTwoFactorAuthLogin($request->session()->get('user_id'));
@@ -228,7 +255,7 @@ class AdminLoginController extends Controller
                 ]);
         }
 
-        // 2FA successful!
+        // 2FA validated!
 
         // Clear the user's 2FA code
         $this->twoFactorAuthHelper->clearUserTwoFactorAuthFields($userId);
@@ -242,7 +269,15 @@ class AdminLoginController extends Controller
         // Clear the 'user_id' session variable
         $this->twoFactorAuthHelper->clearUserIdSessionVar();
 
-        // Onward and forward to the admin!
-        return redirect('admin/');
+        // Set the cookie, and onward and forward to the admin!
+        $view = redirect('admin/');
+        $response = new \Illuminate\Http\Response($view);
+
+        if (!$this->twoFactorAuthHelper->isCookieExists()) {
+
+            $this->twoFactorAuthHelper->setCookie($response);
+        }
+
+        return $response;
     }
 }

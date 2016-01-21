@@ -176,6 +176,38 @@ return [
 	'auth_2fa_minutes_smscode_is_live' => env('APP_AUTH_2FA_MINUTES_SMSCODE_IS_LIVE'),
 
 
+	/*
+    |--------------------------------------------------------------------------
+    | Enable a cookie to excuse 2FA?
+    |--------------------------------------------------------------------------
+    |
+    | Do you want to enable a cookie that disables 2FA for users who have successfully
+    | logged in already via 2FA?
+    |
+    | True or false
+    |
+    */
+	'auth_2fa_cookie_enable' => true,
+
+	/*
+    |--------------------------------------------------------------------------
+    | 2FA cookie's lifetime?
+    |--------------------------------------------------------------------------
+    |
+    | How many DAYS do you want the "auth_2fa_cookie_enable" to last?
+    |
+    | The maximum number of days is 30.
+    |
+    | The minimum number of days is 1.
+    |
+    | The recommended number of days is 7.
+    |
+    | FYI: Cookies are set in Lasallecms\Helpers\TwoFactorAuth->setCookie($response)
+    |
+    */
+	'auth_2fa_cookie_lifetime_days' => 7,
+
+
 	/****************************************************************************************/
 	/*                      END: FRONT-END TWO FACTOR AUTHORIZATION                         */
 	/****************************************************************************************

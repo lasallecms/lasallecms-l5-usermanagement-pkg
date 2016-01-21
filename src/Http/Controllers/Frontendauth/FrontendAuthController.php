@@ -206,27 +206,46 @@ class FrontendAuthController extends Controller
             $this->clearLoginAttempts($request);
         }
 
-        if (method_exists($this, 'authenticated')) {
-            //return $this->authenticated($request, Auth::user());
+        // I've succeeded avoiding CASE statements and ELSE clauses in conditionals. However, this time is different,
+        // because I've had a hard time flowing through my 2FA flow. Turns out that expressing it this way, I've
+        // removed some code! Once in a while, gotta bite the bullet, I suppose. Note my guilt!
+
+        // Is config set for admin 2FA login?
+        if ($this->twoFactorAuthHelper->isAuthConfigEnableTwoFactorAuthAdminLogin()) {
+
+            // All users must go through the 2FA admin login process, so no skipping 2FA!
+
+        } else {
+
+            // The admin can still assign a user to go through the 2FA process, despite the global setting
+            if ($this->twoFactorAuthHelper->isUserTwoFactorAuthEnabled(AUTH::user()->id)) {
+
+                // Ah, this specific user must go through the 2FA admin login process
+
+            } else {
+
+                // We're here? Then no 2FA login required for admin login
+
+                // Update the user's last_login fields
+                $this->twoFactorAuthHelper->updateUserRecordWithLastlogin(AUTH::user()->id);
+
+                // Onward to the admin!
+                return redirect('admin/');
+            }
         }
 
-        // Is front-end auth config set for 2FA login?
-        if (
-            (!$this->twoFactorAuthHelper->isAuthConfigEnableTwoFactorAuthLogin())
-            && (!$this->twoFactorAuthHelper->isUserTwoFactorAuthEnabled($userId))
-        )
-        {
-            // Update the user's last_login fields
-            $this->twoFactorAuthHelper->updateUserRecordWithLastlogin($userId);
-            return redirect()->intended($this->redirectPath());
-        }
 
-        // Is this individual user enabled for 2FA?
-        if (!$this->twoFactorAuthHelper->isUserTwoFactorAuthEnabled($userId)) {
+        // Oh, well, 2FA it is!
+
+
+        // Um, maybe not. If the cookie exists, then no 2FA
+        if ($this->twoFactorAuthHelper->isCookieExists()) {
 
             // Update the user's last_login fields
-            $this->twoFactorAuthHelper->updateUserRecordWithLastlogin($userId);
-            return redirect()->intended($this->redirectPath());
+            $this->twoFactorAuthHelper->updateUserRecordWithLastlogin(AUTH::user()->id);
+
+            // Onward to the admin!
+            return redirect('admin/');
         }
 
 
@@ -302,8 +321,17 @@ class FrontendAuthController extends Controller
         // Clear the 'user_id' session variable
         $this->twoFactorAuthHelper->clearUserIdSessionVar();
 
-        // Go somewhere!
-        return redirect()->intended($this->twoFactorAuthHelper->redirectPathUponSuccessfulFrontendLogin());
+
+        // Set the cookie, and onward and forward to the admin!
+        $view = redirect()->intended($this->twoFactorAuthHelper->redirectPathUponSuccessfulFrontendLogin());
+        $response = new \Illuminate\Http\Response($view);
+
+        if (!$this->twoFactorAuthHelper->isCookieExists()) {
+
+            $this->twoFactorAuthHelper->setCookie($response);
+        }
+
+        return $response;
      }
 
 
