@@ -40,6 +40,7 @@ use Lasallecms\Helpers\TwoFactorAuth\TwoFactorAuthHelper;
 use Lasallecms\Usermanagement\Http\Controllers\Controller;
 use Lasallecms\Usermanagement\Jobs\CreateRegisterUserCommand;
 use Lasallecms\Usermanagement\Jobs\Create2faRegisterUserCommand;
+use Lasallecms\Usermanagement\Events\FrontendRegistrationWasSuccessful;
 
 // Laravel facades
 use Illuminate\Support\Facades\Auth;
@@ -226,10 +227,15 @@ class Register2faUserController extends Controller
                 ->withErrors($message);
         }
 
+        // Fire the custom event
+        event(new FrontendRegistrationWasSuccessful($response));
+
+
         if (config('auth.auth_display_register_confirmation_view_after_successful_frontend_registration')) {
             return view('usermanagement::frontend.'.$this->frontend_template_name.'.register_confirmed.register_confirmed', [
-                'title'    => 'Register Confirmation',
-                'username' => strtoupper($response['data']['name']),
+                'title'          => 'Register Confirmation',
+                'username'       => strtoupper($response['data']['name']),
+                'isUserLoggedIn' => Auth::check(),
             ]);
         }
 

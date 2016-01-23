@@ -37,12 +37,15 @@
                     <span class="fa fa-btn fa-home"></span>&nbsp;&nbsp;Home
                 </a>
 
-				<br /><br />
 
-				<!-- To Login Form -->
-				<a href="{{ route('auth.login') }}" class="btn btn-success">
-					<span class="fa fa-btn fa-sign-in"></span>&nbsp;&nbsp;Login
-				</a>
+				@if (!$isUserLoggedIn)
+					<br /><br />
+
+					<!-- To Login Form -->
+					<a href="{{ route('auth.login') }}" class="btn btn-success">
+						<span class="fa fa-btn fa-sign-in"></span>&nbsp;&nbsp;Login
+					</a>
+				@endif
 
 				<br /><br />
 

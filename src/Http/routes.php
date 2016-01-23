@@ -89,6 +89,7 @@ if (config('auth.auth_enable_two_factor_authorization_frontend_registration')) {
     Route::post('register', 'Frontendauth\Register2faUserController@post2faRegister');
 
 } else {
+
     // Regular workflow
     Route::get('register', [
         'as'   => 'auth.register',

@@ -39,6 +39,7 @@ use Lasallecms\Usermanagement\Http\Controllers\Controller;
 // Laravel facades
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Redirect;
 
 // Laravel classes
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -157,7 +158,7 @@ class FrontendAuthController extends Controller
         }
 
 
-        return redirect($this->loginPath())
+        return redirect()->route('auth.login')
             ->withInput($request->only($this->loginUsername(), 'remember'))
             ->withErrors([
                 $this->loginUsername() => $this->getFailedLoginMessage(),
@@ -229,8 +230,8 @@ class FrontendAuthController extends Controller
                 // Update the user's last_login fields
                 $this->twoFactorAuthHelper->updateUserRecordWithLastlogin(AUTH::user()->id);
 
-                // Onward to the admin!
-                return redirect('admin/');
+                // Onward to the front-end
+                return Redirect::route('home');
             }
         }
 
@@ -244,8 +245,8 @@ class FrontendAuthController extends Controller
             // Update the user's last_login fields
             $this->twoFactorAuthHelper->updateUserRecordWithLastlogin(AUTH::user()->id);
 
-            // Onward to the admin!
-            return redirect('admin/');
+            // Onward to the front-end
+            return Redirect::route('home');
         }
 
 
@@ -255,7 +256,7 @@ class FrontendAuthController extends Controller
             // User is actually logged in at this point, so must log 'em out
             Auth::logout();
 
-            return redirect($this->loginPath())
+            return redirect()->route('auth.login')
                 ->withInput($request->only('email'))
                 ->withErrors([
                     'email' => 'You do not have a country code and/or a phone number for Two Factor Authorization. Please contact your administrator.',
@@ -333,20 +334,4 @@ class FrontendAuthController extends Controller
 
         return $response;
      }
-
-
-    /**
-     * Do this if 2FA is enabled in config or for individual user AND user not have country code/phone number.
-     *
-     * @param $request
-     * @return mixed
-     */
-    public function doThisWhenUserNotHaveCountryCodeOrPhoneNumber($request) {
-        Auth::logout();
-        return redirect('admin/login')
-            ->withInput($request->only('email'))
-            ->withErrors([
-                'email' => 'You do not have a country code and/or a phone number for Two Factor Authorization. Please contact your administrator.',
-            ]);
-    }
 }

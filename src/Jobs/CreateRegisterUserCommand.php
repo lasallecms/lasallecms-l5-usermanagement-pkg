@@ -92,16 +92,5 @@ class CreateRegisterUserCommand extends Command implements SelfHandling
         // ==> THE CreateUserCommand / CreateRegisterUserCommand (THIS FILE!!!!) calls CreateUserFormProcessing
 
         return $createUserFormProcessing->quarterback($this);
-
-        // LOG USER IN
-        // $this->auth->login($user);
-
-        // create LaSalleCRM "people"
-
-        // email new registered user
-
-        // email super administrators
-
-        // return to a new registration welcome form
     }
 }

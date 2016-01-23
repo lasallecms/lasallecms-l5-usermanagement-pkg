@@ -122,6 +122,19 @@ return [
     */
     'auth_allow_two_factor_authorization_frontend_registration' => true,
 
+
+
+	/*
+    |--------------------------------------------------------------------------
+    | Upon successful front-end registration, do you want to automatically login?
+    |--------------------------------------------------------------------------
+    |
+    | If the user successfully registers via the front-end, do you want to
+    | automatically login that user?
+    |
+    */
+	'auth_frontend_registration_successful_auto_login' => true,
+
     /****************************************************************************************/
     /*                        END: FRONT-END REGISTRATION                                   */
     /****************************************************************************************/

@@ -55,15 +55,15 @@
 				</div>
 
 
-                <br />
-                <button class="btn btn-info">
-                    During registration,<br />we send you a code via text message,<br />that you then enter in the next screen.
-                </button>
-                <br /><br />
-
-
                 {{-- 2FA Specific Fields --}}
                 @if ($two_factor_auth_workflow)
+
+					<br />
+					<button class="btn btn-info">
+						During registration,<br />we send you a code via text message,<br />that you then enter in the next screen.
+					</button>
+					<br /><br />
+
                     <div style="margin-bottom: 25px" class="input-group">
                         <span class="input-group-addon"><i class="fa fa-btn fa-map-o"></i></span>
                         {!! Form::text('phone_country_code', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'country code (Canada and US is "1")']) !!}

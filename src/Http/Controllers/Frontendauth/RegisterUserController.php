@@ -24,7 +24,6 @@ namespace Lasallecms\Usermanagement\Http\Controllers\Frontendauth;
  *
  *
  * @package    User Management package for the LaSalle Content Management System
-
  * @link       http://LaSalleCMS.com
  * @copyright  (c) 2015, The South LaSalle Trading Corporation
  * @license    http://www.gnu.org/licenses/gpl-3.0.html
@@ -38,10 +37,12 @@ namespace Lasallecms\Usermanagement\Http\Controllers\Frontendauth;
 // LaSalle Software
 use Lasallecms\Usermanagement\Http\Controllers\Controller;
 use Lasallecms\Usermanagement\Jobs\CreateRegisterUserCommand;
+use Lasallecms\Usermanagement\Events\FrontendRegistrationWasSuccessful;
 
 // Laravel facades
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
@@ -126,10 +127,18 @@ class RegisterUserController extends Controller
                 ->withErrors($message);
         }
 
+        // User registration was successful
+
+        // Fire the custom event
+        event(new FrontendRegistrationWasSuccessful($response));
+
+
+        // Display the registration confirmation view, if the config says so
         if (config('auth.auth_display_register_confirmation_view_after_successful_frontend_registration')) {
             return view('usermanagement::frontend.'.$this->frontend_template_name.'.register_confirmed.register_confirmed', [
-                'title'    => 'Register Confirmation',
-                'username' => strtoupper($response['data']['name']),
+                'title'          => 'Register Confirmation',
+                'username'       => strtoupper($response['data']['name']),
+                'isUserLoggedIn' => Auth::check(),
             ]);
         }
 
