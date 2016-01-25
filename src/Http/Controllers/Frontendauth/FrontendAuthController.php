@@ -40,6 +40,7 @@ use Lasallecms\Usermanagement\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 // Laravel classes
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -182,8 +183,14 @@ class FrontendAuthController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function postLogout() {
+
+        // logout the user
         Auth::logout();
 
+        // remove all of the user's session data
+        Session::flush();
+
+        // display the logout confirmed view
         return view('usermanagement::frontend.'.$this->frontend_template_name.'.logout_confirmed.logout_confirmed', [
             'title' => 'Logout Confirmation'
         ]);

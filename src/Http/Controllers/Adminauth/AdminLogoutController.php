@@ -28,11 +28,20 @@
  *
  */
 
+// LaSalle Software
 use Lasallecms\Usermanagement\Http\Controllers\Controller;
+
+// Laravel Facades
+use Illuminate\Support\Facades\Session;
+
+// Laravel classes
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
 
-
+/**
+ * Class AdminLogoutController
+ * @package Lasallecms\Usermanagement\Http\Controllers\AdminAuth
+ */
 class AdminLogoutController extends Controller {
 
     /**
@@ -65,7 +74,14 @@ class AdminLogoutController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(Guard $auth) {
+
+        // logout the user
         $auth->logout();
+
+        // remove all of the user's session data
+        Session::flush();
+
+        // display the logout confirmed view
         return view('usermanagement::admin/logout_confirmation/confirmed');
     }
 }
