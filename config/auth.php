@@ -108,8 +108,10 @@ return [
     | a user id still needs to be in the "created_by" and "updated_by" fields. So,
     | what user id should be INSERTed into these fields for front-end registration?.
     |
+    | For these automated INSERTs, probably should use first-among-equals user ID
+    |
     */
-	'auth_user_id_for_created_by_for_frontend_user_registration' => true,
+	'auth_user_id_for_created_by_for_frontend_user_registration' => 1,
 
     /*
     |--------------------------------------------------------------------------
@@ -134,6 +136,64 @@ return [
     |
     */
 	'auth_frontend_registration_successful_auto_login' => true,
+
+	/*
+    |--------------------------------------------------------------------------
+    | Upon successful front-end registration, do you want to send a welcome email?
+    |--------------------------------------------------------------------------
+    |
+    | If the user successfully registers via the front-end, do you want to
+    | send them a welcome email?
+    |
+    */
+	'auth_frontend_registration_successful_send_welcome_email' => true,
+
+	/*
+    |--------------------------------------------------------------------------
+    | Upon successful front-end registration, do you want to send admins an email?
+    |--------------------------------------------------------------------------
+    |
+    | If the user successfully registers via the front-end, do you want to
+    | send the super administrators a notification email?
+    |
+    */
+	'auth_frontend_registration_successful_send_admins_email' => true,
+
+	/*
+    |--------------------------------------------------------------------------
+    | Send the admin notification emails to which super administrators?
+    |--------------------------------------------------------------------------
+    |
+    | If the user successfully registers via the front-end, and you want to
+    | send the super administrators a notification email, then which super
+    | administrators do you want to receive this notification email?
+    |
+    | List all the applicable super administrators, including the "first
+    | among equals" if so applicable.
+    |
+    | Users must be super administrators.
+    |
+    | If this array is empty, then will use the first-among-equals email.
+    |
+    | An array.
+    |
+    */
+	'auth_frontend_registration_successful_admins_who_receive_notification_email' => [
+
+	],
+
+	/*
+    |--------------------------------------------------------------------------
+    | Upon successful front-end registration, do you want to create LaSalleCRM records?
+    |--------------------------------------------------------------------------
+    |
+    | If the user successfully registers via the front-end, do you want to
+    | create the LaSalleCRM records?
+    |
+    | If LaSalleCRM is not installed, this step is ignore, even when set to true.
+    |
+    */
+	'auth_frontend_registration_successful_create_lasallecrm_records' => true,
 
     /****************************************************************************************/
     /*                        END: FRONT-END REGISTRATION                                   */
@@ -222,7 +282,7 @@ return [
 
 
 	/****************************************************************************************/
-	/*                      END: FRONT-END TWO FACTOR AUTHORIZATION                         */
+	/*                      END: FRONT-END TWO FACTOR AUTHORIZATION                          */
 	/****************************************************************************************
 
 

@@ -142,6 +142,7 @@ class RegisterUserController extends Controller
             ]);
         }
 
+
         $name = strtoupper($response['data']['name']);
         $message = 'You successfully registered!';
         Session::flash('message', $message);

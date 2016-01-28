@@ -181,10 +181,9 @@ class Register2faUserController extends Controller
             ])
             ->withInput($request->only('name', 'email', 'phone_country_code', 'phone_number'))
             ->withErrors([
-                'Two Factor Authorization' => 'Your two factor authorization code expired. Please re-login.'
+                'Two Factor Authorization' => 'Your two factor authorization code expired. Please re-start your registration.'
             ]);
         }
-
 
         if (!$this->twoFactorAuthHelper->isInputtedTwoFactorAuthCodeCorrect()) {
 

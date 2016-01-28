@@ -59,6 +59,7 @@ class FrontendAuthController extends Controller
 {
     use AuthenticatesUsers, ThrottlesLogins;
 
+
     /**
      * Where to redirect users when frontend login fails.
      *
@@ -180,7 +181,7 @@ class FrontendAuthController extends Controller
     /**
      * Log the user out of the application.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Responseuse Illuminate\Support\Facades\Auth;
      */
     public function postLogout() {
 
@@ -331,14 +332,22 @@ class FrontendAuthController extends Controller
 
 
         // Set the cookie, and onward and forward to the admin!
-        $view = redirect()->intended($this->twoFactorAuthHelper->redirectPathUponSuccessfulFrontendLogin());
-        $response = new \Illuminate\Http\Response($view);
 
-        if (!$this->twoFactorAuthHelper->isCookieExists()) {
+        // Ah ah ah! Instantiating a new response view and returning it is causing a message to display
+        // before the actual view is rendered. This message looks like cookie information, but it displays
+        // whether or not a cookie is created. So... I'm going to see if we need a cookie, and if not,
+        // return the view as usual.
 
-            $this->twoFactorAuthHelper->setCookie($response);
+        if ((!$this->twoFactorAuthHelper->isCookieExists()) && (config('auth.auth_2fa_cookie_enable'))) {
+
+            // Create the cookie...
+            $view = redirect()->intended($this->twoFactorAuthHelper->redirectPathUponSuccessfulFrontendLogin());
+            $response = new \Illuminate\Http\Response($view);
+            $response = $this->twoFactorAuthHelper->setCookie($response);
+            return $response;
         }
 
-        return $response;
+        // Oh, no cookie writing at all...
+        return redirect()->intended($this->twoFactorAuthHelper->redirectPathUponSuccessfulFrontendLogin());
      }
 }

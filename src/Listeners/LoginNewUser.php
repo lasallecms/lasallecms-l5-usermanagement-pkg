@@ -45,7 +45,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
  * Class LoginNewUser
  * @package Lasallecms\Usermanagement\Listeners
  */
-class LoginNewUser
+class LoginNewUser implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -65,8 +65,10 @@ class LoginNewUser
      */
     public function handle(FrontendRegistrationWasSuccessful $event)
     {
-        if (config('auth.auth_frontend_registration_successful_auto_login')) {
-            Auth::loginUsingId($event->data['id']);
+        if (!config('auth.auth_frontend_registration_successful_auto_login')) {
+            return;
         }
+
+        Auth::loginUsingId($event->data['id']);
     }
 }

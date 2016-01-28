@@ -48,21 +48,11 @@ class UsermanagementEventServiceProvider extends ServiceProvider
     protected $listen = [
         'Lasallecms\Usermanagement\Events\FrontendRegistrationWasSuccessful' => [
             'Lasallecms\Usermanagement\Listeners\LoginNewUser',
+            'Lasallecms\Usermanagement\Listeners\WelcomeEmailNewUser',
+            'Lasallecms\Usermanagement\Listeners\SuperAdminNotificationNewUser',
+            'Lasallecms\Usermanagement\Listeners\CreateLaSalleCRMRecordsNewUser'
         ],
     ];
-
-    /*
-     ADD THESE !!!
-    // email new registered user
-    // email super administrators
-    // add person to LaSalleCRM --> and email, and cell phone
-
-    // THEN QUEUE 'EM!
-
-    // THEN UPGRADE TWILIO ACCOUNT
-     */
-
-
 
     /**
      * The event subscribe mappings for the application.
