@@ -47,7 +47,6 @@ class UsermanagementEventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         'Lasallecms\Usermanagement\Events\FrontendRegistrationWasSuccessful' => [
-            'Lasallecms\Usermanagement\Listeners\LoginNewUser',
             'Lasallecms\Usermanagement\Listeners\WelcomeEmailNewUser',
             'Lasallecms\Usermanagement\Listeners\SuperAdminNotificationNewUser',
             'Lasallecms\Usermanagement\Listeners\CreateLaSalleCRMRecordsNewUser'

@@ -48,13 +48,18 @@ class FrontendRegistrationWasSuccessful extends Event
 {
     use SerializesModels;
 
+    /**
+     * @var array
+     */
     public $data;
 
 
     /**
      * Create a new event instance.
      *
-     * @param array   $data   The data returned by the create user process     *
+     * @param  array   $data   The data returned by the create user process
+     * @param  Lasallecms\Lasallecmsapi\Repositories\UserRepository $userRepository
+     * @return void
      */
     public function __construct($data)
     {
@@ -73,6 +78,7 @@ class FrontendRegistrationWasSuccessful extends Event
         return [];
     }
 
+
     /**
      * I want to use Lasallecms/Lasallecmsapi/Repositories/UserRepository, but I'm getting an
      * exception. It worked, but now it does not work. So, I'm going to just do the ID retrieval
@@ -84,10 +90,9 @@ class FrontendRegistrationWasSuccessful extends Event
      * @return int
      */
     public function findUserIdByEmail($email) {
-
         return DB::table('users')
             ->where('email', '=', $email)
             ->value('id')
-        ;
+            ;
     }
 }

@@ -38,6 +38,7 @@ namespace Lasallecms\Usermanagement\Http\Controllers\Frontendauth;
 use Lasallecms\Usermanagement\Http\Controllers\Controller;
 use Lasallecms\Usermanagement\Jobs\CreateRegisterUserCommand;
 use Lasallecms\Usermanagement\Events\FrontendRegistrationWasSuccessful;
+use Lasallecms\Lasallecmsapi\Repositories\UserRepository;
 
 // Laravel facades
 use Illuminate\Support\Facades\Auth;
@@ -65,11 +66,18 @@ class RegisterUserController extends Controller
     protected $frontend_template_name;
 
     /**
+     * @var Lasallecms\Lasallecmsapi\Repositories\UserRepository
+     */
+    protected $userRepository;
+
+
+    /**
      * Create a new authentication controller instance.
      *
+     * @param  Lasallecms\Lasallecmsapi\Repositories\UserRepository $userRepository
      * @return void
      */
-    public function __construct() {
+    public function __construct(UserRepository $userRepository) {
         //$this->middleware('guest', ['except' => 'logout']);
 
         // If logged in, then do not see the register form
@@ -81,8 +89,9 @@ class RegisterUserController extends Controller
         // Run through further custom frontend auth checks
         $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\FrontendCustomLoginChecks::class);
 
-        //$this->frontend_template_name = Config::get('lasallecmsfrontend.frontend_template_name');
         $this->frontend_template_name = config('lasallecmsfrontend.frontend_template_name');
+
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -128,6 +137,14 @@ class RegisterUserController extends Controller
         }
 
         // User registration was successful
+
+
+        // Login registrant
+        if (config('auth.auth_frontend_registration_successful_auto_login')) {
+            $userId = $this->userRepository->findUserIdByEmail($response['data']['email']);
+            Auth::loginUsingId($userId);
+        }
+
 
         // Fire the custom event
         event(new FrontendRegistrationWasSuccessful($response));

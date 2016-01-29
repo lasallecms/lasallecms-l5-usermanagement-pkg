@@ -41,6 +41,7 @@ use Lasallecms\Usermanagement\Http\Controllers\Controller;
 use Lasallecms\Usermanagement\Jobs\CreateRegisterUserCommand;
 use Lasallecms\Usermanagement\Jobs\Create2faRegisterUserCommand;
 use Lasallecms\Usermanagement\Events\FrontendRegistrationWasSuccessful;
+use Lasallecms\Lasallecmsapi\Repositories\UserRepository;
 
 // Laravel facades
 use Illuminate\Support\Facades\Auth;
@@ -76,9 +77,17 @@ class Register2faUserController extends Controller
     protected $twoFactorAuthHelper;
 
     /**
-     * @param \Lasallecms\Helpers\TwoFactorAuth\TwoFactorAuthHelper
+     * @var Lasallecms\Lasallecmsapi\Repositories\UserRepository
      */
-    public function __construct(TwoFactorAuthHelper $twoFactorAuthHelper) {
+    protected $userRepository;
+
+
+    /**
+     * @param  Lasallecms\Helpers\TwoFactorAuth\TwoFactorAuthHelper $twoFactorAuthHelper
+     * @param  Lasallecms\Lasallecmsapi\Repositories\UserRepository $userRepository
+     * @return void
+     */
+    public function __construct(TwoFactorAuthHelper $twoFactorAuthHelper, UserRepository $userRepository) {
         //$this->middleware('guest', ['except' => 'logout']);
 
         // If logged in, then do not see the register form
@@ -93,6 +102,8 @@ class Register2faUserController extends Controller
         $this->frontend_template_name = config('lasallecmsfrontend.frontend_template_name');
 
         $this->twoFactorAuthHelper = $twoFactorAuthHelper;
+
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -225,6 +236,16 @@ class Register2faUserController extends Controller
                 ->withInput($response['data'])
                 ->withErrors($message);
         }
+
+        // User registration was successful
+
+
+        // Login registrant
+        if (config('auth.auth_frontend_registration_successful_auto_login')) {
+            $userId = $this->userRepository->findUserIdByEmail($response['data']['email']);
+            Auth::loginUsingId($userId);
+        }
+
 
         // Fire the custom event
         event(new FrontendRegistrationWasSuccessful($response));
