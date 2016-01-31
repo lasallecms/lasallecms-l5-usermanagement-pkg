@@ -132,6 +132,16 @@ class FrontendAuthController extends Controller
      */
     public function postLogin(Request $request)
     {
+        if (config('auth.auth_users_log_into_front_end_require_terms_of_service')) {
+            if (!$request->input('terms-of-service')) {
+                return redirect()->route('auth.login')
+                    ->withInput($request->only($this->loginUsername(), 'remember'))
+                    ->withErrors([
+                        'terms-of-service' => 'Please read our Terms of Service',
+                    ]);
+            }
+        }
+
         $this->validate($request, [
             $this->loginUsername() => 'required', 'password' => 'required',
         ]);
@@ -209,8 +219,6 @@ class FrontendAuthController extends Controller
      */
     protected function handleUserWasAuthenticated(Request $request, $throttles)
     {
-        $userId = AUTH::user()->id;
-
         if ($throttles) {
             $this->clearLoginAttempts($request);
         }
