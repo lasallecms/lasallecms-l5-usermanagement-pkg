@@ -120,7 +120,7 @@ class CustomAdminAuthChecks  {
      * @return bool
      */
     public function isAllowedIPAddressesCheck() {
-        if (config('auth.perform_the_ip_addresses_for_admin_check'))
+        if (config('lasallecmsusermanagement.perform_the_ip_addresses_for_admin_check'))
         {
             return true;
         } else {
@@ -135,7 +135,7 @@ class CustomAdminAuthChecks  {
      * @return bool
      */
     public function isAllowedUsersCheck() {
-        if (config('auth.perform_the_usergroups_allowed_to_access_admin_check'))
+        if (config('lasallecmsusermanagement.perform_the_usergroups_allowed_to_access_admin_check'))
         {
             return true;
         } else {
@@ -150,7 +150,7 @@ class CustomAdminAuthChecks  {
      * @return bool
      */
     public function isUserGroupCheck() {
-        if (config('auth.perform_the_usergroups_allowed_to_access_admin_check'))
+        if (config('lasallecmsusermanagement.perform_the_usergroups_allowed_to_access_admin_check'))
         {
             return true;
         } else {
@@ -168,7 +168,7 @@ class CustomAdminAuthChecks  {
     * @return array
     */
     public function getAllowedIPAddresses() {
-        return config('auth.admin_ip_addresses_allowed');
+        return config('lasallecmsusermanagement.admin_ip_addresses_allowed');
     }
 
     /*
@@ -189,7 +189,7 @@ class CustomAdminAuthChecks  {
      * @return array
      */
     public function getAllowedUsers() {
-        return config('auth.users_allowed_to_access_the_admin');
+        return config('lasallecmsusermanagement.users_allowed_to_access_the_admin');
     }
 
     /*
@@ -212,7 +212,7 @@ class CustomAdminAuthChecks  {
      * @return array
      */
     public function getAllowedUserGroups() {
-        return config('auth.usergroups_allowed_to_access_the_admin');
+        return config('lasallecmsusermanagement.usergroups_allowed_to_access_the_admin');
     }
 
     /*

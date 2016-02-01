@@ -241,7 +241,7 @@ class Register2faUserController extends Controller
 
 
         // Login registrant
-        if (config('auth.auth_frontend_registration_successful_auto_login')) {
+        if (config('lasallecmsusermanagement.auth_frontend_registration_successful_auto_login')) {
             $userId = $this->userRepository->findUserIdByEmail($response['data']['email']);
             Auth::loginUsingId($userId);
         }

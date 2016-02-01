@@ -91,7 +91,7 @@ class AdminLoginController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function getLogin(Request $request, Response $response) {
-        return view('usermanagement::admin/login/'.config('auth.admin_login_view_folder').'/login');
+        return view('usermanagement::admin/login/'.config('lasallecmsusermanagement.admin_login_view_folder').'/login');
     }
 
 
@@ -224,7 +224,7 @@ class AdminLoginController extends Controller
         // Perform 2FA for login
         $this->twoFactorAuthHelper->doTwoFactorAuthLogin($request->session()->get('user_id'));
 
-        return view('usermanagement::admin/login/'.config('auth.admin_login_view_folder').'/.two_factor_auth');
+        return view('usermanagement::admin/login/'.config('lasallecmsusermanagement.admin_login_view_folder').'/.two_factor_auth');
     }
 
 
@@ -240,7 +240,7 @@ class AdminLoginController extends Controller
 
         // Did the user take too much time to fill out the form?
         if ($this->twoFactorAuthHelper->isTwoFactorAuthFormTimeout($userId)) {
-            return view('usermanagement::admin/login/'.config('auth.admin_login_view_folder').'/login')
+            return view('usermanagement::admin/login/'.config('lasallecmsusermanagement.admin_login_view_folder').'/login')
                 ->withErrors([
                     'Two Factor Authorization' => 'Your two factor authorization code expired. Please re-login.'
                 ]);
@@ -249,7 +249,7 @@ class AdminLoginController extends Controller
         // Is the code correct?
         // If not, go back to the 2FA form with an error message
         if (!$this->twoFactorAuthHelper->isInputtedTwoFactorAuthCodeCorrect($userId)) {
-            return view('usermanagement::admin/login/'.config('auth.admin_login_view_folder').'/.two_factor_auth')
+            return view('usermanagement::admin/login/'.config('lasallecmsusermanagement.admin_login_view_folder').'/.two_factor_auth')
                 ->withErrors([
                     'Two Factor Authorization' => 'Your entered an incorrect two factor authorization code. Please try again.'
                 ]);

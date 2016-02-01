@@ -132,7 +132,7 @@ class FrontendAuthController extends Controller
      */
     public function postLogin(Request $request)
     {
-        if (config('auth.auth_users_log_into_front_end_require_terms_of_service')) {
+        if (config('lasallecmsusermanagement.auth_users_log_into_front_end_require_terms_of_service')) {
             if (!$request->input('terms-of-service')) {
                 return redirect()->route('auth.login')
                     ->withInput($request->only($this->loginUsername(), 'remember'))
@@ -346,7 +346,7 @@ class FrontendAuthController extends Controller
         // whether or not a cookie is created. So... I'm going to see if we need a cookie, and if not,
         // return the view as usual.
 
-        if ((!$this->twoFactorAuthHelper->isCookieExists()) && (config('auth.auth_2fa_cookie_enable'))) {
+        if ((!$this->twoFactorAuthHelper->isCookieExists()) && (config('lasallecmsusermanagement.auth_2fa_cookie_enable'))) {
 
             // Create the cookie...
             $view = redirect()->intended($this->twoFactorAuthHelper->redirectPathUponSuccessfulFrontendLogin());

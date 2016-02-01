@@ -33,7 +33,7 @@
 
 
     <!-- Custom styles for this template http://getbootstrap.com/examples/navbar-fixed-top/-->
-    <link media="all" type="text/css" rel="stylesheet" href="{{{ Config::get('app.url') }}}/packages/usermanagement/admin/logout/{{{ Config::get('auth.admin_login_view_folder') }}}/logout.css" >
+    <link media="all" type="text/css" rel="stylesheet" href="{{{ Config::get('app.url') }}}/packages/usermanagement/admin/logout/{{{ Config::get('lasallecmsusermanagement.admin_login_view_folder') }}}/logout.css" >
 </head>
 
 

@@ -66,7 +66,7 @@ class SuperAdminNotificationNewUser implements ShouldQueue
      */
     public function handle(FrontendRegistrationWasSuccessful $event)
     {
-        if (!config('auth.auth_frontend_registration_successful_send_admins_email')) {
+        if (!config('lasallecmsusermanagement.auth_frontend_registration_successful_send_admins_email')) {
             return;
         }
 
@@ -75,7 +75,7 @@ class SuperAdminNotificationNewUser implements ShouldQueue
 
         // If there are no super administrators who are specified in the config setting, use the first-among-equals admin
         if (count($superAdminEmails) == 0) {
-            $superAdminEmails[] = config('auth.administrator_first_among_equals_email');
+            $superAdminEmails[] = config('lasallecmsusermanagement.administrator_first_among_equals_email');
         }
 
         // create data array from the event DTO

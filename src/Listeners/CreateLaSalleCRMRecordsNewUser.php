@@ -91,7 +91,7 @@ class CreateLaSalleCRMRecordsNewUser implements ShouldQueue
     //public function handle(FrontendRegistrationWasSuccessful $event)
     public function handle(FrontendRegistrationWasSuccessful $event)
     {
-        if (!config('auth.auth_frontend_registration_successful_create_lasallecrm_records')) {
+        if (!config('lasallecmsusermanagement.auth_frontend_registration_successful_create_lasallecrm_records')) {
             return;
         }
 

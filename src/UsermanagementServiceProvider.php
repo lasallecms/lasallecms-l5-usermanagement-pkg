@@ -80,10 +80,10 @@ class UsermanagementServiceProvider extends ServiceProvider {
         // config filename is "auth.php" instead of "usermanagement.php" because
         // we are extracting an actual native app config file, instead of
         // creating a brand new config file
-        $configuration = realpath(__DIR__.'/../config/auth.php');
+        $configuration = realpath(__DIR__.'/../config/lasallecmsusermanagement.php');
 
         $this->publishes([
-            $configuration => config_path('auth.php'),
+            $configuration => config_path('lasallecmsusermanagement.php'),
         ]);
     }
 

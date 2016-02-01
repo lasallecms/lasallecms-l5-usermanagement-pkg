@@ -48,7 +48,7 @@ class FrontendCustomLoginChecks
      */
     public function handle($request, Closure $next)
     {
-        if (!Config::get('auth.auth_allow_users_to_log_into_front_end'))
+        if (!Config::get('lasallecmsusermanagement.auth_allow_users_to_log_into_front_end'))
         {
             return redirect()->back();
         }

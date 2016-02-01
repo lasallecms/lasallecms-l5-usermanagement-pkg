@@ -64,7 +64,7 @@ class AdminLogoutController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function logout(Guard $auth) {
-        return view('usermanagement::admin/logout/'.config('auth.admin_logout_view_folder').'/logout');
+        return view('usermanagement::admin/logout/'.config('lasallecmsusermanagement.admin_logout_view_folder').'/logout');
     }
 
 

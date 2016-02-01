@@ -65,7 +65,7 @@ class WelcomeEmailNewUser implements ShouldQueue
      */
     public function handle(FrontendRegistrationWasSuccessful $event)
     {
-        if (!config('auth.auth_frontend_registration_successful_send_welcome_email')) {
+        if (!config('lasallecmsusermanagement.auth_frontend_registration_successful_send_welcome_email')) {
             return;
         }
 
