@@ -77,7 +77,7 @@
 
                     <div class="col-sm-12 controls">
                         <button onclick="goBack()" class="btn btn-success btn-lg">
-                            <i class="glyphicon glyphicon-removeA"></i> Oops! <strong>No</strong>, I want to go back!
+                            <i class="fa fa-timesA"></i> Oops! <strong>No</strong>, I want to go back!
                         </button>
                     </div>
 
