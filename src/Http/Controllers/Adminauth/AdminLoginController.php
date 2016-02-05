@@ -269,15 +269,23 @@ class AdminLoginController extends Controller
         // Clear the 'user_id' session variable
         $this->twoFactorAuthHelper->clearUserIdSessionVar();
 
-        // Set the cookie, and onward and forward to the admin!
-        $view = redirect('admin/');
-        $response = new \Illuminate\Http\Response($view);
+        // Set the cookie, and onward and forward to the frontend!
 
-        if (!$this->twoFactorAuthHelper->isCookieExists()) {
+        // Ah ah ah! Instantiating a new response view and returning it is causing a message to display
+        // before the actual view is rendered. This message looks like cookie information, but it displays
+        // whether or not a cookie is created. So... I'm going to see if we need a cookie, and if not,
+        // return the view as usual.
 
-            $this->twoFactorAuthHelper->setCookie($response);
+        if ((!$this->twoFactorAuthHelper->isCookieExists()) && (config('lasallecmsusermanagement.auth_2fa_cookie_enable'))) {
+
+            // Create the cookie...
+            $view = redirect('admin/');
+            $response = new \Illuminate\Http\Response($view);
+            $response = $this->twoFactorAuthHelper->setCookie($response);
+            return $response;
         }
 
-        return $response;
+        // Oh, no cookie writing at all...
+        return redirect('admin/');
     }
 }

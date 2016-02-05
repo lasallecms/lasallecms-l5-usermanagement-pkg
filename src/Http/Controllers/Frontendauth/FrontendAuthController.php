@@ -339,7 +339,7 @@ class FrontendAuthController extends Controller
         $this->twoFactorAuthHelper->clearUserIdSessionVar();
 
 
-        // Set the cookie, and onward and forward to the admin!
+        // Set the cookie, and onward and forward to the frontend!
 
         // Ah ah ah! Instantiating a new response view and returning it is causing a message to display
         // before the actual view is rendered. This message looks like cookie information, but it displays
