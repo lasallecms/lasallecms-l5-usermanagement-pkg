@@ -263,6 +263,6 @@ class Register2faUserController extends Controller
         $message = 'You successfully registered!';
         Session::flash('message', $message);
 
-        return Redirect::route('users.index');
+        return Redirect::route('home');
     }
 }
