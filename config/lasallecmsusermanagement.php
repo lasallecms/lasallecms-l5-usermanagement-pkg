@@ -55,19 +55,30 @@ return [
 
 
     /****************************************************************************************/
-    /*                 START: FRONT-END LOGIN TERMS OF SERVICE                              */
+    /*                     START: FRONT-END TERMS OF SERVICE                                */
     /****************************************************************************************/
 
     /*
-    |--------------------------------------------------------------------------
-    | Require front-end users to click "I have read the Terms of Service"
-    |--------------------------------------------------------------------------
+    |-----------------------------------------------------------------------------------------
+    | Require front-end users to click "I have read the Terms of Service" when logging in?
+    |-----------------------------------------------------------------------------------------
     |
     | Do you want to require users logging into your front-end to check that they have read
     | your Terms of Service?
     |
     */
     'auth_users_log_into_front_end_require_terms_of_service' => true,
+
+    /*
+    |-----------------------------------------------------------------------------------------
+    | Require front-end users to click "I have read the Terms of Service" when registering?
+    |-----------------------------------------------------------------------------------------
+    |
+    | Do you want to require new front-end registrants to check that they have read
+    | your Terms of Service?
+    |
+    */
+    'auth_users_registration_front_end_require_terms_of_service' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +91,7 @@ return [
     'auth_users_log_into_front_end_require_terms_of_service_url' => 'about/terms-of-service',
 
     /****************************************************************************************/
-    /*                   END: FRONT-END LOGIN TERMS OF SERVICE                              */
+    /*                        END: FRONT-END TERMS OF SERVICE                               */
     /****************************************************************************************/
 
 
@@ -92,7 +103,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Allow users to log into the front-end
+    | Allow users to register, and to log into, the front-end
     |--------------------------------------------------------------------------
     |
     | Do you want users to log into the front-end?

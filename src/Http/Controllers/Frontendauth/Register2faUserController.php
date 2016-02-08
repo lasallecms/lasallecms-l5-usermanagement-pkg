@@ -134,6 +134,16 @@ class Register2faUserController extends Controller
      */
     public function post2faRegisterDisplayForm(Request $request) {
 
+        if (config('lasallecmsusermanagement.auth_users_registration_front_end_require_terms_of_service')) {
+            if (!$request->input('terms-of-service')) {
+                return redirect()->route('auth.register')
+                    ->withInput($request->only('name', 'email', 'phone_country_code', 'phone_number'))
+                    ->withErrors([
+                        'terms-of-service' => 'Please read our Terms of Service',
+                    ]);
+            }
+        }
+
         // Go through the special validation-only command bus
         $response = $this->dispatchFrom(Create2faRegisterUserCommand::class, $request);
 

@@ -43,8 +43,6 @@
 					<div style="margin-bottom: 25px" class="input-group">
 					    {!! Form::checkbox('terms-of-service', null) !!}&nbsp;&nbsp;I have read the <a href="{{{ config('lasallecmsusermanagement.auth_users_log_into_front_end_require_terms_of_service_url') }}}">Terms of Service</a>
 					</div>
-@else
-<h1>FALSE BABY!</h1>
 				    @endif
 
 					<!-- Login Button -->
