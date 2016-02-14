@@ -73,7 +73,7 @@
 
                 <br /><br /><br />
 
-                <div style="margin-top:0px;margin-left:50px;" class="form-group">
+                <div style="margin-top:0px;margin-left:50px;text-align: center;" class="form-group">
 
                     <div class="col-sm-12 controls">
                         <button onclick="goBack()" class="btn btn-success btn-lg">
