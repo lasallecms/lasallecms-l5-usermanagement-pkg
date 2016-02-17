@@ -62,7 +62,7 @@
 
                         <div class="col-sm-12 controls">
                             <button type="submit" class="btn btn-danger btn-lg">
-                                <i class="glyphicon glyphicon-okA"></i>  <strong>Yes</strong>, I want to logout!
+                                <strong>Yes</strong>, I want to logout!
                             </button>
                         </div>
 
@@ -75,9 +75,9 @@
 
                 <div style="margin-top:0px;margin-left:50px;text-align: center;" class="form-group">
 
-                    <div class="col-sm-12 controls">
+                    <div class="col-sm-12 controls text-center">
                         <button onclick="goBack()" class="btn btn-success btn-lg">
-                            <i class="fa fa-timesA"></i> Oops! <strong>No</strong>, I want to go back!
+                            Oops! <strong>No</strong>, I want to go back!
                         </button>
                     </div>
 
