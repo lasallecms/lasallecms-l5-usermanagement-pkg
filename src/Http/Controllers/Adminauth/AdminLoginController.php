@@ -31,7 +31,7 @@ namespace Lasallecms\Usermanagement\Http\Controllers\AdminAuth;
  */
 
 // LaSalle Software
-use Lasallecms\Helpers\TwoFactorAuth\TwoFactorAuthHelper;
+use Lasallecms\Usermanagement\Helpers\TwoFactorAuthorization\TwoFactorAuthHelper;
 use Lasallecms\Usermanagement\Http\Controllers\Controller;
 
 // Laravel facades
@@ -71,7 +71,7 @@ class AdminLoginController extends Controller
     /*
      * Middleware
      *
-     * @param \Lasallecms\Helpers\TwoFactorAuth\TwoFactorAuthHelper
+     * @param \Lasallecms\Usermanagement\Helpers\TwoFactorAuthorization\TwoFactorAuthHelper
      */
     public function __construct(TwoFactorAuthHelper $twoFactorAuthHelper)
     {

@@ -32,7 +32,7 @@ namespace Lasallecms\Usermanagement\Http\Controllers\Frontendauth;
  */
 
 /// LaSalle Software
-use Lasallecms\Helpers\TwoFactorAuth\TwoFactorAuthHelper;
+use Lasallecms\Usermanagement\Helpers\TwoFactorAuthorization\TwoFactorAuthHelper;
 use Lasallecms\Usermanagement\Models\User;
 use Lasallecms\Usermanagement\Http\Controllers\Controller;
 
@@ -90,7 +90,7 @@ class FrontendAuthController extends Controller
     /**
      * Create a new authentication controller instance.
      *
-     * @param \Lasallecms\Helpers\TwoFactorAuth\TwoFactorAuthHelper
+     * @param \Lasallecms\Usermanagement\Helpers\TwoFactorAuthorization\TwoFactorAuthHelper
      * @return void
      */
     public function __construct(TwoFactorAuthHelper $twoFactorAuthHelper) {

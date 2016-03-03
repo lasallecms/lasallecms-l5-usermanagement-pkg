@@ -36,7 +36,7 @@ namespace Lasallecms\Usermanagement\Http\Controllers\Frontendauth;
 // Adapted from https://github.com/laravel/framework/blob/5.1/src/Illuminate/Foundation/Auth/RegistersUsers.php (L5.1)
 
 // LaSalle Software
-use Lasallecms\Helpers\TwoFactorAuth\TwoFactorAuthHelper;
+use Lasallecms\Usermanagement\Helpers\TwoFactorAuthorization\TwoFactorAuthHelper;
 use Lasallecms\Usermanagement\Http\Controllers\Controller;
 use Lasallecms\Usermanagement\Jobs\CreateRegisterUserCommand;
 use Lasallecms\Usermanagement\Jobs\Create2faRegisterUserCommand;
@@ -83,7 +83,7 @@ class Register2faUserController extends Controller
 
 
     /**
-     * @param  Lasallecms\Helpers\TwoFactorAuth\TwoFactorAuthHelper $twoFactorAuthHelper
+     * @param  Lasallecms\Usermanagement\Helpers\TwoFactorAuthorization\TwoFactorAuthHelper $twoFactorAuthHelper
      * @param  Lasallecms\Lasallecmsapi\Repositories\UserRepository $userRepository
      * @return void
      */
