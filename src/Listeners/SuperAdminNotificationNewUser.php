@@ -32,15 +32,15 @@ namespace Lasallecms\Usermanagement\Listeners;
 
 // LaSalle Software
 use Lasallecms\Usermanagement\Events\FrontendRegistrationWasSuccessful;
+use Lasallecms\Usermanagement\Helpers\NotifySuperAdministrators\EmailSuperAdministrators;
 
 // Laravel facades
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Mail;
 
 // Laravel classes
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+
 
 /**
  * Class SuperAdminNotificationNewUser
@@ -49,12 +49,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 class SuperAdminNotificationNewUser implements ShouldQueue
 {
     /**
+     * @var Lasallecms\Usermanagement\Helpers\NotifySuperAdministrators\EmailSuperAdministrators
+     */
+    protected $emailSuperAdministrators;
+
+
+    /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(EmailSuperAdministrators $emailSuperAdministrators)
     {
+        $this->emailSuperAdministrators = $emailSuperAdministrators;
     }
 
 
@@ -66,118 +73,16 @@ class SuperAdminNotificationNewUser implements ShouldQueue
      */
     public function handle(FrontendRegistrationWasSuccessful $event)
     {
+
+
         if (!config('lasallecmsusermanagement.auth_frontend_registration_successful_send_admins_email')) {
             return;
         }
 
-        // Grab the super administrators who need to be notified from the config settting
-        $superAdminEmails = config('auth_frontend_registration_successful_admins_who_receive_notification_email');
+        $subject = 'New User Registration at ' . config('lasallecmsfrontend.site_name');
 
-        // If there are no super administrators who are specified in the config setting, use the first-among-equals admin
-        if (count($superAdminEmails) == 0) {
-            $superAdminEmails[] = config('lasallecmsusermanagement.administrator_first_among_equals_email');
-        }
+        $emailBladeFile = 'usermanagement::emails.SuperAdminNotificationNewUser';
 
-        // create data array from the event DTO
-        $data = $event->data;
-
-        // Set the data needed to send the email
-        $data['subject']   = 'New User Registration at ' . config('lasallecmsfrontend.site_name');
-        $data['site_name'] = config('lasallecmsfrontend.site_name');
-
-        // data used in the body of the email, in the blade file
-        $data['data']['site_name'] = config('lasallecmsfrontend.site_name');
-        $data['data']['id']        = $event->data['id'];
-
-        // Send the notification email to each specified super administrator
-        foreach ($superAdminEmails as $superAdminEmail) {
-
-            // ensure that this email is a super admins
-            if (!$this->isSuperAdministrator($superAdminEmail)) {
-                continue;
-            }
-
-            // set the "to" email field
-            $data['to'] = $superAdminEmail;
-
-            Mail::queue('usermanagement::emails.SuperAdminNotificationNewUser', $data, function ($message) use ($data) {
-                $message->subject($data['subject'])
-                        ->to($data['to'])
-                ;
-            });
-        }
-    }
-
-    /**
-     * Does this email belong to a super administrator?
-     *
-     * @param  text  $email
-     * @return bool
-     */
-    public function isSuperAdministrator($email) {
-
-        // get the user id
-        $userId = $this->findUserIdByEmail($email);
-
-        // if there is no user ID for that email, then zero is returned
-        if ($userId == 0) {
-            return;
-        }
-
-
-        // does this user id belong to the usergroup "super administrator"
-        if ($this->isUserSuperAdministrator($userId)) {
-            return true;
-        }
-
-        return false;
-    }
-
-
-    // I know I am supposed to inject the UserRepository class from the LaSalleCMSAPI; but, what
-    // I *really* want to do is put all that is needed for this job in this one single file.
-
-
-    /**
-     * Find the user's ID from their email address.
-     *
-     * Return 0 if no ID is found.
-     *
-     * @param  string  $email
-     * @return int
-     */
-    public function findUserIdByEmail($email) {
-        $userId = DB::table('users')
-            ->where('email', $email)
-            ->value('id')
-        ;
-
-        if (!$userId) {
-            return 0;
-        }
-
-        return $userId;
-    }
-
-    /**
-     * Does the user belong to the Super Administrator user group?
-     *
-     * It is assumed that Super Administrator is ID=3 in the groups database table.
-     *
-     * @param  int $userId
-     * @return bool
-     */
-    public function isUserSuperAdministrator($userId) {
-        $result = DB::table('user_group')
-            ->where('user_id', $userId)
-            ->where('group_id', 3)
-            ->first()
-        ;
-
-        if (!$result) {
-            return false;
-        }
-
-        return true;
+        $this->emailSuperAdministrators->sendEmailToSuperAdmins($subject, $event, $emailBladeFile);
     }
 }
