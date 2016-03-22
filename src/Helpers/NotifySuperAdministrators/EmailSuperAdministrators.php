@@ -35,6 +35,7 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
+
 /**
  * Class EmailSuperAdministrators
  * @package Lasallecms\Usermanagement\Helpers\TwoFactorAuthorization
@@ -86,9 +87,6 @@ class EmailSuperAdministrators
                 $message->subject($data['subject'])
                         ->to($data['to'])
             ;
-
-                //echo "<hr>".$message->getBody();
-
             });
         }
     }

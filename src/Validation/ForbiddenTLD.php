@@ -28,15 +28,21 @@
  *
  */
 
+// Laravel facades
 use Config;
 
-/*
+
+/**
+ * Class ForbiddenTLD
+ *
  * New users cannot register if they use an email address with a forbidden Top Level Domain.
  * Forbidden TLD's are specified in this package's config file.
  * This validation exists to thwart bots.
+ *
+ * @package Lasallecms\Usermanagement\Validation
  */
-class ForbiddenTLD {
-
+class ForbiddenTLD
+{
     /**
      * Validate Top Level Domains
      *
@@ -44,8 +50,8 @@ class ForbiddenTLD {
      * @param  array  $specifiedTLDs  So unit test can specify its own array of forbidden TLDs
      * @return bool
      */
-    public function validateForbiddenTLD($email, $specifiedTLDs = array())
-    {
+    public function validateForbiddenTLD($email, $specifiedTLDs = array()) {
+
         $forbiddenTLDs = $this->getTheForbiddenTLDs($specifiedTLDs);
 
         // if no TLD's specified in the parameters; and, no TLD's specified in the config,
@@ -76,8 +82,7 @@ class ForbiddenTLD {
      * @param  array $specifiedTLDs
      * @return array
      */
-    public function getTheForbiddenTLDs($specifiedTLDs = array())
-    {
+    public function getTheForbiddenTLDs($specifiedTLDs = array()) {
         // so the unit test can specify its own list of forbidden TLDs
         if (!empty($specifiedTLDs)) return $specifiedTLDs;
 
@@ -93,8 +98,7 @@ class ForbiddenTLD {
      * @param  int    $ForbiddenTLD
      * @return bool
      */
-    public function lengthForbiddenTLD($ForbiddenTLD)
-    {
+    public function lengthForbiddenTLD($ForbiddenTLD) {
         return strlen($ForbiddenTLD);
     }
 
@@ -105,8 +109,7 @@ class ForbiddenTLD {
      * @param  int     $length
      * @return string
      */
-    public function lastCharactersOfEmail($email, $length)
-    {
+    public function lastCharactersOfEmail($email, $length) {
         return substr($email, -$length, $length);
     }
 
@@ -117,14 +120,13 @@ class ForbiddenTLD {
      * @param  string $forbiddenTLD
      * @return bool
      */
-    public function compareEmailWithForbiddenTLD($lastCharactersOfEmail, $forbiddenTLD)
-    {
+    public function compareEmailWithForbiddenTLD($lastCharactersOfEmail, $forbiddenTLD) {
+
         if ($lastCharactersOfEmail == $forbiddenTLD)
         {
             return true;
-        } else {
-            return false;
         }
-    }
 
+        return false;
+    }
 }

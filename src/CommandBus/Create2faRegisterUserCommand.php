@@ -1,6 +1,6 @@
 <?php
 
-namespace Lasallecms\Usermanagement\Jobs;
+namespace Lasallecms\Usermanagement\CommandBus;
 
 /**
  *
@@ -33,18 +33,19 @@ namespace Lasallecms\Usermanagement\Jobs;
 
 
 // Laravel Software
-use Lasallecms\Usermanagement\Jobs\Command;
-use Lasallecms\Lasallecmsapi\Users\CreateUserFormProcessing;
+use Lasallecms\Usermanagement\CommandBus\Command;
+use Lasallecms\Lasallecmsadmin\FormProcessing\Users\CreateUserFormProcessing;
 
 // Laravel classes
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
+
 /**
  * This is the command used to validate ONLY front-end user registration data. No data persist here.
  *
  * Class Create2faRegisterUserCommand
- * @package Lasallecms\Usermanagement\Jobs
+ * @package Lasallecms\Usermanagement\CommandBus
  */
 class Create2faRegisterUserCommand extends Command implements SelfHandling
 {
@@ -69,8 +70,8 @@ class Create2faRegisterUserCommand extends Command implements SelfHandling
      *
      * @return void
      */
-    public function __construct($name, $email, $password, $password_confirmation, $activated=1, $enabled=1, $groups=[1], $two_factor_auth_enabled=0, $phone_country_code=null, $phone_number=null)
-    {
+    public function __construct($name, $email, $password, $password_confirmation, $activated=1, $enabled=1, $groups=[1], $two_factor_auth_enabled=0, $phone_country_code=null, $phone_number=null) {
+
         $this->name                  = $name;
         $this->email                 = $email;
         $this->password              = $password;
@@ -88,10 +89,11 @@ class Create2faRegisterUserCommand extends Command implements SelfHandling
     /**
      * Execute the command.
      *
+     * @param Lasallecms\Lasallecmsadmin\FormProcessing\Users\CreateUserFormProcessing $createUserFormProcessing
      * @return void
      */
-    public function handle(CreateUserFormProcessing $createUserFormProcessing)
-    {
+    public function handle(CreateUserFormProcessing $createUserFormProcessing) {
+
         // call the 2FA method --> the one that validates only (does *not* persist)!
         return $createUserFormProcessing->quarterback2fa($this);
     }

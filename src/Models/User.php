@@ -1,4 +1,5 @@
 <?php
+
 namespace Lasallecms\Usermanagement\Models;
 
 /**
@@ -50,6 +51,10 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 
+/**
+ * Class User
+ * @package Lasallecms\Usermanagement\Models
+ */
 class User extends BaseModel implements AuthenticatableContract, CanResetPasswordContract
 {
 
@@ -148,7 +153,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 
     // USER GROUPS & ROLES PROPERTIES
 
-    /*
+    /**
      * User groups that are allowed to execute each controller action
      *
      * @var array
@@ -168,13 +173,12 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
     //////////////        RELATIONSHIPS             ///////////////////
     ///////////////////////////////////////////////////////////////////
 
-    /*
+    /**
      * Many to many relationship with groups
      *
      * @return Eloquent
      */
-    public function group()
-    {
+    public function group() {
         return $this->belongsToMany('Lasallecms\Usermanagement\Models\Group', 'user_group');
     }
 }

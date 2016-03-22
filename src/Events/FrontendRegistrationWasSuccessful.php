@@ -61,8 +61,8 @@ class FrontendRegistrationWasSuccessful extends Event
      * @param  Lasallecms\Lasallecmsapi\Repositories\UserRepository $userRepository
      * @return void
      */
-    public function __construct($data)
-    {
+    public function __construct($data) {
+
         // Add the user's ID to the data array
         $data['id'] = $this->findUserIdByEmail($data['data']['email']);
         $this->data = $data;
@@ -73,8 +73,7 @@ class FrontendRegistrationWasSuccessful extends Event
      *
      * @return array
      */
-    public function broadcastOn()
-    {
+    public function broadcastOn() {
         return [];
     }
 

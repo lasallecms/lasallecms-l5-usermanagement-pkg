@@ -34,6 +34,7 @@ namespace Lasallecms\Usermanagement\Listeners\Createlasallecrmrecords;
 use Lasallecrm\Lasallecrmapi\Models\Email;
 use Lasallecms\Lasallecmsapi\Repositories\BaseRepository;
 
+
 /**
  * Class CreateEmailRecord
  * @package Lasallecms\Usermanagement\Listeners\Createlasallecrmrecords
@@ -59,13 +60,14 @@ class CreateEmailRecord
      */
     protected $model;
 
+
     /**
      * @param  Lasallecrm\Lasallecrmapi\Models\Email $model
      * @param  Lasallecms\Lasallecmsapi\Repositories\BaseRepository $repository
      * @return void
      */
-    public function __construct(Email $model, BaseRepository $repository)
-    {
+    public function __construct(Email $model, BaseRepository $repository) {
+
         // Inject the model
         $this->model = $model;
 

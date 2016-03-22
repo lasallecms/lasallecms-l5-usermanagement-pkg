@@ -34,6 +34,7 @@ namespace Lasallecms\Usermanagement\Listeners\Createlasallecrmrecords;
 use Lasallecrm\Lasallecrmapi\Models\Telephone;
 use Lasallecms\Lasallecmsapi\Repositories\BaseRepository;
 
+
 /**
  * Class CreateTelephoneRecord
  * @package Lasallecms\Usermanagement\Listeners\Createlasallecrmrecords
@@ -65,8 +66,8 @@ class CreateTelephoneRecord
      * @param  Lasallecms\Lasallecmsapi\Repositories\BaseRepository $repository
      * @return void
      */
-    public function __construct(Telephone $model, BaseRepository $repository)
-    {
+    public function __construct(Telephone $model, BaseRepository $repository) {
+
         // Inject the model
         $this->model = $model;
 

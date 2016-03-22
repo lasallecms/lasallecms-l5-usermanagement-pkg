@@ -1,7 +1,5 @@
 <?php
 
-//namespace Illuminate\Foundation\Auth;
-
 namespace Lasallecms\Usermanagement\Http\Controllers\Frontendauth;
 
 /**
@@ -38,8 +36,8 @@ namespace Lasallecms\Usermanagement\Http\Controllers\Frontendauth;
 // LaSalle Software
 use Lasallecms\Usermanagement\Helpers\TwoFactorAuthorization\TwoFactorAuthHelper;
 use Lasallecms\Usermanagement\Http\Controllers\Controller;
-use Lasallecms\Usermanagement\Jobs\CreateRegisterUserCommand;
-use Lasallecms\Usermanagement\Jobs\Create2faRegisterUserCommand;
+use Lasallecms\Usermanagement\CommandBus\CreateRegisterUserCommand;
+use Lasallecms\Usermanagement\CommandBus\Create2faRegisterUserCommand;
 use Lasallecms\Usermanagement\Events\FrontendRegistrationWasSuccessful;
 use Lasallecms\Lasallecmsapi\Repositories\UserRepository;
 
@@ -54,6 +52,7 @@ use Illuminate\Http\Request;
 
 // Third party classes
 use Carbon\Carbon;
+
 
 /**
  * Front-end user registration with Two Factor Authorization workflow
@@ -88,6 +87,7 @@ class Register2faUserController extends Controller
      * @return void
      */
     public function __construct(TwoFactorAuthHelper $twoFactorAuthHelper, UserRepository $userRepository) {
+
         //$this->middleware('guest', ['except' => 'logout']);
 
         // If logged in, then do not see the register form
@@ -128,7 +128,7 @@ class Register2faUserController extends Controller
      * second 2FA is successful, the original command bus, that is used for the regular non-2FA front-end user
      * registration, is used in all its original glory. Meaning, the entire validation happens again. The assumption
      * is that the sanitation and validation will always process flawlessly the second time around.
-     *isTwoFactorAuthFormTimeout()
+     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -269,7 +269,7 @@ class Register2faUserController extends Controller
             ]);
         }
 
-        $name = strtoupper($response['data']['name']);
+        // $name = strtoupper($response['data']['name']);
         $message = 'You successfully registered!';
         Session::flash('message', $message);
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace Lasallecms\Usermanagement\Models;
 
 /**
@@ -32,10 +33,17 @@ namespace Lasallecms\Usermanagement\Models;
 // LaSalle Software
 use Lasallecms\Lasallecmsapi\Models\BaseModel;
 
+
+/**
+ * Class User_group
+ * @package Lasallecms\Usermanagement\Models
+ */
 class User_group extends BaseModel
 {
-    /*
-     * Database table
+    /**
+     * The database table
+     *
+     * @var string
      */
     protected $table = 'user_group';
 

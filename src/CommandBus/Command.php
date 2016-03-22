@@ -1,6 +1,6 @@
 <?php
 
-namespace Lasallecms\Usermanagement\Jobs;
+namespace Lasallecms\Usermanagement\CommandBus;
 
 /**
  *

@@ -30,6 +30,7 @@ namespace Lasallecms\Usermanagement;
  *
  */
 
+// Laravel classes
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 
@@ -39,8 +40,8 @@ use Illuminate\Support\ServiceProvider;
  *
  * @author Bob Bloom <info@southlasalle.com>
  */
-class UsermanagementServiceProvider extends ServiceProvider {
-
+class UsermanagementServiceProvider extends ServiceProvider
+{
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -54,8 +55,8 @@ class UsermanagementServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    public function boot()
-    {
+    public function boot() {
+
         $this->setupConfiguration();
 
         $this->setupMigrations();
@@ -75,8 +76,8 @@ class UsermanagementServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    protected function setupConfiguration()
-    {
+    protected function setupConfiguration() {
+
         // config filename is "auth.php" instead of "usermanagement.php" because
         // we are extracting an actual native app config file, instead of
         // creating a brand new config file
@@ -92,8 +93,7 @@ class UsermanagementServiceProvider extends ServiceProvider {
      *
      * @return void
      */
-    protected function setupMigrations()
-    {
+    protected function setupMigrations() {
         $migrations = realpath(__DIR__.'/../database/migrations');
 
         $this->publishes([
@@ -101,14 +101,12 @@ class UsermanagementServiceProvider extends ServiceProvider {
         ]);
     }
 
-
     /**
      * Setup the Seeds.
      *
      * @return void
      */
-    protected function setupSeeds()
-    {
+    protected function setupSeeds() {
         $seeds = realpath(__DIR__.'/../database/seeds');
 
         $this->publishes([
@@ -116,26 +114,22 @@ class UsermanagementServiceProvider extends ServiceProvider {
         ]);
     }
 
-
-
     /**
      * Register the service provider.
      *
      * @return void
      */
-    public function register()
-    {
+    public function register() {
         $this->registerUsermanagement();
     }
-
 
     /**
      * Register the application bindings.
      *
      * @return void
      */
-    private function registerUsermanagement()
-    {
+    private function registerUsermanagement() {
+
         $this->app->bind('usermanagement', function($app) {
             return new Usermanagement($app);
         });
@@ -146,41 +140,36 @@ class UsermanagementServiceProvider extends ServiceProvider {
         );
     }
 
-
     /**
      * Define the routes for the application.
      *
      * @param  \Illuminate\Routing\Router  $router
      * @return void
      */
-    public function setupRoutes(Router $router)
-    {
+    public function setupRoutes(Router $router) {
+
         $router->group(['namespace' => 'Lasallecms\Usermanagement\Http\Controllers'], function($router)
         {
             require __DIR__.'/Http/routes.php';
         });
-
     }
-
 
     /**
      * Define the translations for the application.
      *
      * @return void
      */
-    public function setupTranslations()
-    {
+    public function setupTranslations() {
         $this->loadTranslationsFrom(__DIR__.'/../languages', 'usermanagement');
     }
-
 
     /**
      * Define the views for the application.
      *
      * @return void
      */
-    public function setupViews()
-    {
+    public function setupViews() {
+
         $this->loadViewsFrom(__DIR__.'/../views', 'usermanagement');
 
         $this->publishes([
@@ -189,18 +178,15 @@ class UsermanagementServiceProvider extends ServiceProvider {
 
     }
 
-
     /**
      * Define the assets for the application.
      *
      * @return void
      */
-    public function setupAssets()
-    {
+    public function setupAssets() {
+
         $this->publishes([
             __DIR__.'/../public' => public_path('packages/usermanagement/'),
         ]);
-
     }
-
 }

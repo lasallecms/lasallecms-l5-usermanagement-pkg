@@ -1,7 +1,5 @@
 <?php
 
-//namespace Illuminate\Foundation\Auth;
-
 namespace Lasallecms\Usermanagement\Http\Controllers\Frontendauth;
 
 /**
@@ -36,7 +34,7 @@ namespace Lasallecms\Usermanagement\Http\Controllers\Frontendauth;
 
 // LaSalle Software
 use Lasallecms\Usermanagement\Http\Controllers\Controller;
-use Lasallecms\Usermanagement\Jobs\CreateRegisterUserCommand;
+use Lasallecms\Usermanagement\CommandBus\CreateRegisterUserCommand;
 use Lasallecms\Usermanagement\Events\FrontendRegistrationWasSuccessful;
 use Lasallecms\Lasallecmsapi\Repositories\UserRepository;
 
@@ -49,6 +47,7 @@ use Illuminate\Support\Facades\Session;
 
 // Laravel classes
 use Illuminate\Http\Request;
+
 
 /**
  * Regular Front-end user registration workflow
@@ -78,6 +77,7 @@ class RegisterUserController extends Controller
      * @return void
      */
     public function __construct(UserRepository $userRepository) {
+
         //$this->middleware('guest', ['except' => 'logout']);
 
         // If logged in, then do not see the register form
@@ -171,7 +171,7 @@ class RegisterUserController extends Controller
         }
 
 
-        $name = strtoupper($response['data']['name']);
+        // $name = strtoupper($response['data']['name']);
         $message = 'You successfully registered!';
         Session::flash('message', $message);
 

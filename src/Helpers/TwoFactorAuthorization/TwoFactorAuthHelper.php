@@ -45,6 +45,7 @@ use Illuminate\Http\Request;
 // Third party classes
 use Carbon\Carbon;
 
+
 /**
  * Class TwoFactorAuthHelper
  * @package Lasallecms\Helpers\TwoFactorAuth
@@ -67,11 +68,11 @@ class TwoFactorAuthHelper
      * @param \Illuminate\Http\Request  $request
      * @param \Lasallecms\Shortmessageservice\Contracts\ShortMessageService\ShortMessageService $shortMessageService
      */
-    public function __construct(Request $request, ShortMessageService $shortMessageService)
-    {
+    public function __construct(Request $request, ShortMessageService $shortMessageService) {
         $this->request             = $request;
         $this->shortMessageService = $shortMessageService;
     }
+
 
 
     /*********************************************************************************/
@@ -124,8 +125,6 @@ class TwoFactorAuthHelper
 
         $this->shortMessageService->sendSMS($data['phone_country_code'], $data['phone_number'], $message);
     }
-
-
 
     /**
      * Has too much time passed between issuing the 2FA code and this code being
@@ -447,7 +446,6 @@ class TwoFactorAuthHelper
 
         return false;
     }
-
 
 
 

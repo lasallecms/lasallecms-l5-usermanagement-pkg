@@ -1,6 +1,6 @@
 <?php
 
-namespace Lasallecms\Usermanagement\Jobs;
+namespace Lasallecms\Usermanagement\CommandBus;
 
 /**
  *
@@ -33,14 +33,17 @@ namespace Lasallecms\Usermanagement\Jobs;
 
 
 // Laravel Software
-use Lasallecms\Usermanagement\Jobs\Command;
-use Lasallecms\Lasallecmsapi\Users\CreateUserFormProcessing;
+use Lasallecms\Usermanagement\CommandBus\Command;
+use Lasallecms\Lasallecmsadmin\FormProcessing\Users\CreateUserFormProcessing;
 
 // Laravel classes
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 
-
+/**
+ * Class CreateRegisterUserCommand
+ * @package Lasallecms\Usermanagement\CommandBus
+ */
 class CreateRegisterUserCommand extends Command implements SelfHandling
 {
     use DispatchesJobs;
@@ -64,8 +67,7 @@ class CreateRegisterUserCommand extends Command implements SelfHandling
      *
      * @return void
      */
-    public function __construct($name, $email, $password, $password_confirmation, $activated=1, $enabled=1, $groups=[1], $two_factor_auth_enabled=0, $phone_country_code=null, $phone_number=null)
-    {
+    public function __construct($name, $email, $password, $password_confirmation, $activated=1, $enabled=1, $groups=[1], $two_factor_auth_enabled=0, $phone_country_code=null, $phone_number=null) {
         $this->name                  = $name;
         $this->email                 = $email;
         $this->password              = $password;
@@ -83,13 +85,10 @@ class CreateRegisterUserCommand extends Command implements SelfHandling
     /**
      * Execute the command.
      *
+     * @param Lasallecms\Lasallecmsadmin\FormProcessing\Users\CreateUserFormProcessing $createUserFormProcessing
      * @return void
      */
-    public function handle(CreateUserFormProcessing $createUserFormProcessing)
-    {
-        // ==> YES, USE CreateUserFormProcessing
-
-        // ==> THE CreateUserCommand / CreateRegisterUserCommand (THIS FILE!!!!) calls CreateUserFormProcessing
+    public function handle(CreateUserFormProcessing $createUserFormProcessing) {
 
         return $createUserFormProcessing->quarterback($this);
     }

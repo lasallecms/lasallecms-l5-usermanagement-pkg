@@ -48,6 +48,7 @@ use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Http\Request;
 use Validator;
 
+
 /**
  * Class FrontendAuthController
  *
@@ -87,11 +88,11 @@ class FrontendAuthController extends Controller
      */
     protected $twoFactorAuthHelper;
 
+
     /**
      * Create a new authentication controller instance.
      *
      * @param \Lasallecms\Usermanagement\Helpers\TwoFactorAuthorization\TwoFactorAuthHelper
-     * @return void
      */
     public function __construct(TwoFactorAuthHelper $twoFactorAuthHelper) {
         //$this->middleware('guest', ['except' => 'logout']);
@@ -109,7 +110,6 @@ class FrontendAuthController extends Controller
 
         $this->twoFactorAuthHelper = $twoFactorAuthHelper;
     }
-
 
     /**
      * Show the application login form.
@@ -130,8 +130,8 @@ class FrontendAuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function postLogin(Request $request)
-    {
+    public function postLogin(Request $request) {
+
         if (config('lasallecmsusermanagement.auth_users_log_into_front_end_require_terms_of_service')) {
             if (!$request->input('terms-of-service')) {
                 return redirect()->route('auth.login')
@@ -207,7 +207,6 @@ class FrontendAuthController extends Controller
         ]);
     }
 
-
     /**
      * Send the response after the user was authenticated.
      *
@@ -217,8 +216,8 @@ class FrontendAuthController extends Controller
      * @param  bool  $throttles
      * @return \Illuminate\Http\Response
      */
-    protected function handleUserWasAuthenticated(Request $request, $throttles)
-    {
+    protected function handleUserWasAuthenticated(Request $request, $throttles) {
+
         if ($throttles) {
             $this->clearLoginAttempts($request);
         }
@@ -299,8 +298,8 @@ class FrontendAuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function post2FALogin(Request $request)
-    {
+    public function post2FALogin(Request $request) {
+
         $userId = $request->session()->get('user_id');
 
         // Did the user take too much time to fill out the form?

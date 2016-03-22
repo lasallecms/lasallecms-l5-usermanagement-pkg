@@ -39,7 +39,6 @@ class Version
      */
     const VERSION = '1.01';
 
-
     /**
      * This package's name.
      *
@@ -53,8 +52,7 @@ class Version
      *
      * @return string
      */
-    public function version()
-    {
+    public function version() {
         return static::VERSION;
     }
 
@@ -63,8 +61,7 @@ class Version
      *
      * @return string
      */
-    public function packageName()
-    {
+    public function packageName() {
         return static::PACKAGE;
     }
 }

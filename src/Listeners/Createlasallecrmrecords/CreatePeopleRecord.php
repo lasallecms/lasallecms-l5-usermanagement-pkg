@@ -2,11 +2,6 @@
 
 namespace Lasallecms\Usermanagement\Listeners\Createlasallecrmrecords;
 
-// LaSalle Software
-use Lasallecrm\Lasallecrmapi\Models\People as Model;
-use Lasallecms\Lasallecmsapi\Repositories\BaseRepository;
-
-
 /**
  *
  * User Management package for the LaSalle Content Management System, based on the Laravel 5 Framework
@@ -35,12 +30,17 @@ use Lasallecms\Lasallecmsapi\Repositories\BaseRepository;
  *
  */
 
+// LaSalle Software
+use Lasallecrm\Lasallecrmapi\Models\People as Model;
+use Lasallecms\Lasallecmsapi\Repositories\BaseRepository;
+
 // Laravel software
 use Lasallecrm\Lasallecrmapi\Models\People;
 
 // "as Base" due to "Cannot use Lasallecms\Lasallecmsapi\Repositories\BaseRepository as
 // BaseRepository because the name is already in use" error
 use Lasallecms\Lasallecmsapi\Repositories\BaseRepository as Base;
+
 
 /**
  * Class CreatePeopleRecord
@@ -67,13 +67,14 @@ class CreatePeopleRecord
      */
     protected $model;
 
+
     /**
      * @param  Lasallecrm\Lasallecrmapi\Models\People $model
      * @param  Lasallecms\Lasallecmsapi\Repositories\BaseRepository $repository
      * @return void
      */
-    public function __construct(People $model, Base $repository)
-    {
+    public function __construct(People $model, Base $repository) {
+
         // Inject the model
         $this->model = $model;
 
@@ -91,14 +92,6 @@ class CreatePeopleRecord
      * @return array
      */
     public function createRecord($eventData) {
-
-
-       /* echo "<h1>yer event object </h1>";
-        echo "name = ".$eventData->data['data']['name'];
-        echo "<pre>";
-        print_r($eventData);
-        dd("CreatePeopleRecord");
-*/
 
         // Basically, just want to throw the data to the "API", and have the database magically updated.
         // Don't want to do the Command Bus thing, although has worked out well! The data's ready, just
@@ -171,5 +164,4 @@ class CreatePeopleRecord
 
         return substr($name, 0, $positionOfFinalSpace);
     }
-
 }

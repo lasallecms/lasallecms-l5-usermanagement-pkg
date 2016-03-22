@@ -48,6 +48,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+/**
+ * Class ResetsPasswordsController
+ * @package Lasallecms\Usermanagement\Http\Controllers\Frontendauth
+ */
 class ResetsPasswordsController extends Controller
 {
     //use RedirectsUsers;
@@ -59,13 +63,16 @@ class ResetsPasswordsController extends Controller
      */
     protected $frontend_template_name;
 
+
     /**
      * Create a new authentication controller instance.
      *
      * @return void
      */
     public function __construct() {
+
         //$this->middleware('guest', ['except' => 'logout']);
+
         $this->middleware('guest');
 
         // If user is already logged in, then cannot see the reset form
@@ -86,14 +93,11 @@ class ResetsPasswordsController extends Controller
      *
      * @return Response
      */
-    public function getEmail()
-    {
+    public function getEmail() {
         return view('usermanagement::frontend.'.$this->frontend_template_name.'.password.password', [
             'title' => 'Password Reset Request'
         ]);
     }
-
-
 
     /**
      * Send a reset link to the given user.
@@ -101,8 +105,7 @@ class ResetsPasswordsController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function postEmail(Request $request)
-    {
+    public function postEmail(Request $request) {
         $this->validate($request, ['email' => 'required|email']);
 
         $response = Password::sendResetLink($request->only('email'), function (Message $message) {
@@ -127,8 +130,7 @@ class ResetsPasswordsController extends Controller
      *
      * @return string
      */
-    protected function getEmailSubject()
-    {
+    protected function getEmailSubject() {
         return isset($this->subject) ? $this->subject : 'Your Password Reset Link';
     }
 
@@ -138,8 +140,7 @@ class ResetsPasswordsController extends Controller
      * @param  string  $token
      * @return Response
      */
-    public function getReset($token = null)
-    {
+    public function getReset($token = null) {
         if (is_null($token))
         {
             throw new NotFoundHttpException;
@@ -158,8 +159,8 @@ class ResetsPasswordsController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function postReset(Request $request)
-    {
+    public function postReset(Request $request) {
+
         $this->validate($request, [
             'token'    => 'required',
             'email'    => 'required|email',
@@ -196,8 +197,8 @@ class ResetsPasswordsController extends Controller
      *
      * @return string
      */
-    public function redirectPath()
-    {
+    public function redirectPath() {
+
         if (property_exists($this, 'redirectPath'))
         {
             return $this->redirectPath;
@@ -206,7 +207,6 @@ class ResetsPasswordsController extends Controller
         return property_exists($this, 'redirectTo') ? $this->redirectTo : '/home';
     }
 
-
     /**
      * Reset the given user's password.
      *
@@ -214,12 +214,10 @@ class ResetsPasswordsController extends Controller
      * @param  string  $password
      * @return void
      */
-    protected function resetPassword($user, $password)
-    {
+    protected function resetPassword($user, $password) {
         $user->password = bcrypt($password);
         $user->save();
 
         Auth::login($user);
     }
-
 }

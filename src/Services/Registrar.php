@@ -28,11 +28,20 @@
  *
  */
 
+
+// LaSalle Software
 use Lasallecms\Usermanagement\Models\User;
 use Lasallecms\Usermanagement\Models\User_group;
+
+// Laravel classes
 use Illuminate\Contracts\Auth\Registrar as RegistrarContract;
 use Validator;
 
+
+/**
+ * Class Registrar
+ * @package Lasallecms\Usermanagement\Services
+ */
 class Registrar implements RegistrarContract {
 
 	/**
@@ -41,8 +50,7 @@ class Registrar implements RegistrarContract {
 	 * @param  array  $data
 	 * @return \Illuminate\Contracts\Validation\Validator
 	 */
-	public function validator(array $data)
-	{
+	public function validator(array $data) {
 		return Validator::make($data, [
 			'name' => 'required|max:255',
 			'email' => 'required|email|max:255|unique:users',
@@ -56,8 +64,7 @@ class Registrar implements RegistrarContract {
 	 * @param  array  $data
 	 * @return User
 	 */
-	public function create(array $data)
-	{
+	public function create(array $data) {
 		return User::create([
 			'name' => $data['name'],
 			'email' => $data['email'],
@@ -71,12 +78,10 @@ class Registrar implements RegistrarContract {
      * @param  int  $id
      * @return User_group
      */
-    public function createusergroup($id)
-    {
+    public function createusergroup($id) {
         return User_group::create([
             'user_id'   => $id,
             'group_id'  => 1,
         ]);
     }
-
 }

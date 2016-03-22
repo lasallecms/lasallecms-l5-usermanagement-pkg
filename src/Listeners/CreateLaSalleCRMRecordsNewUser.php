@@ -63,7 +63,7 @@ class CreateLaSalleCRMRecordsNewUser implements ShouldQueue
     protected $createTelephonesRecord;
 
 
-    /*
+    /**
      * Create the event listener.
      *
      * @param Lasallecms\Usermanagement\Listeners\Createlasallecrmrecords\CreatePeopleRecord     $createPeoplesRecord
@@ -74,13 +74,13 @@ class CreateLaSalleCRMRecordsNewUser implements ShouldQueue
     public function __construct(
         CreatePeopleRecord     $createPeoplesRecord,
         CreateEmailRecord      $createEmailsRecord,
-        CreateTelephoneRecord  $createTelephonesRecord)
+        CreateTelephoneRecord  $createTelephonesRecord
+    )
     {
         $this->createPeoplesRecord    = $createPeoplesRecord;
         $this->createEmailsRecord     = $createEmailsRecord;
         $this->createTelephonesRecord = $createTelephonesRecord;
     }
-
 
     /**
      * Handle the event.
@@ -89,8 +89,8 @@ class CreateLaSalleCRMRecordsNewUser implements ShouldQueue
      * @return void
      */
     //public function handle(FrontendRegistrationWasSuccessful $event)
-    public function handle(FrontendRegistrationWasSuccessful $event)
-    {
+    public function handle(FrontendRegistrationWasSuccessful $event) {
+
         if (!config('lasallecmsusermanagement.auth_frontend_registration_successful_create_lasallecrm_records')) {
             return;
         }

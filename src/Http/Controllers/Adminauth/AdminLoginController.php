@@ -50,6 +50,7 @@ use Validator;
 // Third party classes
 use Carbon\Carbon;
 
+
 /**
  * Class AdminLoginController
  *
@@ -68,20 +69,18 @@ class AdminLoginController extends Controller
     protected $twoFactorAuthHelper;
 
 
-    /*
+    /**
      * Middleware
      *
      * @param \Lasallecms\Usermanagement\Helpers\TwoFactorAuthorization\TwoFactorAuthHelper
      */
-    public function __construct(TwoFactorAuthHelper $twoFactorAuthHelper)
-    {
+    public function __construct(TwoFactorAuthHelper $twoFactorAuthHelper) {
         $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\Admin\AdminDoNotDisplayLoginFormWhenLoggedInCheck::class, ['only' => 'displayLoginForm']);
 
         $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\Admin\CustomAdminAuthChecks::class, ['only' => 'post']);
 
         $this->twoFactorAuthHelper = $twoFactorAuthHelper;
     }
-
 
     /**
      * Show the application login form.
@@ -94,15 +93,13 @@ class AdminLoginController extends Controller
         return view('usermanagement::admin/login/'.config('lasallecmsusermanagement.admin_login_view_folder').'/login');
     }
 
-
     /**
      * Handle a registration request for the application.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function postLogin(Request $request)
-    {
+    public function postLogin(Request $request) {
         $this->validate($request, [
             'email' => 'required|email', 'password' => 'required',
         ]);
@@ -142,7 +139,6 @@ class AdminLoginController extends Controller
             ]);
     }
 
-
     /**
      * Send the response after the user was authenticated.
      *
@@ -152,8 +148,8 @@ class AdminLoginController extends Controller
      * @param  bool  $throttles
      * @return \Illuminate\Http\Response
      */
-    protected function handleUserWasAuthenticated(Request $request, $throttles)
-    {
+    protected function handleUserWasAuthenticated(Request $request, $throttles) {
+
         if ($throttles) {
             $this->clearLoginAttempts($request);
         }
@@ -227,15 +223,14 @@ class AdminLoginController extends Controller
         return view('usermanagement::admin/login/'.config('lasallecmsusermanagement.admin_login_view_folder').'/.two_factor_auth');
     }
 
-
     /**
      * Handle the admin Two Factor Authorization login
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function post2FALogin(Request $request)
-    {
+    public function post2FALogin(Request $request) {
+
         $userId = $request->session()->get('user_id');
 
         // Did the user take too much time to fill out the form?

@@ -1,4 +1,5 @@
 <?php
+
 namespace Lasallecms\Usermanagement\Models;
 
 /**
@@ -29,6 +30,7 @@ namespace Lasallecms\Usermanagement\Models;
  *
  */
 
+
 /*
  * GROUPS IS A LOOKUP TABLE!
  *
@@ -41,6 +43,11 @@ use Lasallecms\Lasallecmsapi\Models\BaseModel;
 // Laravel facades
 use Illuminate\Support\Facades\DB;
 
+
+/**
+ * Class Group
+ * @package Lasallecms\Usermanagement\Models
+ */
 class Group extends BaseModel
 {
     ///////////////////////////////////////////////////////////////////
@@ -71,8 +78,10 @@ class Group extends BaseModel
      */
     public $timestamps = false;
 
-    /*
+    /**
      * User groups that are allowed to execute each controller action
+     *
+     * @var array
      */
     public $allowed_user_groups = [
         ['index'   => ['Super Administrator']],
@@ -83,7 +92,7 @@ class Group extends BaseModel
         ['destroy' => ['Super Administrator']],
     ];
 
-    /*
+    /**
      * DO NOT DELETE THESE CORE RECORDS.
      *
      * Specify the TITLE of these records
@@ -102,40 +111,38 @@ class Group extends BaseModel
     //////////////        RELATIONSHIPS             ///////////////////
     ///////////////////////////////////////////////////////////////////
 
-    /*
+    /**
      * Many to many relationship with users
      *
      * @return Eloquent
      */
-    public function user()
-    {
+    public function user() {
         return $this->belongsToMany('Lasallecms\Usermanagement\Models\User', 'user_group');
     }
 
-    /*
+    /**
      * Return an array of all the tables using a specified lookup table id.
      * The array is in the form ['table related to the lookup table' => 'count']
      *
      * @param   int   $id   Table ID
      * @return  array
      */
-    public function foreignKeyCheck($id)
-    {
+    public function foreignKeyCheck($id) {
         // 'related_table' is the table name
         return  [
             [ 'related_table' => 'users', 'count' => $this->usersCount($id) ],
         ];
     }
 
-    /*
+    /**
      * Count of related table using lookup table.
      *
      * Method name is the table name (no techie reason, just a convention to adopt)
      *
      * @return int
      */
-    public function usersCount($id)
-    {
+    public function usersCount($id) {
+
         // I know eloquent does this, but having trouble so hand crafting using DB
         // Note the pivot table
         $record =  DB::table('user_group')->where('group_id', '=', $id)->get();

@@ -1,4 +1,6 @@
-<?php namespace Lasallecms\Usermanagement\Http\Controllers\AdminAuth;
+<?php
+
+namespace Lasallecms\Usermanagement\Http\Controllers\AdminAuth;
 
 /**
  *
@@ -42,8 +44,8 @@ use Illuminate\Contracts\Auth\Guard;
  * Class AdminLogoutController
  * @package Lasallecms\Usermanagement\Http\Controllers\AdminAuth
  */
-class AdminLogoutController extends Controller {
-
+class AdminLogoutController extends Controller
+{
     /**
      * The Guard implementation.
      *
@@ -52,11 +54,13 @@ class AdminLogoutController extends Controller {
     protected $auth;
 
 
+    /**
+     * AdminLogoutController constructor.
+     */
     public function __construct() {
         $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\Admin\AdminMustBeLoggedInCheck::class, ['except' => 'index']);
         $this->middleware(\Lasallecms\Usermanagement\Http\Middleware\Admin\CustomAdminAuthChecks::class, ['only' => 'post']);
     }
-
 
     /**
      * Admin "are you sure you want to logout?" form
@@ -66,7 +70,6 @@ class AdminLogoutController extends Controller {
     public function logout(Guard $auth) {
         return view('usermanagement::admin/logout/'.config('lasallecmsusermanagement.admin_logout_view_folder').'/logout');
     }
-
 
     /**
      * Log the user out of the application.
