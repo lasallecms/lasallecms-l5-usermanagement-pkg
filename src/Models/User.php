@@ -91,7 +91,7 @@ class User extends BaseModel implements AuthenticatableContract, CanResetPasswor
 	 *
 	 * @var array
 	 */
-	protected $hidden = ['password', 'remember_token', 'sms_token', 'sms_token_created_at'];
+	protected $hidden = ['password', 'remember_token', 'sms_token', 'sms_token_created_at', 'login_token', 'login_token_created_at'];
 
 
     // SANITATION RULES PROPERTIES

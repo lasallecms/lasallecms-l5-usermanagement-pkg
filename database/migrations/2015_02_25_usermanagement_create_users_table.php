@@ -66,6 +66,9 @@ class CreateUsersTable extends Migration {
                 $table->string('sms_token')->nullable();
                 $table->timestamp('sms_token_created_at')->nullable();
 
+                // Token Based Login Authentication Columns
+                $table->string('login_token')->nullable();
+                $table->timestamp('login_token_created_at')->nullable();
 
                 $table->timestamp('created_at');
                 $table->integer('created_by')->unsigned()->default(0);
@@ -134,8 +137,6 @@ class CreateUsersTable extends Migration {
                 $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
             });
         }
-
-
     }
 
 	/**
@@ -144,7 +145,7 @@ class CreateUsersTable extends Migration {
 	 * @return void
 	 */
 	public function down()
-	{
+    {
         // Disable foreign key constraints or these DROPs will not work
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 
@@ -177,6 +178,4 @@ class CreateUsersTable extends Migration {
         // Enable foreign key constraints
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
 	}
-
-
 }

@@ -108,3 +108,7 @@ Route::post('password/email', 'Frontendauth\ResetsPasswordsController@postEmail'
 Route::get('password/reset/{token}', 'Frontendauth\ResetsPasswordsController@getReset');
 Route::post('password/reset', 'Frontendauth\ResetsPasswordsController@postReset');
 
+
+// Front-end token based login routes
+Route::get('auth/login/token/{token}', 'Frontendauth\TokenLoginController@getLoginToken');
+
