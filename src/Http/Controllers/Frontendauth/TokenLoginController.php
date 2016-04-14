@@ -124,6 +124,6 @@ class TokenLoginController extends Controller
 
 
         // Redirect to front-end dashboard
-        return redirect()->route('home');
+        return redirect()->route('FrontendCustomerCareDashboard');
     }
 }
