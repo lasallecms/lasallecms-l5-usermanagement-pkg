@@ -246,9 +246,10 @@ class FrontendAuthController extends Controller
                 $this->twoFactorAuthHelper->updateUserRecordWithLastlogin(AUTH::user()->id);
 
                 // Onward to the front-end
-                if (config('lasasllecmsfrontend.frontend_redirect_to_this_view_when_user_successfully_logged_in_to_front_end') != '') {
-                    return config('lasasllecmsfrontend.frontend_redirect_to_this_view_when_user_successfully_logged_in_to_front_end');
+                if (Config::get('lasallecmsfrontend.frontend_redirect_to_this_view_when_user_successfully_logged_in_to_front_end') != '') {
+                    return redirect(Config::get('lasallecmsfrontend.frontend_redirect_to_this_view_when_user_successfully_logged_in_to_front_end'));
                 }
+
                 return Redirect::route('home');
             }
         }
