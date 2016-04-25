@@ -66,9 +66,10 @@ class CreateUsersTable extends Migration {
                 $table->string('sms_token')->nullable();
                 $table->timestamp('sms_token_created_at')->nullable();
 
-                // Token Based Login Authentication Columns
-                $table->string('login_token')->nullable();
-                $table->timestamp('login_token_created_at')->nullable();
+                // Token Based Login Authentication Columns ==> NEW PACKAGE FOR THIS!
+                // https://github.com/lasallecms/lasallecms-l5-tokenbasedlogin-pkg
+               // $table->string('login_token')->nullable();
+               // $table->timestamp('login_token_created_at')->nullable();
 
                 $table->timestamp('created_at');
                 $table->integer('created_by')->unsigned()->default(0);
