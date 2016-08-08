@@ -52,7 +52,7 @@
 
                 <div class="">
                     <a href="{{ route('admin.login') }}" class="btn btn-success btn-small">
-                        <span class="fa fa-btn fa-sign-in"></span>&nbsp;&nbsp;&nbsp;Log back into Admin
+                        <span class="fa fa-btn fa-sign-in" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Log back into Admin
                     </a>
                 </div>
 

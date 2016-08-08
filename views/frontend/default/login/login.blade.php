@@ -28,13 +28,13 @@
 
 					<!-- E-Mail Address -->
 					<div style="margin-bottom: 25px; margin-top: 25px;" class="input-group">
-							<span class="input-group-addon"><i class="fa fa-btn fa-envelope"></i></span>
+							<span class="input-group-addon"><i class="fa fa-btn fa-envelope" aria-hidden="true"></i></span>
 							{!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'email']) !!}
 					</div>
 
 					<!-- Password -->
 					<div style="margin-bottom: 25px" class="input-group">
-						<span class="input-group-addon"><i class="fa fa-btn fa-lock"></i></span>
+						<span class="input-group-addon"><i class="fa fa-btn fa-lock" aria-hidden="true"></i></span>
 						{!! Form::password('password', ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'password']) !!}
 					</div>
 
@@ -47,14 +47,14 @@
 
 					<!-- Login Button -->
 					<button type="submit" class="btn btn-success">
-					    <i class="fa fa-btn fa-sign-in"></i>&nbsp;&nbsp;Login
+					    <i class="fa fa-btn fa-sign-in" aria-hidden="true"></i>&nbsp;&nbsp;Login
 					</button>
 
 
                     <br /><br />
                     <!-- Reset Request Link -->
                     <a class="btn btn-warning" href="password/email" role="button">
-                        <i class="fa fa-btn fa-envelope-o"></i>&nbsp;&nbsp;Forgot Your Password?
+                        <i class="fa fa-btn fa-envelope-o" aria-hidden="true"></i>&nbsp;&nbsp;Forgot Your Password?
                     </a>
 
 				</form>

@@ -26,7 +26,7 @@
                 @include('usermanagement::frontend.default.common.errors')
 
                 <!-- To Home Page -->
-                <a href="{{ route('home') }}" class="btn btn-success">
+                <a href="{{ route('home') }}" class="btn btn-success" aria-hidden="true">
                     <span class="fa fa-btn fa-home"></span>&nbsp;&nbsp;Home
                 </a>
 

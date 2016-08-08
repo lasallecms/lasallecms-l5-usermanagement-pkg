@@ -34,7 +34,7 @@
 
                 <!-- To Home Page -->
                 <a href="{{ route('home') }}" class="btn btn-default">
-                    <span class="fa fa-btn fa-home"></span>&nbsp;&nbsp;Home
+                    <span class="fa fa-btn fa-home" aria-hidden="true"></span>&nbsp;&nbsp;Home
                 </a>
 
 
@@ -43,7 +43,7 @@
 
 					<!-- To Login Form -->
 					<a href="{{ route('auth.login') }}" class="btn btn-success">
-						<span class="fa fa-btn fa-sign-in"></span>&nbsp;&nbsp;Login
+						<span class="fa fa-btn fa-sign-in" aria-hidden="true"></span>&nbsp;&nbsp;Login
 					</a>
 				@endif
 

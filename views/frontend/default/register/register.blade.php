@@ -32,25 +32,25 @@
 
 				{{-- Name --}}
 				<div style="margin-bottom: 25px; margin-top: 25px;" class="input-group">
-					<span class="input-group-addon"><i class="fa fa-btn fa-user"></i></span>
+					<span class="input-group-addon"><i class="fa fa-btn fa-user" aria-hidden="true"></i></span>
 					{!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'name']) !!}
 				</div>
 
 				{{-- E-Mail Address --}}
 				<div style="margin-bottom: 25px; margin-top: 25px;" class="input-group">
-					<span class="input-group-addon"><i class="fa fa-btn fa-envelope"></i></span>
+					<span class="input-group-addon"><i class="fa fa-btn fa-envelope" aria-hidden="true"></i></span>
 					{!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'email']) !!}
 				</div>
 
 				{{-- Password --}}
 				<div style="margin-bottom: 25px" class="input-group">
-					<span class="input-group-addon"><i class="fa fa-btn fa-lock"></i></span>
+					<span class="input-group-addon"><i class="fa fa-btn fa-lock" aria-hidden="true"></i></span>
 					{!! Form::password('password', ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'password']) !!}
 				</div>
 
 				{{-- Confirm Password --}}
 				<div style="margin-bottom: 25px" class="input-group">
-					<span class="input-group-addon"><i class="fa fa-btn fa-lock"></i></span>
+					<span class="input-group-addon"><i class="fa fa-btn fa-lock" aria-hidden="true"></i></span>
 					{!! Form::password('password_confirmation', ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'confirm password']) !!}
 				</div>
 
@@ -65,12 +65,12 @@
 					<br /><br />
 
                     <div style="margin-bottom: 25px" class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-btn fa-map-o"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-btn fa-map-o" aria-hidden="true"></i></span>
                         {!! Form::text('phone_country_code', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'country code (Canada and US is "1")']) !!}
                     </div>
 
                     <div style="margin-bottom: 25px" class="input-group">
-                        <span class="input-group-addon"><i class="fa fa-btn fa-phone"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-btn fa-phone" aria-hidden="true"></i></span>
                         {!! Form::text('phone_number', null,['class' => 'form-control', 'required' => 'required', 'placeholder' => 'cell phone number (no spaces nor hyphens)']) !!}
                     </div>
                 @endif
@@ -84,7 +84,7 @@
 
 				<!-- Login Button -->
 				<button type="submit" class="btn btn-success">
-					<i class="fa fa-btn fa-sign-in"></i>&nbsp;&nbsp;Register
+					<i class="fa fa-btn fa-sign-in" aria-hidden="true"></i>&nbsp;&nbsp;Register
 				</button>
 
 				</form>

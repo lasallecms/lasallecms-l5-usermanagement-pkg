@@ -30,25 +30,25 @@
 
 				<!-- E-Mail Address -->
 				<div style="margin-bottom: 25px; margin-top: 25px;" class="input-group">
-					<span class="input-group-addon"><i class="fa fa-btn fa-envelope"></i></span>
+					<span class="input-group-addon"><i class="fa fa-btn fa-envelope" aria-hidden="true"></i></span>
 					{!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'email']) !!}
 				</div>
 
 				<!-- Password -->
 				<div style="margin-bottom: 25px" class="input-group">
-					<span class="input-group-addon"><i class="fa fa-btn fa-lock"></i></span>
+					<span class="input-group-addon"><i class="fa fa-btn fa-lock" aria-hidden="true"></i></span>
 					{!! Form::password('password', ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'password']) !!}
 				</div>
 
 				<!-- Confirm Password -->
 				<div style="margin-bottom: 25px" class="input-group">
-					<span class="input-group-addon"><i class="fa fa-btn fa-lock"></i></span>
+					<span class="input-group-addon"><i class="fa fa-btn fa-lock" aria-hidden="true"></i></span>
 					{!! Form::password('password_confirmation', ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'confirm password']) !!}
 				</div>
 
 				<!-- Login Button -->
 				<button type="submit" class="btn btn-success">
-					<i class="fa fa-btn fa-sign-in"></i>&nbsp;&nbsp;Reset Password
+					<i class="fa fa-btn fa-sign-in" aria-hidden="true"></i>&nbsp;&nbsp;Reset Password
 				</button>
 
 				</form>

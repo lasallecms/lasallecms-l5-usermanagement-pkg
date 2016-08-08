@@ -69,12 +69,12 @@
                 {!! Form::open(['action' => '\Lasallecms\Usermanagement\Http\Controllers\AdminAuth\AdminLoginController@postLogin']) !!}
 
                     <div style="margin-bottom: 25px" class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></span>
                         {!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'email']) !!}
                     </div>
 
                     <div style="margin-bottom: 25px" class="input-group">
-                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-lock" aria-hidden="true"></i></span>
                         {!! Form::password('password', ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'password']) !!}
                     </div>
 
@@ -84,7 +84,7 @@
 
                         <div class="col-sm-12 controls">
                             <button type="submit" class="btn btn-success">
-                                <i class="glyphicon glyphicon-ok"></i>  Log into Admin
+                                <i class="fa fa-check" aria-hidden="true"></i>  Log into Admin
                             </button>
                         </div>
 

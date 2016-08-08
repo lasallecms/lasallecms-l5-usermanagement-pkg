@@ -35,7 +35,7 @@
 
                     <div class="form-group">
                         <button type="submit" class="btn btn-danger btn-lg">
-                            <i class="fa fa-btn fa-check"></i>&nbsp;&nbsp;<strong>Yes</strong>, I want to logout!
+                            <i class="fa fa-btn fa-check" aria-hidden="true"></i>&nbsp;&nbsp;<strong>Yes</strong>, I want to logout!
                         </button>
                     </div>
 
@@ -43,7 +43,7 @@
 
                 <!-- No, do not logout -->
                 <button onclick="goBack()" class="btn btn-success btn-lg">
-                    <i class="fa fa-btn fa-remove"></i>&nbsp;&nbsp;<strong>No</strong>, I want to go back!
+                    <i class="fa fa-btn fa-remove" aria-hidden="true"></i>&nbsp;&nbsp;<strong>No</strong>, I want to go back!
                 </button>
 
             </div>

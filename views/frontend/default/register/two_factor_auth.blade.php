@@ -35,7 +35,7 @@
 
 					<!-- 2FA Code -->
 					<div style="margin-bottom: 25px; margin-top: 25px;" class="input-group">
-							<span class="input-group-addon"><i class="fa fa-btn fa-phone"></i></span>
+							<span class="input-group-addon"><i class="fa fa-btn fa-phone" aria-hidden="true"></i></span>
 							{!! Form::text('2facode', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'your two factor authorization code']) !!}
 					</div>
 
@@ -49,7 +49,7 @@
 
 					<!-- Register Button -->
 					<button type="submit" class="btn btn-success">
-					    <i class="fa fa-btn fa-sign-in"></i>&nbsp;&nbsp;Register
+					    <i class="fa fa-btn fa-sign-in" aria-hidden="true"></i>&nbsp;&nbsp;Register
 					</button>
 
 				</form>

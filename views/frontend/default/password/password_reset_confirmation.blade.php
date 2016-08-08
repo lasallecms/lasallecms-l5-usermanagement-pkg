@@ -34,7 +34,7 @@
 
 				<!-- To Home Page -->
 				<a href="{{ route('home') }}" class="btn btn-success">
-					<span class="fa fa-btn fa-home"></span>&nbsp;&nbsp;Home
+					<span class="fa fa-btn fa-home" aria-hidden="true"></span>&nbsp;&nbsp;Home
 				</a>
 
 				<br /><br />

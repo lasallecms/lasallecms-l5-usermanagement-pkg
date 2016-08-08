@@ -28,13 +28,13 @@
 
 				<!-- E-Mail Address -->
 				<div style="margin-bottom: 25px; margin-top: 25px;" class="input-group">
-					<span class="input-group-addon"><i class="fa fa-btn fa-envelope"></i></span>
+					<span class="input-group-addon"><i class="fa fa-btn fa-envelope" aria-hidden="true"></i></span>
 					{!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required', 'placeholder' => 'email']) !!}
 				</div>
 
 				<!-- Login Button -->
 				<button type="submit" class="btn btn-success">
-					<i class="fa fa-btn fa-envelope-o"></i>&nbsp;&nbsp;Send Password Reset Link
+					<i class="fa fa-btn fa-envelope-o" aria-hidden="true"></i>&nbsp;&nbsp;Send Password Reset Link
 				</button>
 
 				</form>
