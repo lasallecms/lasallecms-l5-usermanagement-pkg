@@ -31,13 +31,12 @@ namespace Lasallecms\Usermanagement\Http\Middleware;
  */
 
 // Laravel classes
-use Illuminate\Contracts\Routing\Middleware;
 use Illuminate\Support\Facades\Auth;
 
 // PHP
 use Closure;
 
-class FrontendLoggedInNoRegisterCheck implements Middleware
+class FrontendLoggedInNoRegisterCheck
 {
     /**
      * Handle an incoming request.

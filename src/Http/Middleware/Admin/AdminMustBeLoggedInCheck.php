@@ -28,11 +28,12 @@
  *
  */
 
-use Illuminate\Contracts\Routing\Middleware;
+
 use Illuminate\Contracts\Auth\Guard;
 use Closure;
 
-class AdminMustBeLoggedInCheck implements Middleware{
+class AdminMustBeLoggedInCheck
+{
     /**
      * The Guard implementation.
      *
