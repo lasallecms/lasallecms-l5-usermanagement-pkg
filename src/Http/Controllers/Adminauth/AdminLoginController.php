@@ -40,7 +40,9 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Cookie;
 
 // Laravel classes
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+//use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Lasallecms\Usermanagement\Http\Controllers\AdminAuth\AuthenticatesUsers;
+
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Cookie\Cookiejar;
 use Illuminate\Http\Request;
