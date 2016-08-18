@@ -45,6 +45,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 
+// Added by Bob
+use Illuminate\Foundation\Auth\RedirectsUsers;
+
+
 trait AuthenticatesUsers
 {
     use RedirectsUsers;
