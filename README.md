@@ -14,6 +14,11 @@ User Management package made specifically for my LaSalle Content Management Syst
 I extracted the native L5 app's authentication features into this package. 
 
 
+
+[MUST READ CAVEAT ABOUT THIS PACKAGE at https://lasallesoftware.ca/caveat_about_lasalle_software_version_one.php](https://lasallesoftware.ca/caveat_about_lasalle_software_version_one.php)
+
+
+
 ## Usage Caveat
 
 Is it really worthwhile extracting the core auth out of the app? After all, as I learned, it's not just the base L5 app we're dealing with. The two trait files at Illuminate\Foundation\Auth are part of it too. Plus App\Http\Kernel.php too. But, yes, it is, at least I think so.
