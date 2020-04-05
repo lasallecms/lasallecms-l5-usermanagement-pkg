@@ -14,8 +14,7 @@ User Management package made specifically for my LaSalle Content Management Syst
 I extracted the native L5 app's authentication features into this package. 
 
 
-
-[MUST READ CAVEAT ABOUT THIS PACKAGE at https://lasallesoftware.ca/caveat_about_lasalle_software_version_one.php](https://lasallesoftware.ca/caveat_about_lasalle_software_version_one.php)
+*** DO NOT USE THIS REPOSITORY!! NOT MAINTAINED!! GO TO [LaSalleSoftware.ca](https://lasallesoftware.ca) ***
 
 
 
